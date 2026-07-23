@@ -1,0 +1,29 @@
+$fontSizes:
+  "3xs" var(--f-size-3xs),
+  "2xs" var(--f-size-2xs),
+  "xs" var(--f-size-xs),
+  "sm" var(--f-size-sm),
+  "md" var(--f-size-md),
+  "lg" var(--f-size-lg),
+  "xl" var(--f-size-xl),
+  "2xl" var(--f-size-2xl),
+  "3xl" var(--f-size-3xl);
+
+@each $semanticSize, $size in $fontSizes { .--text-#{$semanticSize} { font-size: $size; } }
+
+.--text-error { color: var(--c-red-1); }
+
+.--text-left { text-align: left; }
+.--text-center { text-align: center; }
+.--text-right { text-align: right; }
+
+.--uppercase { text-transform: uppercase; }
+
+.--font-light { font-weight: 400; }
+.--font-regular { font-weight: 500; }
+.--font-semibold { font-weight: 600; }
+.--font-bold { font-weight: 700; }
+
+// Colors
+.--text-white { color: var(--c-white); }
+// .--text-muted { color: var(--color-text-muted); }

@@ -1,0 +1,8 @@
+node_modules
+dist/
+
+apps/backend/data/application.sqlite-shm
+apps/backend/data/application.sqlite-wal
+apps/backend/data/application.sqlite
+apps/backend/runtime
+apps/backend/backup

@@ -1,0 +1,110 @@
+.--base-button {
+  border: solid 1px var(--c-border);
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: var(--c-font-main);
+  justify-content: center;
+  align-items: center;
+  gap: var(--s-xs);
+  cursor: pointer;
+  display: flex;
+  height: 36px;
+
+  --base-button-variant-color: var(--c-button-primary);
+  --base-button-not-filled-color: var(--c-white);
+  --base-button-not-filled-hover-color: var(--c-white);
+  --base-button-filled-color: var(--c-white);
+
+  &--link {
+    --base-button-variant-color: var(--c-font-muted);
+    --base-button-not-filled-color: var(--c-font-muted);
+    --base-button-not-filled-hover-color: var(--c-white);
+    --base-button-filled-color: var(--c-white);
+  }
+
+  &--primary {
+    --base-button-variant-color: var(--c-button-primary);
+    --base-button-not-filled-color: var(--c-button-primary);
+    --base-button-not-filled-hover-color: var(--c-white);
+    --base-button-filled-color: var(--c-white);
+  }
+
+  &--secondary {
+    --base-button-variant-color: var(--c-button-secondary);
+    --base-button-not-filled-color: var(--c-button-secondary);
+    --base-button-not-filled-hover-color: var(--c-white);
+    --base-button-filled-color: var(--c-white);
+  }
+
+  &--success {
+    --base-button-variant-color: var(--c-button-success);
+    --base-button-not-filled-color: var(--c-button-success);
+    --base-button-not-filled-hover-color: var(--c-white);
+    --base-button-filled-color: var(--c-white);
+  }
+
+  &--warning {
+    --base-button-variant-color: var(--c-button-warning);
+    --base-button-not-filled-color: var(--c-button-warning);
+    --base-button-not-filled-hover-color: var(--c-white);
+    --base-button-filled-color: var(--c-white);
+  }
+
+  &--danger {
+    --base-button-variant-color: var(--c-button-danger);
+    --base-button-not-filled-color: var(--c-button-danger);
+    --base-button-not-filled-hover-color: var(--c-white);
+    --base-button-filled-color: var(--c-white);
+  }
+
+  &--info {
+    --base-button-variant-color: var(--c-button-info);
+    --base-button-not-filled-color: var(--c-button-info);
+    --base-button-not-filled-hover-color: var(--c-white);
+    --base-button-filled-color: var(--c-white);
+  }
+
+  &--dark {
+    --base-button-variant-color: var(--c-button-dark);
+    --base-button-not-filled-color: var(--c-gray-400);
+    --base-button-not-filled-hover-color: var(--c-white);
+    --base-button-filled-color: var(--c-white);
+  }
+
+  &--light {
+    --base-button-variant-color: var(--c-button-light);
+    --base-button-not-filled-color: var(--c-button-light);
+    --base-button-not-filled-hover-color: var(--c-button-dark);
+    --base-button-filled-color: var(--c-button-dark);
+  }
+
+  &--filled {
+    background-color: var(--base-button-variant-color);
+    border-color: var(--base-button-variant-color);
+    color: var(--base-button-filled-color);
+
+    &:hover {
+      background-color: color-mix(in oklab, var(--base-button-variant-color), transparent 20%);
+    }
+  }
+
+  &:not(.--base-button--filled) {
+    border-color: var(--base-button-variant-color);
+    color: var(--base-button-not-filled-color);
+    
+    &:hover {
+      background-color: var(--base-button-variant-color);
+      color: var(--base-button-not-filled-hover-color);
+    }
+  }
+
+  &:focus-within {
+    transform: scale(1.08);
+    outline: none;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.4;
+  }
+}

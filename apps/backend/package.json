@@ -1,0 +1,44 @@
+{
+  "name": "@scrapland/backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "type-check": "tsc --noEmit",
+    "build": "tsup",
+    "start": "node dist/index.js",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:delete": "drizzle-kit delete"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.13.2",
+    "@types/ws": "^8.18.1",
+    "drizzle-kit": "^0.31.10",
+    "tsup": "^8.5.1",
+    "tsx": "^4.23.0",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@scrapland/data-model": "workspace:*",
+    "@scrapland/functions": "workspace:*",
+    "@scrapland/targets": "workspace:*",
+    "better-sqlite3": "^12.11.1",
+    "cors": "^2.8.6",
+    "drizzle-orm": "^0.45.2",
+    "express": "^5.2.1",
+    "morgan": "^1.11.0",
+    "playwright": "^1.61.1",
+    "ws": "^8.21.0"
+  }
+}

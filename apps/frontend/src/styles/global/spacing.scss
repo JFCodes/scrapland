@@ -1,0 +1,30 @@
+$spacingSizes:
+  "3xs" var(--s-3xs),
+  "2xs" var(--s-2xs),
+  "xs" var(--s-xs),
+  "sm" var(--s-sm),
+  "md" var(--s-md),
+  "lg" var(--s-lg),
+  "xl" var(--s-xl),
+  "2xl" var(--s-2xl),
+  "3xl" var(--s-3xl);
+
+@each $semanticSize, $size in $spacingSizes {
+  // Padding
+  .--p-#{$semanticSize} { padding: $size !important; }
+  .--px-#{$semanticSize} { padding-left: $size; padding-right: $size !important; }
+  .--py-#{$semanticSize} { padding-top: $size; padding-bottom: $size !important; }
+  .--pt-#{$semanticSize} { padding-top: $size !important; }
+  .--pr-#{$semanticSize} { padding-right: $size !important; }
+  .--pb-#{$semanticSize} { padding-bottom: $size !important; }
+  .--pl-#{$semanticSize} { padding-left: $size !important; }
+
+  // Margin
+  .--m-#{$semanticSize} { margin: $size !important; }
+  .--mx-#{$semanticSize} { margin-left: $size; margin-right: $size !important; }
+  .--my-#{$semanticSize} { margin-top: $size; margin-bottom: $size !important; }
+  .--mt-#{$semanticSize} { margin-top: $size !important; }
+  .--mr-#{$semanticSize} { margin-right: $size !important; }
+  .--mb-#{$semanticSize} { margin-bottom: $size !important; }
+  .--ml-#{$semanticSize} { margin-left: $size !important; }
+}

@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+html, body, #app {
+  height: 100%;
+  width: 100%;
+}
+
+#app {
+  font-size: 14px; // Controls rem relative sizing
+  background-color: var(--c-background-main);
+  font-family: var(--f-family);
+  color: var(--c-font-main);
+}

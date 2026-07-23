@@ -1,0 +1,26 @@
+{
+  "name": "@scrapland/data-model",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "dev": "chokidar \"src/**/*.{ts,js,vue,css,scss}\" -c \"pnpm build\" --initial",
+    "build": "tsup src/index.ts --format esm,cjs --dts"
+  },
+  "devDependencies": {
+    "chokidar-cli": "^3.0.0",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.2"
+  }
+}

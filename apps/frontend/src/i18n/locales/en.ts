@@ -1,0 +1,110 @@
+import {
+  type T_Ad_Housing_BuildingType,
+  E_TASK_SCHEDULE_TYPE,
+  E_EXECUTION_STATUS,
+  E_AD_ENTITY_TYPE,
+  E_ENTITY_TYPE,
+  E_TASK_STATUS,
+} from '@scrapland/data-model'
+import { E_ROUTER_PAGES } from '@/router/enums'
+
+const adEntityType: Record<E_AD_ENTITY_TYPE, string> = {
+  [E_AD_ENTITY_TYPE.VEHICLE]: 'Vehicles',
+  [E_AD_ENTITY_TYPE.HOUSING]: 'Housing',
+}
+
+const taskStatus: Record<E_TASK_STATUS, string> = {
+  [E_TASK_STATUS.DRAFT]: 'Draft',
+  [E_TASK_STATUS.PUBLISHED]: 'Published',
+  [E_TASK_STATUS.PAUSED]: 'Paused',
+  [E_TASK_STATUS.DELETED]: 'Deleted',
+}
+
+const entityTypes: Record<E_ENTITY_TYPE, string> = {
+  [E_ENTITY_TYPE.EXECUTION]: 'Executions',
+  [E_ENTITY_TYPE.TARGET]: 'Targets',
+  [E_ENTITY_TYPE.TASK]: 'Tasks',
+  [E_ENTITY_TYPE.AD]: 'Ads',
+}
+
+const pages: Record<E_ROUTER_PAGES, string> = {
+  [E_ROUTER_PAGES.NOTIFICATIONS]: 'Notifications',
+  [E_ROUTER_PAGES.SETTINGS]: 'Settings',
+  [E_ROUTER_PAGES.HOME]: 'Home',
+  [E_ROUTER_PAGES.HOME_INDEX]: '',
+  [E_ROUTER_PAGES.EXECUTIONS]: 'Executions',
+  [E_ROUTER_PAGES.EXECUTIONS_ALL]: 'Executions',
+  [E_ROUTER_PAGES.EXECUTIONS_QUEUE]: 'Queued executions',
+  [E_ROUTER_PAGES.EXECUTIONS_RUNNING]: 'Running executions',
+  [E_ROUTER_PAGES.EXECUTIONS_ABORTED]: 'Aborted executions',
+  [E_ROUTER_PAGES.EXECUTIONS_COMPLETED]: 'Completed executions',
+  [E_ROUTER_PAGES.VEHICLES]: 'Vehicles',
+  [E_ROUTER_PAGES.HOUSING]: 'Housing',
+  [E_ROUTER_PAGES.HOUSING_DASHBOARD]: 'Dashboard',
+  [E_ROUTER_PAGES.HOUSING_TASKS]: 'Tasks',
+  [E_ROUTER_PAGES.HOUSING_ADS]: 'Ads',
+}
+
+const executionStatus: Record<E_EXECUTION_STATUS, string> = {
+  [E_EXECUTION_STATUS.QUEUED]: 'Queued',
+  [E_EXECUTION_STATUS.RUNNING]: 'Running',
+  [E_EXECUTION_STATUS.ABORTED]: 'Aborted',
+  [E_EXECUTION_STATUS.COMPLETED]: 'Completed',
+}
+
+const taskScheduleType: Record<E_TASK_SCHEDULE_TYPE, string> = {
+  [E_TASK_SCHEDULE_TYPE.INTERVAL]: 'Interval',
+  [E_TASK_SCHEDULE_TYPE.MANUAL]: 'Manual',
+  [E_TASK_SCHEDULE_TYPE.CRON]: 'Cron Job',
+}
+
+const adHousingBuildingTypes: Record<T_Ad_Housing_BuildingType, string> = {
+  'single-house': 'Single house',
+  'apartment': 'Apartment',
+}
+
+export default {
+  global: {
+    buildingTypes: 'Building Types',
+    discardChanges: 'Discard changes',
+    location: 'Location',
+    createdAt: 'Created ad',
+    save: 'Save',
+    schedule: 'Schedule',
+    scheduleExecution: 'Schedule execution',
+    status: 'Status',
+    target: 'Target',
+    task: 'Task',
+  },
+  pages: {},
+  components: {},
+  entities: {
+    task: {
+      schedule: {
+        interval: 'Not set | This task runs every minute | This task runs every {count} minutes',
+        manual: 'This task only runs on a manual trigger',
+        cron: 'This cron job runs: {cronDescription}'
+      },
+    },
+  },
+  tooltips: {
+    targetLocation1: 'Location option is based on the source website.',
+    targetLocation2: 'Please check the source information about this field.',
+  },
+  panels: {
+    task: {
+      createTitle: 'Create new task',
+      editTitle: 'Edit task',
+    }
+  },
+  toasts: {},
+  enums: {
+    adHousingBuildingTypes,
+    taskScheduleType,
+    executionStatus,
+    adEntityType,
+    entityTypes,
+    taskStatus,
+    pages,
+  }
+} as const

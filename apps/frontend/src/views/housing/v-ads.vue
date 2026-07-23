@@ -1,0 +1,3 @@
+<template>
+  housing ads
+</template>

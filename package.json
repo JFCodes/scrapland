@@ -1,0 +1,16 @@
+{
+  "name": "scrapland",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "build": "pnpm --filter @scrapland/data-model build && pnpm --filter @scrapland/functions build && pnpm --filter @scrapland/targets build"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.9.0",
+      "onFail": "download"
+    }
+  },
+  "type": "module"
+}

@@ -1,0 +1,31 @@
+{
+  "name": "@scrapland/functions",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "chokidar \"src/**/*.{ts,js,vue,css,scss}\" -c \"pnpm build\" --initial",
+    "build": "tsup src/index.ts --format esm,cjs --dts"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.7.2",
+    "chokidar-cli": "^3.0.0",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@scrapland/data-model": "workspace:*",
+    "luxon": "^3.7.2"
+  }
+}
