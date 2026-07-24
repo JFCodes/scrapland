@@ -18,6 +18,7 @@ const MAX_CONCURRENCY = 2
 class ExecutionQueueClass {
   isProcessingTick = false
 
+  // When server stats, aborts all running execution.
   public async cleanRunningExecutions (): Promise<void> {
     await db
       .update(DBSchema_Execution)
@@ -28,6 +29,8 @@ class ExecutionQueueClass {
       .where(eq(DBSchema_Execution.status, E_EXECUTION_STATUS.RUNNING))
   }
 
+  // Add a task to execute.
+  // Checks if a execution for the task is already queued or running.
   public queueTask (task: T_Task): null | T_Execution {
     const execution = getTaskInQueueOrRunning(task._id) || createTaskExecution(task)
 
@@ -37,7 +40,9 @@ class ExecutionQueueClass {
     return execution
   }
 
-  // // Private
+  // Private
+  // Running tick, only one function active at a time so we can spam this.tick()
+  // Executes until max concurrency reached or no executions to run
   private async tick (): Promise<void> {
     if(this.isProcessingTick) return
     const finishTick = (): void => { this.isProcessingTick = false }
@@ -52,7 +57,7 @@ class ExecutionQueueClass {
 
     await this.execute(nextToExecute)
     finishTick()
-    // this.tick()
+    this.tick()
   }
 
   private async execute (execute: T_Execution): Promise<void> {
@@ -62,6 +67,7 @@ class ExecutionQueueClass {
     await executionModel.setRunning()
 
     RunExecution(executionModel)
+      .then(() => this.tick())
   }
 
   public getRunningExecutions (): Array<T_Execution> {
@@ -81,57 +87,6 @@ class ExecutionQueueClass {
       .orderBy(asc(DBSchema_Execution._createdAt))
       .all()[0]
   } 
-
-  // private async execute (execution: T_Execution): Promise<void> {
-  
-    // await this.setRunningStatus(execution._id)
-
-  //   RunExecution(execution)
-  //     .then(async () => {
-  //       console.log('execution completed')
-  //       await this.setCompletedStatus(execution._id)
-  //       this.tick()
-  //     })
-  //     .catch(async () => {
-  //       console.log('execution error')
-  //       await this.setAbortedStatus(execution._id)
-  //       this.tick()
-  //     })
-  // }
-
-
-
-  // private createTaskExecution (task: T_Task): null | T_Execution {
-  //   const created = db
-  //     .insert(DBSchema_Execution)
-  //     .values({
-  //       status: E_EXECUTION_STATUS.QUEUED,
-  //       taskId: task._id
-  //     })
-  //     .returning()
-
-  //   return created.all()[0] ?? null
-  // }
-
-
-
-  // private async setRunningStatus (executionId: string): Promise<void> {
-
-  // }
-
-  // private async setAbortedStatus (executionId: string): Promise<void> {
-  //   await db
-  //     .update(DBSchema_Execution)
-  //     .set({ status: E_EXECUTION_STATUS.ABORTED })
-  //     .where(eq(DBSchema_Execution._id, executionId))
-  // }
-
-  // private async setCompletedStatus (executionId: string): Promise<void> {
-  //   await db
-  //     .update(DBSchema_Execution)
-  //     .set({ status: E_EXECUTION_STATUS.COMPLETED })
-  //     .where(eq(DBSchema_Execution._id, executionId))
-  // }
 }
 
 export const ExecutionQueue = new ExecutionQueueClass()
