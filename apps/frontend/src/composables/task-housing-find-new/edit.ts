@@ -10,10 +10,9 @@ import {
 // App
 import { useToastsStore } from '@/stores/toasts'
 import { useTasksStore } from '@/stores/tasks'
-import { useApi } from '@/composables/api'
+import { API } from '@/api'
 
 export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Housing_FindNew>) {
-  const { tasks: tasksApi } = useApi()
   const toastsStore = useToastsStore()
   const tasksStore = useTasksStore()
   const taskValue = toValue(task)
@@ -63,7 +62,7 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
       location: editableLocation.value,
     }
 
-    return await tasksApi.housing.findNew
+    return await API.tasks.housing.findNew
       .patch(taskValue._id, payload)
       .then(result => {
         tasksStore.updateTask(result)

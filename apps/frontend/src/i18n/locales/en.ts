@@ -5,6 +5,7 @@ import {
   E_AD_ENTITY_TYPE,
   E_ENTITY_TYPE,
   E_TASK_STATUS,
+  E_TASK_TYPE,
 } from '@scrapland/data-model'
 import { E_ROUTER_PAGES } from '@/router/enums'
 
@@ -37,6 +38,7 @@ const pages: Record<E_ROUTER_PAGES, string> = {
   [E_ROUTER_PAGES.EXECUTIONS_QUEUE]: 'Queued executions',
   [E_ROUTER_PAGES.EXECUTIONS_RUNNING]: 'Running executions',
   [E_ROUTER_PAGES.EXECUTIONS_ABORTED]: 'Aborted executions',
+  [E_ROUTER_PAGES.EXECUTIONS_FAILED]: 'Failed executions',
   [E_ROUTER_PAGES.EXECUTIONS_COMPLETED]: 'Completed executions',
   [E_ROUTER_PAGES.VEHICLES]: 'Vehicles',
   [E_ROUTER_PAGES.HOUSING]: 'Housing',
@@ -49,6 +51,7 @@ const executionStatus: Record<E_EXECUTION_STATUS, string> = {
   [E_EXECUTION_STATUS.QUEUED]: 'Queued',
   [E_EXECUTION_STATUS.RUNNING]: 'Running',
   [E_EXECUTION_STATUS.ABORTED]: 'Aborted',
+  [E_EXECUTION_STATUS.FAILED]: 'Failed',
   [E_EXECUTION_STATUS.COMPLETED]: 'Completed',
 }
 
@@ -61,6 +64,10 @@ const taskScheduleType: Record<E_TASK_SCHEDULE_TYPE, string> = {
 const adHousingBuildingTypes: Record<T_Ad_Housing_BuildingType, string> = {
   'single-house': 'Single house',
   'apartment': 'Apartment',
+}
+
+const taskType: Record<E_TASK_TYPE, string> = {
+  [E_TASK_TYPE.FIND_NEW_ADS]: 'find new ads'
 }
 
 export default {
@@ -97,7 +104,28 @@ export default {
       editTitle: 'Edit task',
     }
   },
-  toasts: {},
+  toasts: {
+    executionQueued: {
+      message: `Task '{taskType}' '{adEntityType}' on target '{target}' is queued for execution.`,
+      title: 'Task execution queued',
+    },
+    executionRunning: {
+      message: `Task '{taskType}' '{adEntityType}' on target '{target}' is started execution.`,
+      title: 'Task execution running',
+    },
+    executionAborted: {
+      message: `Task '{taskType}' '{adEntityType}' on target '{target}' was aborted.`,
+      title: 'Task execution aborted',
+    },
+    executionFailed: {
+      message: `Task '{taskType}' '{adEntityType}' on target '{target}' failed execution.`,
+      title: 'Task execution failed',
+    },
+    executionCompleted: {
+      message: `Task '{taskType}' '{adEntityType}' on target '{target}' completed execution.`,
+      title: 'Task execution completed',
+    }
+  },
   enums: {
     adHousingBuildingTypes,
     taskScheduleType,
@@ -105,6 +133,7 @@ export default {
     adEntityType,
     entityTypes,
     taskStatus,
+    taskType,
     pages,
   }
 } as const

@@ -16,12 +16,13 @@ import {
   BookDashed,
   Building2,
   RefreshCw,
+  CircleX,
   Clock2,
   Pause,
   Trash,
   Play,
   Hand,
-  Car
+  Car,
 } from '@lucide/vue'
 
 export enum TELEPORTS {
@@ -55,8 +56,9 @@ export const TASK_SCHEDULE_TYPE_ICONS: Record<E_TASK_SCHEDULE_TYPE, Component> =
 
 export const EXECUTION_STATUS_BADGE_TYPE: Record<E_EXECUTION_STATUS, UiButtonType> = {
   [E_EXECUTION_STATUS.QUEUED]: 'light',
-  [E_EXECUTION_STATUS.RUNNING]: 'warning',
-  [E_EXECUTION_STATUS.ABORTED]: 'danger',
+  [E_EXECUTION_STATUS.RUNNING]: 'info',
+  [E_EXECUTION_STATUS.ABORTED]: 'warning',
+  [E_EXECUTION_STATUS.FAILED]: 'danger',
   [E_EXECUTION_STATUS.COMPLETED]: 'success',
 }
 
@@ -64,5 +66,6 @@ export const EXECUTION_STATUS_ICONS: Record<E_EXECUTION_STATUS, Component> = {
   [E_EXECUTION_STATUS.QUEUED]: markRaw(ListOrdered),
   [E_EXECUTION_STATUS.RUNNING]: markRaw(RefreshCw),
   [E_EXECUTION_STATUS.ABORTED]: markRaw(OctagonMinus),
+  [E_EXECUTION_STATUS.FAILED]: markRaw(CircleX),
   [E_EXECUTION_STATUS.COMPLETED]: markRaw(LaptopMinimalCheck),
 }

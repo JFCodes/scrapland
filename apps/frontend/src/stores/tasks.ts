@@ -8,10 +8,9 @@ import {
 } from '@scrapland/data-model'
 // App
 import { filterByAdEntityAndType } from '@/stores/tasks/filter-by-ad-and-type'
-import { useApi } from '@/composables/api'
+import { API } from '@/api'
 
 export const useTasksStore = defineStore('tasks', () => {
-  const { tasks: apiTasks } = useApi()
 
   const tasks = ref<Array<T_Task>>([])
 
@@ -30,13 +29,12 @@ export const useTasksStore = defineStore('tasks', () => {
 
   const load = async () => {
     // TODO: alert for errors
-    await apiTasks
+    await API.tasks
       .all()
       .then(result => tasks.value = result)
   }
 
   const updateTask = (updated: T_Task_Ad_Housing_FindNew): void => {
-    console.log('replacing task in place', { updated })
     const index = tasks.value.findIndex(t => t._id === updated._id)
     if (index === -1) return
 

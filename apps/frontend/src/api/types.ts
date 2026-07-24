@@ -2,7 +2,6 @@ export type RequestQueryValues = Record<string, string | number>
 
 type RequestBaseOptions = {
   method: 'GET' | 'POST' | 'PATCH'
-  baseUrl: string
   path: string
 }
 

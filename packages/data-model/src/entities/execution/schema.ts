@@ -1,12 +1,16 @@
 import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
-// // App
+// App
 import { getEntityBaseSchemaFields } from '../base-schema-fields'
+import type { T_Execution_StatusHistory } from './types'
 import { E_EXECUTION_STATUS } from './enums'
 import { E_ENTITY_TYPE } from '../enums'
 
 export const DBSchema_Execution = sqliteTable('execution', {
   ...getEntityBaseSchemaFields(E_ENTITY_TYPE.EXECUTION),
+  statusHistory: text('statusHistory', { mode: 'json' }).notNull().$type<Array<T_Execution_StatusHistory>>().$default(() => []),
   status: text('status').notNull().$type<E_EXECUTION_STATUS>(),
+  failureReason: text('failureReason'),
+  abortReason: text('abortReason'),
   taskId: text('taskId').notNull(),
 })
 
@@ -17,4 +21,5 @@ export type T_Execution_Patch = Partial<Omit<T_Execution,
   | '_entityType'
   | '_createdAt'
   | '_updatedAt'
+  | 'statusHistory'
 >>

@@ -30,9 +30,10 @@ const ICONS: Record<UIToast['type'], Component> = {
     </div>
 
     <div>
-      <p>{{ toast.title }}</p>
+      <p class="--font-bold --mb-2xs">{{ toast.title }}</p>
       <p
         v-for="(message, index) in toast.messages"
+        class="--text-xs"
         :key="index">
         {{ message }}
       </p>

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onUnmounted, onMounted } from 'vue'
 // // App
 // import { useDiscoveryTasksStore } from '@/stores/discovery-tasks'
+// import { useAdsStore } from '@/stores/ads'
 import { useServerStatusStore } from '@/stores/server-status'
 import { useExecutionsStore } from '@/stores/executions'
+import { unsubscribeSocket } from '@/websocket/instance'
 import { useTasksStore } from '@/stores/tasks'
-// import { unsubscribeSocket } from '@/websocket/instance'
-// import { websocket } from '@/websocket/client'
-// import { useAdsStore } from '@/stores/ads'
+import { websocket } from '@/websocket/client'
 // // Components
 import CompGlobalTooltipAnchor from '@/components/global/g-tooltip-anchor.vue'
 import CompGlobalToastsAnchor from '@/components/global/g-toasts-anchor.vue'
@@ -19,23 +19,23 @@ import CompUiLoading from '@/components/ui/ui-loading.vue'
 import ViewOffline from '@/views/v-offline.vue'
 
 // const discoveryTasksStore = useDiscoveryTasksStore()
+// const adsStore = useAdsStore()
 const serverStatusStore = useServerStatusStore()
 const executionsStore = useExecutionsStore()
 const tasksStore = useTasksStore()
-// const adsStore = useAdsStore()
 
 onMounted(() => {
+  // discoveryTasksStore.search()
+  // adsStore.search()
   executionsStore.load()
+  websocket.connect()
   tasksStore.load()
-  //   discoveryTasksStore.search()
-  //   websocket.connect()
-  //   adsStore.search()
 })
 
-// onUnmounted(() => {
-//   unsubscribeSocket()
-//   websocket.disconnect()
-// })
+onUnmounted(() => {
+  unsubscribeSocket()
+  websocket.disconnect()
+})
 </script>
 
 <template>

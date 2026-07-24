@@ -14,6 +14,7 @@ import {
   OctagonMinus,
   ListOrdered,
   RefreshCw,
+  CircleX,
 } from '@lucide/vue'
 
 const executionsStore = useExecutionsStore()
@@ -23,6 +24,7 @@ const linksData: Array<{ name: E_ROUTER_PAGES, icon: Component }> = [
   { name: E_ROUTER_PAGES.EXECUTIONS_QUEUE, icon: ListOrdered },
   { name: E_ROUTER_PAGES.EXECUTIONS_RUNNING, icon: RefreshCw },
   { name: E_ROUTER_PAGES.EXECUTIONS_ABORTED, icon: OctagonMinus },
+  { name: E_ROUTER_PAGES.EXECUTIONS_FAILED, icon: CircleX },
   { name: E_ROUTER_PAGES.EXECUTIONS_COMPLETED, icon: LaptopMinimalCheck },
 ]
 

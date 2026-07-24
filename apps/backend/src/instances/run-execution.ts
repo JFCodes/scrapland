@@ -1,6 +1,9 @@
-import { T_Execution } from '@scrapland/data-model'
+// App
+import { ExecutionModel } from '../models/execution'
 
-export async function RunExecution (execution: T_Execution): Promise<void> {
-  console.log('executing task', execution.taskId)
+export async function RunExecution (executionModel: ExecutionModel): Promise<void> {
+  console.log('executing task', executionModel)
   await new Promise(r => setTimeout(r, 4000))
+
+  await executionModel.setCompleted()
 }

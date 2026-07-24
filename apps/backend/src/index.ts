@@ -1,4 +1,4 @@
-// import { WebSocketServer } from 'ws'
+import { WebSocketServer } from 'ws'
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
@@ -9,9 +9,8 @@ import { ExecutionQueue } from './instances/execution-queue'
 import { router as ApiRouter } from './routers'
 import { seedDatabase } from './database/seed'
 
-// import { initializeWebSocket } from './websocket'
+import { WebsocketRegistry } from './websocket/registry'
 // import { scheduler } from './schedule/scheduler'
-// import './queues'
 
 const PORT = 3000
 
@@ -24,13 +23,13 @@ app.use(cors({ origin: '*' }))
 app.use('/api', NoCacheController, ApiRouter)
 
 const httpServer = http.createServer(app)
-// const websocketServer = new WebSocketServer({
-//   server: httpServer,
-//   path: '/ws',
-// })
+const websocketServer = new WebSocketServer({
+  server: httpServer,
+  path: '/ws',
+})
 
+websocketServer.on('connection', (socket) => WebsocketRegistry.registerClient(socket))
 await ExecutionQueue.cleanRunningExecutions()
-// initializeWebSocket(websocketServer)
 // scheduler.initialize()
 seedDatabase()
 

@@ -4,11 +4,13 @@ import {
   type T_Execution,
   type T_Task,
 } from '@scrapland/data-model'
-import { and, asc, eq, or } from 'drizzle-orm'
+import { asc, eq } from 'drizzle-orm'
 // App
-import { db } from '../database'
+import { getTaskInQueueOrRunning } from '../models/execution/get-task-in-queue-or-running'
+import { createTaskExecution } from '../models/execution/create-task-execution'
+import { ExecutionModel } from '../models/execution'
 import { RunExecution } from './run-execution'
-
+import { db } from '../database'
 
 // TODO: this will come form a global configuration file
 const MAX_CONCURRENCY = 2
@@ -19,29 +21,23 @@ class ExecutionQueueClass {
   public async cleanRunningExecutions (): Promise<void> {
     await db
       .update(DBSchema_Execution)
-      .set({ status: E_EXECUTION_STATUS.ABORTED })
+      .set({
+        abortReason: 'Server interrupted while execution was running.',
+        status: E_EXECUTION_STATUS.ABORTED,
+      })
       .where(eq(DBSchema_Execution.status, E_EXECUTION_STATUS.RUNNING))
   }
 
-  public async resetExecutions (): Promise<void> {
-    await db.delete(DBSchema_Execution)
-  }
-
   public queueTask (task: T_Task): null | T_Execution {
-    const execution = this.findTaskInQueue(task._id) || this.createTaskExecution(task)
+    const execution = getTaskInQueueOrRunning(task._id) || createTaskExecution(task)
+
+    if (!execution) return null
+    
     this.tick()
     return execution
   }
 
-  public getRunningExecutions (): Array<T_Execution> {
-    return db
-      .select()
-      .from(DBSchema_Execution)
-      .where(eq(DBSchema_Execution.status, E_EXECUTION_STATUS.RUNNING))
-      .all()
-  }
-
-  // Private
+  // // Private
   private async tick (): Promise<void> {
     if(this.isProcessingTick) return
     const finishTick = (): void => { this.isProcessingTick = false }
@@ -56,54 +52,24 @@ class ExecutionQueueClass {
 
     await this.execute(nextToExecute)
     finishTick()
-    this.tick()
+    // this.tick()
   }
 
-  private async execute (execution: T_Execution): Promise<void> {
+  private async execute (execute: T_Execution): Promise<void> {
     // This update must be awaited so that tick doesn't retrigger
     // before execution status is RUNNING
-    await this.setRunningStatus(execution._id)
+    const executionModel = new ExecutionModel(execute)
+    await executionModel.setRunning()
 
-    RunExecution(execution)
-      .then(async () => {
-        console.log('execution completed')
-        await this.setCompletedStatus(execution._id)
-        this.tick()
-      })
-      .catch(async () => {
-        console.log('execution error')
-        await this.setAbortedStatus(execution._id)
-        this.tick()
-      })
+    RunExecution(executionModel)
   }
 
-  private findTaskInQueue (taskId: string): null | T_Execution {
-    const execution = db
+  public getRunningExecutions (): Array<T_Execution> {
+    return db
       .select()
       .from(DBSchema_Execution)
-      .where(
-        and(
-          eq(DBSchema_Execution.taskId, taskId),
-          or(
-            eq(DBSchema_Execution.status, E_EXECUTION_STATUS.RUNNING),
-            eq(DBSchema_Execution.status, E_EXECUTION_STATUS.QUEUED),
-          )
-        )
-      ).all()
-
-    return execution[0] ?? null
-  }
-
-  private createTaskExecution (task: T_Task): null | T_Execution {
-    const created = db
-      .insert(DBSchema_Execution)
-      .values({
-        status: E_EXECUTION_STATUS.QUEUED,
-        taskId: task._id
-      })
-      .returning()
-
-    return created.all()[0] ?? null
+      .where(eq(DBSchema_Execution.status, E_EXECUTION_STATUS.RUNNING))
+      .all()
   }
 
   private nextToExecute (): null | T_Execution {
@@ -114,28 +80,58 @@ class ExecutionQueueClass {
       .where(eq(DBSchema_Execution.status, E_EXECUTION_STATUS.QUEUED))
       .orderBy(asc(DBSchema_Execution._createdAt))
       .all()[0]
-  }
+  } 
 
-  private async setRunningStatus (executionId: string): Promise<void> {
-    await db
-      .update(DBSchema_Execution)
-      .set({ status: E_EXECUTION_STATUS.RUNNING })
-      .where(eq(DBSchema_Execution._id, executionId))
-  }
+  // private async execute (execution: T_Execution): Promise<void> {
+  
+    // await this.setRunningStatus(execution._id)
 
-  private async setAbortedStatus (executionId: string): Promise<void> {
-    await db
-      .update(DBSchema_Execution)
-      .set({ status: E_EXECUTION_STATUS.ABORTED })
-      .where(eq(DBSchema_Execution._id, executionId))
-  }
+  //   RunExecution(execution)
+  //     .then(async () => {
+  //       console.log('execution completed')
+  //       await this.setCompletedStatus(execution._id)
+  //       this.tick()
+  //     })
+  //     .catch(async () => {
+  //       console.log('execution error')
+  //       await this.setAbortedStatus(execution._id)
+  //       this.tick()
+  //     })
+  // }
 
-  private async setCompletedStatus (executionId: string): Promise<void> {
-    await db
-      .update(DBSchema_Execution)
-      .set({ status: E_EXECUTION_STATUS.COMPLETED })
-      .where(eq(DBSchema_Execution._id, executionId))
-  }
+
+
+  // private createTaskExecution (task: T_Task): null | T_Execution {
+  //   const created = db
+  //     .insert(DBSchema_Execution)
+  //     .values({
+  //       status: E_EXECUTION_STATUS.QUEUED,
+  //       taskId: task._id
+  //     })
+  //     .returning()
+
+  //   return created.all()[0] ?? null
+  // }
+
+
+
+  // private async setRunningStatus (executionId: string): Promise<void> {
+
+  // }
+
+  // private async setAbortedStatus (executionId: string): Promise<void> {
+  //   await db
+  //     .update(DBSchema_Execution)
+  //     .set({ status: E_EXECUTION_STATUS.ABORTED })
+  //     .where(eq(DBSchema_Execution._id, executionId))
+  // }
+
+  // private async setCompletedStatus (executionId: string): Promise<void> {
+  //   await db
+  //     .update(DBSchema_Execution)
+  //     .set({ status: E_EXECUTION_STATUS.COMPLETED })
+  //     .where(eq(DBSchema_Execution._id, executionId))
+  // }
 }
 
 export const ExecutionQueue = new ExecutionQueueClass()

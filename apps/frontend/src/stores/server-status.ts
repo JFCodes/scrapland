@@ -1,20 +1,18 @@
 import { onMounted, watch, ref } from 'vue'
 import { defineStore } from 'pinia'
 // App
-import { useApi } from '@/composables/api'
+import { API } from '@/api'
 
 const OFFLINE_CHECK_TIMING = 2000
 const ONLINE_CHECK_TIMING = 5000
 
 export const useServerStatusStore = defineStore('server-status', () => {
-  const { ping } = useApi()
-
   let checkInterval: null | number = null
   const isInitializing = ref(true)
   const serverOk = ref(true)
 
   const checkStatus = async (): Promise<void> => {
-    const status = await ping()
+    const status = await API.ping()
       .then(result =>result.status === 'ok')
       .catch(() => false)
 

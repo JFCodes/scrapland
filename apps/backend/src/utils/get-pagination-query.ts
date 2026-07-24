@@ -19,7 +19,6 @@ export function getPagination (req: Request): T_API_Pagination {
     const querySizeNumber = Number(querySize)
     if (!isNaN(querySizeNumber)) {
       size = Math.max(MIN_SIZE, Math.min(querySizeNumber, MAX_SIZE))
-      console.log({ size })
     }
   }
 
