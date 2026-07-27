@@ -15,13 +15,18 @@ export enum E_ROUTER_PAGES {
     HOUSING_DASHBOARD = 'housing-dashboard',
     HOUSING_TASKS = 'housing-tasks',
     HOUSING_ADS = 'housing-ads',
+      HOUSING_ADS_ALL = 'housing-ads-all',
+      HOUSING_ADS_CLASSIFY = 'housing-ads-classify',
 }
 
 export enum E_ROUTER_PARAMS {
   AD_ENTITY = 'ad_entity'
 }
 
-export enum E_ROUTER_QUERIES {}
+export enum E_ROUTER_QUERIES {
+  AD_STATUS = 'ad-status',
+  LIST_VIEW = 'list-view'
+}
 
 export const CONST_ROUTER_PATHS: Record<E_ROUTER_PAGES, string> = {
   [E_ROUTER_PAGES.NOTIFICATIONS]: '/notifications',
@@ -40,4 +45,6 @@ export const CONST_ROUTER_PATHS: Record<E_ROUTER_PAGES, string> = {
     [E_ROUTER_PAGES.HOUSING_DASHBOARD]: '',
     [E_ROUTER_PAGES.HOUSING_TASKS]: 'tasks',
     [E_ROUTER_PAGES.HOUSING_ADS]: 'ads',
+      [E_ROUTER_PAGES.HOUSING_ADS_ALL]: '',
+      [E_ROUTER_PAGES.HOUSING_ADS_CLASSIFY]: 'classify'
 }

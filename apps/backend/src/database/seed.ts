@@ -1,5 +1,6 @@
 import {
   DBSchema_Task_Ad_Housing_FindNew,
+  DBSchema_Ad_Housing,
   E_TASK_SCHEDULE_TYPE,
   E_TARGET
 } from '@scrapland/data-model'
@@ -8,8 +9,6 @@ import { db } from './'
 
 export async function seedDatabase (): Promise<void> {
   const taskAdHousingFindNew = db.select().from(DBSchema_Task_Ad_Housing_FindNew).all()
-
-  // console.log(taskAdHousingFindNew)
 
   const hasRemaxPortugal = taskAdHousingFindNew.some(d => d._task_target === E_TARGET.REMAX_PORTUGAL)
   if (!hasRemaxPortugal) await seedRemaxPortugal()

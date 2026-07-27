@@ -24,19 +24,51 @@ export function useRouterUtils () {
     return computed(() => route.query[queryKey] !== undefined)
   }
 
-  const writableToggleQuery = (queryKey: E_ROUTER_QUERIES): WritableComputedRef<boolean> => {
+  const computedArrayQuery = (queryKey: E_ROUTER_QUERIES): ComputedRef => {
+    return computed(() => getArrayStringQuery(queryKey))
+  }
+
+  const writableQuery = (queryKey: E_ROUTER_QUERIES, fallback: string): WritableComputedRef<string> => {
     return computed({
-      get: () => route.query[queryKey] !== undefined,
+      get: () => getStringQuery(queryKey, fallback),
       set: value => {
-        const currentQuery = route.query
-        const updatedQuery = value
-          ? { ...currentQuery, [queryKey]: null }
-          : { ...currentQuery, [queryKey]: undefined }
-        
-        router.replace({ query: updatedQuery })
+        const shallowClone = { ...route.query }
+        value !== fallback
+          ? shallowClone[queryKey] = value
+          : delete shallowClone[queryKey]
+
+        router.replace({ query: shallowClone })
       }
     })
   }
+
+  const writableQueryArray = (queryKey: E_ROUTER_QUERIES): WritableComputedRef<Array<string>> => {
+    return computed({
+      get: () => getArrayStringQuery(queryKey),
+      set: value => {
+        const shallowClone = { ...route.query }
+        value.length > 0
+          ? shallowClone[queryKey] = value
+          : delete shallowClone[queryKey]
+
+        router.replace({ query: shallowClone })
+      }
+    })
+  }
+
+  // const writableToggleQuery = (queryKey: E_ROUTER_QUERIES): WritableComputedRef<boolean> => {
+  //   return computed({
+  //     get: () => route.query[queryKey] !== undefined,
+  //     set: value => {
+  //       const currentQuery = route.query
+  //       const updatedQuery = value
+  //         ? { ...currentQuery, [queryKey]: null }
+  //         : { ...currentQuery, [queryKey]: undefined }
+        
+  //       router.replace({ query: updatedQuery })
+  //     }
+  //   })
+  // }
 
   // 'Private'
   function getStringParam (param: E_ROUTER_PARAMS): null | string {
@@ -44,11 +76,26 @@ export function useRouterUtils () {
     return typeof value === 'string' ? value : null
   }
 
+  function getStringQuery (queryKey: E_ROUTER_QUERIES, fallback = ''): string {
+    const value = route.query[queryKey]
+    return typeof value !== 'string' || !value ? fallback : value
+  }
+
+  function getArrayStringQuery (queryKey: E_ROUTER_QUERIES): Array<string> {
+    const value = route.query[queryKey]
+
+    if (Array.isArray(value)) return value.filter(value => typeof value === 'string')
+    if (typeof value === 'string') return [value]
+    return []
+  }
+
   return {
-    writableToggleQuery,
     computedStringParam,
+    computedArrayQuery,
+    writableQueryArray,
     routeIsActiveExact,
     computedHasQuery,
+    writableQuery,
     routeIsActive,
   }
 }

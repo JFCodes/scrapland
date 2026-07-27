@@ -2,10 +2,13 @@ import {
   type T_API_PAYLOAD_Task_Housing_FindNEw_Patch,
   type T_API_RESPONSE_Task_Housing_FindNew,
   type T_Task_Ad_Housing_FindNew_Patch,
+  type T_API_RESPONSE_Ads_Housing,
   type T_API_RESPONSE_Executions,
   type T_API_RESPONSE_Tasks,
   type T_API_RESPONSE_Ping,
   type T_API_Pagination,
+  type T_API_PAYLOAD_Ad_Housing_Patch,
+  type T_API_Response_Ad_Housing,
 } from '@scrapland/data-model'
 // App
 import type { RequestQueryValues, RequestOptions } from '@/api/types'
@@ -47,6 +50,22 @@ class Api {
       query: pagination,
       method: 'GET',
     }),
+  }
+
+  ads = {
+    housing: {
+      all: (pagination: T_API_Pagination, query?: RequestQueryValues) => this.request<T_API_RESPONSE_Ads_Housing, never, T_API_Pagination>({
+        query: { ...query, ...pagination },
+        path: 'ads/housing/all',
+        method: 'GET'
+      }),
+
+      patch: (adId: string, payload: T_API_PAYLOAD_Ad_Housing_Patch) => this.request<T_API_Response_Ad_Housing, T_API_PAYLOAD_Ad_Housing_Patch>({
+        path: `ads/housing/${adId}`,
+        method: 'PATCH',
+        body: payload,
+      })
+    }
   }
 
   public setWsClientId (clientId: string): void {
@@ -102,7 +121,9 @@ class Api {
   
     if(query) {
       Object.entries(query).forEach(([key, value]) => {
-        url.searchParams.set(key, String(value))
+        Array.isArray(value)
+          ? value.forEach(v => url.searchParams.append(key, String(v)))
+          : url.searchParams.set(key, String(value))
       })
     }
   

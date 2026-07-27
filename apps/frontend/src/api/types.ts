@@ -1,4 +1,9 @@
-export type RequestQueryValues = Record<string, string | number>
+export type RequestQueryValues = Record<string,
+  | Array<string>
+  | string
+  | number
+  | null
+>
 
 type RequestBaseOptions = {
   method: 'GET' | 'POST' | 'PATCH'

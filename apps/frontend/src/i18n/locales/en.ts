@@ -5,6 +5,7 @@ import {
   E_AD_ENTITY_TYPE,
   E_ENTITY_TYPE,
   E_TASK_STATUS,
+  E_AD_STATUS,
   E_TASK_TYPE,
 } from '@scrapland/data-model'
 import { E_ROUTER_PAGES } from '@/router/enums'
@@ -44,7 +45,9 @@ const pages: Record<E_ROUTER_PAGES, string> = {
   [E_ROUTER_PAGES.HOUSING]: 'Housing',
   [E_ROUTER_PAGES.HOUSING_DASHBOARD]: 'Dashboard',
   [E_ROUTER_PAGES.HOUSING_TASKS]: 'Tasks',
-  [E_ROUTER_PAGES.HOUSING_ADS]: 'Ads',
+  [E_ROUTER_PAGES.HOUSING_ADS]: 'Housing ads',
+  [E_ROUTER_PAGES.HOUSING_ADS_ALL]: 'All ads',
+  [E_ROUTER_PAGES.HOUSING_ADS_CLASSIFY]: 'Classify ads',
 }
 
 const executionStatus: Record<E_EXECUTION_STATUS, string> = {
@@ -61,6 +64,17 @@ const taskScheduleType: Record<E_TASK_SCHEDULE_TYPE, string> = {
   [E_TASK_SCHEDULE_TYPE.CRON]: 'Cron Job',
 }
 
+const adStatus: Record<E_AD_STATUS, string> = {
+  [E_AD_STATUS.NEW]: 'New',
+  [E_AD_STATUS.DELETED]: 'Deleted',
+  [E_AD_STATUS.INTERESTING]: 'Interesting',
+  [E_AD_STATUS.CONTACT_MADE]: 'Contact Made',
+  [E_AD_STATUS.PROPOSAL_MADE]: 'Proposal Made',
+  [E_AD_STATUS.PROPOSAL_ACCEPTED]: 'Proposal Accepted',
+  [E_AD_STATUS.PROPOSAL_REJECTED]: 'Proposal Rejected',
+  [E_AD_STATUS.COMPLETED]: 'Completed',
+}
+
 const adHousingBuildingTypes: Record<T_Ad_Housing_BuildingType, string> = {
   'single-house': 'Single house',
   'apartment': 'Apartment',
@@ -72,18 +86,30 @@ const taskType: Record<E_TASK_TYPE, string> = {
 
 export default {
   global: {
+    all: 'All',
+    area: 'Area',
+    askingPrice: 'Asking price',
     buildingTypes: 'Building Types',
+    classify: 'Classify',
     discardChanges: 'Discard changes',
     location: 'Location',
     createdAt: 'Created ad',
+    noParking: 'No parking',
+    rooms: 'Rooms',
     save: 'Save',
     schedule: 'Schedule',
     scheduleExecution: 'Schedule execution',
     status: 'Status',
     target: 'Target',
+    targetId: 'Source id',
     task: 'Task',
   },
-  pages: {},
+  pages: {
+    adsHousingAll: {
+      indexTitle: 'All housing ads',
+      showing: 'showing {loaded} of {total} housing ads',
+    }
+  },
   components: {},
   entities: {
     task: {
@@ -124,6 +150,10 @@ export default {
     executionCompleted: {
       message: `Task '{taskType}' '{adEntityType}' on target '{target}' completed execution.`,
       title: 'Task execution completed',
+    },
+    patchAdError: {
+      title: 'Failed to update ad',
+      message: `Failed to save changes to add with id '{adId}'`
     }
   },
   enums: {
@@ -134,6 +164,7 @@ export default {
     entityTypes,
     taskStatus,
     taskType,
+    adStatus,
     pages,
   }
 } as const

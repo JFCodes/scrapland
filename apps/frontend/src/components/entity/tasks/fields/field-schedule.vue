@@ -87,7 +87,7 @@ const parseEveryMs = (): void => {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .schedule-field {
   grid-template-columns: 1fr 1fr 1fr;
   gap: var(--s-sm);

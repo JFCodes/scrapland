@@ -26,15 +26,9 @@ export async function RunExecution (executionModel: ExecutionModel): Promise<voi
   }
 
   const outcome = await getExecutionFunction(executionModel.task)
-  if (outcome === null) {
-    await executionModel.setFailed(getNoExecutionFunctionError(executionModel.task))
-    return
-  }
-
-  console.log({ outcome })
-  await new Promise(r => setTimeout(r, 4000))
-
-  await executionModel.setCompleted()
+  outcome === null
+    ? await executionModel.setFailed(getNoExecutionFunctionError(executionModel.task))
+    : await executionModel.setCompleted()
 }
 
 async function getExecutionFunction (task: T_Task): Promise<null | T_RunOutcome> {

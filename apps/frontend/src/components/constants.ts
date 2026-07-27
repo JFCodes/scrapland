@@ -3,6 +3,7 @@ import {
   E_EXECUTION_STATUS,
   E_AD_ENTITY_TYPE,
   E_TASK_STATUS,
+  E_AD_STATUS,
 } from '@scrapland/data-model'
 import { type Component, markRaw } from 'vue'
 // App
@@ -10,13 +11,21 @@ import type { UiButtonType } from '@/components/types'
 // Components
 import {
   LaptopMinimalCheck,
+  CircleDollarSign,
+  PhoneForwarded,
+  BanknoteCheck,
   OctagonMinus,
   ListOrdered,
   TimerReset,
   BookDashed,
   Building2,
   RefreshCw,
+  BanknoteX,
+  Handshake,
+  Bookmark,
+  TagPlus,
   CircleX,
+  BadgeX,
   Clock2,
   Pause,
   Trash,
@@ -68,4 +77,37 @@ export const EXECUTION_STATUS_ICONS: Record<E_EXECUTION_STATUS, Component> = {
   [E_EXECUTION_STATUS.ABORTED]: markRaw(OctagonMinus),
   [E_EXECUTION_STATUS.FAILED]: markRaw(CircleX),
   [E_EXECUTION_STATUS.COMPLETED]: markRaw(LaptopMinimalCheck),
+}
+
+export const AD_STATUS_ORDERED: Array<E_AD_STATUS> = [
+  E_AD_STATUS.NEW,
+  E_AD_STATUS.INTERESTING,
+  E_AD_STATUS.CONTACT_MADE,
+  E_AD_STATUS.PROPOSAL_MADE,
+  E_AD_STATUS.PROPOSAL_ACCEPTED,
+  E_AD_STATUS.PROPOSAL_REJECTED,
+  E_AD_STATUS.DELETED,
+  E_AD_STATUS.COMPLETED,
+]
+
+export const AD_STATUS_BADGE_TYPE: Record<E_AD_STATUS, UiButtonType> = {
+  [E_AD_STATUS.NEW]: 'info',
+  [E_AD_STATUS.DELETED]: 'danger',
+  [E_AD_STATUS.INTERESTING]: 'warning',
+  [E_AD_STATUS.CONTACT_MADE]: 'light',
+  [E_AD_STATUS.PROPOSAL_MADE]: 'light',
+  [E_AD_STATUS.PROPOSAL_ACCEPTED]: 'success',
+  [E_AD_STATUS.PROPOSAL_REJECTED]: 'danger',
+  [E_AD_STATUS.COMPLETED]: 'success',
+}
+
+export const AD_STATUS_BADGE_ICON: Record<E_AD_STATUS, Component> = {
+  [E_AD_STATUS.NEW]: markRaw(TagPlus),
+  [E_AD_STATUS.DELETED]: markRaw(BadgeX),
+  [E_AD_STATUS.INTERESTING]: markRaw(Bookmark),
+  [E_AD_STATUS.CONTACT_MADE]: markRaw(PhoneForwarded),
+  [E_AD_STATUS.PROPOSAL_MADE]: markRaw(CircleDollarSign),
+  [E_AD_STATUS.PROPOSAL_ACCEPTED]: markRaw(BanknoteCheck),
+  [E_AD_STATUS.PROPOSAL_REJECTED]: markRaw(BanknoteX),
+  [E_AD_STATUS.COMPLETED]: markRaw(Handshake),
 }

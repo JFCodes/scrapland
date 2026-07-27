@@ -26,7 +26,7 @@ export const useModalsStore = defineStore('modals', () => {
     }
   }
 
-  const launch = <Props extends object, ReturnType>(
+  const launch = <Props extends object, ReturnType = null>(
     component: Component,
     props: Props
   ): { resolution: Promise<null |ReturnType>, id: string } => {

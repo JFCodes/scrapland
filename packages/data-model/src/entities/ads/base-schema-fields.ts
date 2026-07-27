@@ -13,7 +13,8 @@ export function getAdBaseSchemaFields (adType: E_AD_ENTITY_TYPE) {
     _ad_targetAndId: text('_ad_targetAndId').notNull().unique(),
     _ad_target: text('_ad_target').notNull().$type<E_TARGET>(),
     _ad_targetId: text('_ad_targetId').notNull(),
-    _ad_proposalBig: integer('_ad_proposalBig'),
+    _ad_proposalBid: integer('_ad_proposalBig'),
+    _ad_taskId: text('_ad_taskId').notNull(),
     _ad_notes: text('_ad_notes'),
   }
 }

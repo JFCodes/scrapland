@@ -5,6 +5,8 @@ import {
   E_TARGET,
 } from '@scrapland/data-model'
 import { TargetExecution_RemaxPortugal_Housing_FindNew } from '@scrapland/targets'
+// App
+import { upsertAdsHousing } from '../../models/ad/upsert-ads-housing'
 
 type ExecutionFunction = (task: T_Task_Ad_Housing_FindNew) => Promise<T_RunOutcome_Ad_Housing_FindNew>
 
@@ -12,9 +14,12 @@ export async function ExecuteAdHousingFindNew (task: T_Task_Ad_Housing_FindNew):
   const executionFunction = getTargetFunction(task._task_target)
   if (!executionFunction) return null
 
-  const outcome =  executionFunction(task)
+  const outcome =  await executionFunction(task)
 
   // Upsert ads!!!
+  await upsertAdsHousing(outcome.data.ads)
+
+  
 
   return outcome
 }

@@ -3,7 +3,6 @@ import type { T_Ad_Housing_BuildingType } from '@scrapland/data-model'
 // Components
 import CompUiTypeBadge from '@/components/ui/ui-type-badge.vue'
 
-
 defineProps<{ adBuildingTypes: Array<T_Ad_Housing_BuildingType> }>()
 </script>
 

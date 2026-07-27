@@ -2,6 +2,7 @@
 .--pointer { cursor: pointer; }
 .--help { cursor: help; }
 .--no-focus-visible { outline: none; }
+.--rotate-180 { transform: rotate(180deg); }
 
 .--divider {
   border-bottom: solid 1px var(--color-border);
@@ -21,6 +22,7 @@
 
   &--spread { justify-content: space-between; }
   &--end { justify-content: end; }
+  &--top { align-items: start; }
 }
 
 .--group-v {

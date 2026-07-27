@@ -7,6 +7,7 @@ export function getPaginatedResponse <T>(
   const returnBlank = (): T_API_Paginated<T> => ({
     hasMore: false,
     totalPages: 0,
+    totalItems: 0,
     data: [],
     size: 0,
     page: 0,
@@ -26,6 +27,7 @@ export function getPaginatedResponse <T>(
   const hasMore = page < totalPages
 
   return {
+    totalItems: all.length,
     totalPages,
     hasMore,
     data,

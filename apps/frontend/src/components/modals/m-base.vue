@@ -32,6 +32,7 @@ const style = computed<string>(() => {
 })
 
 const onEscapePress = (): void => {
+  console.log('escape press')
   if (props.closeOnEscapePress) emits('close')
 }
 </script>
@@ -91,6 +92,7 @@ const onEscapePress = (): void => {
 
   &__content {
     padding: var(--s-sm) var(--s-xs);
+    position: relative;
   }
 
   &__footer {

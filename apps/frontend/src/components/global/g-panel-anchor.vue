@@ -17,7 +17,7 @@ const panelStore = usePanelStore()
 
 <style lang="scss" scoped>
 .panel-anchor {
-  z-index: var(--z-modals);
+  z-index: var(--z-panels);
   position: fixed;
   left: 0;
   top: 0;

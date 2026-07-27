@@ -15,14 +15,14 @@ const links: Array<UiNavBarLink> = [
     icon: LayoutDashboard,
   },
   {
-    linkTo: { name: E_ROUTER_PAGES.HOUSING_TASKS },
-    name: E_ROUTER_PAGES.HOUSING_TASKS,
-    icon: Cctv,
-  },
-  {
     linkTo: { name: E_ROUTER_PAGES.HOUSING_ADS },
     name: E_ROUTER_PAGES.HOUSING_ADS,
     icon: IdCard
+  },
+  {
+    linkTo: { name: E_ROUTER_PAGES.HOUSING_TASKS },
+    name: E_ROUTER_PAGES.HOUSING_TASKS,
+    icon: Cctv,
   },
 ]
 </script>

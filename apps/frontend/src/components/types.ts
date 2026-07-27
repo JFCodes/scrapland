@@ -3,6 +3,11 @@ import type { Component } from "vue"
 // App
 import { E_ROUTER_PAGES } from '@/router/enums'
 
+export enum LIST_VIEW {
+  TABLE = 'table',
+  GRID = 'grid'
+}
+
 export type UIToast = {
   type: 'info' | 'success' | 'warning' | 'danger'
   messages?: Array<string>
@@ -32,3 +37,23 @@ export type UiButtonType =
   | 'dark'
   | 'light'
   | 'link'
+
+export type UiPageTab = {
+  icon?: Component
+  badge?: string
+  label: string
+  key: string
+}
+
+export type UiPageTabRoute = UiPageTab & { to: RouteLocationRaw }
+
+export type UiIconToggleItem<K extends string> = {
+  isActive: boolean
+  icon: Component
+  key: K
+}
+
+
+export type UiTableHeader = {
+  label: string
+}

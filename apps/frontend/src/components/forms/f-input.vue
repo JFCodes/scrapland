@@ -43,7 +43,7 @@ const value = defineModel<string | number>({ default: '' })
   </CompFormsFormField>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .input {
   height: 40px;
 }

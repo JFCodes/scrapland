@@ -1,0 +1,3 @@
+<template>
+  classify ads
+</template>

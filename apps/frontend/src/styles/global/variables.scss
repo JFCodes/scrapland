@@ -70,6 +70,10 @@
   --c-modal-border-color: rgba(72, 110, 149, 0.34);
   --c-modal-background: var(--c-gray-800);
 
+  --c-number-navigation-border: var(--c-gray-500);
+  --c-number-navigation-border-active: var(--c-white);
+  --c-number-navigation-border-disabled: var(--c-gray-700);
+
   --c-info: var(--c-blue-2);
   --c-success: var(--c-green-1);
   --c-warning: var(--c-orange-1);
@@ -115,5 +119,6 @@
   --z-modals: 7000;
   --z-loading: 6000;
   --z-dropdown: 5000;
+  --z-panels: 4000; 
   --z-baseline: 1;
 }

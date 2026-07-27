@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const emits = defineEmits<{ 'overlay-click': [] }>()
 
@@ -12,6 +12,10 @@ const onOverlayClick = (event: MouseEvent): void => {
   const targetIsOverlay = overlayRef.value.isSameNode(event.target as HTMLDivElement)
   if (targetIsOverlay) emits('overlay-click')
 }
+
+onMounted(() => {
+  if (overlayRef.value) overlayRef.value.focus()
+})
 </script>
 
 <template>

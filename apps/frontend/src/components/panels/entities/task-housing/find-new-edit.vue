@@ -2,7 +2,7 @@
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
 // App
-import type { PanelTaskHousingEditCreateProps } from '@/components/panels/types'
+import type { PanelTaskHousingEditCreateProps, OverLayExposed } from '@/components/panels/types'
 import { useTaskHousingFindNewEdit } from '@/composables/task-housing-find-new/edit'
 // Components
 import CompEntityTaskHousingBuildingTypesField from '@/components/entity/tasks/housing/fields/field-building-type.vue'
@@ -28,7 +28,7 @@ const {
   isValid
 } = useTaskHousingFindNewEdit(() => props.task)
 
-const overlayRef = ref<null | { closePanel: () => void }>(null)
+const overlayRef = ref<null | OverLayExposed>(null)
 
 const save = async (): Promise<void> => {
   const saved = await saveChanges()
