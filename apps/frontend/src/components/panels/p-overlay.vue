@@ -15,6 +15,7 @@ const slots = defineSlots<{
 }>()
 
 const props = defineProps<{
+  beforeCloseGuard?: () => boolean | Promise<boolean>
   closeOnOverlayClick?: boolean
   showCloseIcon?: boolean
   isLoading?: boolean
@@ -26,17 +27,21 @@ const panelStore = usePanelStore()
 const overlayRef = ref<null | HTMLDivElement>(null)
 const panelIsOpen = ref(false)
 
-const close = (): void => {
+const close = async (): Promise<void> => {
+  if (props.beforeCloseGuard) {
+    const proceed = await props.beforeCloseGuard()
+    if (!proceed) return
+  }
+
   panelIsOpen.value = false
   window.setTimeout(() => panelStore.closeCurrent(), 500)
 }
 
-
 const onOverlayClick = (event: MouseEvent) => {
   // Check if clicked element is the panel ref, otherwise we ignore it
-  if (event.target) return
+  if (!event.target) return
   if (!overlayRef.value) return
-  if (!overlayRef.value.isSameNode(event.target)) return
+  if (!overlayRef.value.isSameNode(event.target as Element)) return
   if (!props.closeOnOverlayClick) return
 
   close()

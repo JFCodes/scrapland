@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { E_AD_STATUS, T_Ad_Housing } from '@scrapland/data-model'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 // App
 import { useAdsStore } from '@/stores/ads'
 // Components
@@ -25,8 +25,6 @@ const changeStatus = async (status: E_AD_STATUS): Promise<void> => {
 
   if (patched) emits('update-ad', patched)
 }
-
-onMounted(() => console.log(props.adHousing))
 </script>
 
 <template>

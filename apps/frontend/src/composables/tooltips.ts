@@ -42,9 +42,20 @@ export function useTooltips () {
     })
   }
 
+  const tooltip = (event: MouseEvent, props: TooltipMessageProps, position = TOOLTIP_POSITION.BOTTOM) => {
+    if (!event.target) return
+
+    tooltipStore.launchTooltip<TooltipMessageProps>(event.target as HTMLElement, {
+      component: TooltipMessage,
+      position,
+      props
+    })
+  }
+
   return {
     scheduleTypeTooltip,
     sourceLocationInfo,
-    linkTooltip
+    linkTooltip,
+    tooltip
   }
 }

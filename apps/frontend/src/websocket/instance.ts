@@ -9,8 +9,6 @@ import { onMessage as OnConnected} from '@/websocket/on-messages/connected'
 import { onMessage as OnPong } from '@/websocket/on-messages/on-pong'
 
 export const unsubscribeSocket = websocket.onMessage(message => {
-  console.log({ message })
-
   switch (message.type) {
     case 'execution-completed': return OnExecutionCompleted(message.payload)
     case 'execution-aborted': return OnExecutionAborted(message.payload)

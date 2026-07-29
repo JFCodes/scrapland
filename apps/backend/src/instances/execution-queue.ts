@@ -1,10 +1,11 @@
+import { asc, eq } from 'drizzle-orm'
 import {
   DBSchema_Execution,
   E_EXECUTION_STATUS,
+  E_TASK_STATUS,
   type T_Execution,
   type T_Task,
 } from '@scrapland/data-model'
-import { asc, eq } from 'drizzle-orm'
 // App
 import { getTaskInQueueOrRunning } from '../models/execution/get-task-in-queue-or-running'
 import { createTaskExecution } from '../models/execution/create-task-execution'
@@ -32,6 +33,8 @@ class ExecutionQueueClass {
   // Add a task to execute.
   // Checks if a execution for the task is already queued or running.
   public queueTask (task: T_Task): null | T_Execution {
+    if (task._task_status !== E_TASK_STATUS.PUBLISHED) return null
+
     const execution = getTaskInQueueOrRunning(task._id) || createTaskExecution(task)
 
     if (!execution) return null

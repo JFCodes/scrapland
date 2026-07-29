@@ -51,7 +51,7 @@ const ICONS: Record<UIToast['type'], Component> = {
   position: relative;
   gap: var(--s-sm);
   display: grid;
-  width: 320px;
+  width: 380px;
 
   &__dismiss {
     padding: var(--s-3xs);

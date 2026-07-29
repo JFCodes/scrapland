@@ -90,7 +90,9 @@ export default {
     area: 'Area',
     askingPrice: 'Asking price',
     buildingTypes: 'Building Types',
+    cancel: 'Cancel',
     classify: 'Classify',
+    confirm: 'Confirm',
     discardChanges: 'Discard changes',
     location: 'Location',
     createdAt: 'Created ad',
@@ -104,6 +106,10 @@ export default {
     targetId: 'Source id',
     task: 'Task',
   },
+  sentences: {
+    youHaveUnsavedChanges: 'You you have unsaved changes.',
+    doYouWishToDiscardThem: `'Do you wish to discard them?'`,
+  },
   pages: {
     adsHousingAll: {
       indexTitle: 'All housing ads',
@@ -113,6 +119,7 @@ export default {
   components: {},
   entities: {
     task: {
+      unsavedChanges: `Some changes in this task aren't saved`,
       schedule: {
         interval: 'Not set | This task runs every minute | This task runs every {count} minutes',
         manual: 'This task only runs on a manual trigger',
@@ -123,6 +130,8 @@ export default {
   tooltips: {
     targetLocation1: 'Location option is based on the source website.',
     targetLocation2: 'Please check the source information about this field.',
+    taskNotExecutable1: `Task with status '{status}' is not executable.`,
+    taskNotExecutable2: 'Publish task before executing',
   },
   panels: {
     task: {

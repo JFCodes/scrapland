@@ -94,7 +94,7 @@ class Api {
     if (!response.ok) {
       let errorJson: string
       try {
-        errorJson = await response.json()
+        errorJson = await JSON.parse(responseText)
       } catch (error) {
         throw response.status
       }

@@ -32,7 +32,6 @@ const style = computed<string>(() => {
 })
 
 const onEscapePress = (): void => {
-  console.log('escape press')
   if (props.closeOnEscapePress) emits('close')
 }
 </script>

@@ -13,8 +13,6 @@ export function controller(req: Request, res: Response<T_API_Response_Ad_Housing
   const payload = req.body
   if (typeof payload !== 'object') return res.sendStatus(400)
 
-  console.log({ payload })
-
   const idMatchClause = eq(DBSchema_Ad_Housing._id, adId)
 
   const ad = db

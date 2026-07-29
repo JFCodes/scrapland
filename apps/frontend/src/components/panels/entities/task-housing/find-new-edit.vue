@@ -4,23 +4,27 @@ import { ref } from 'vue'
 // App
 import type { PanelTaskHousingEditCreateProps, OverLayExposed } from '@/components/panels/types'
 import { useTaskHousingFindNewEdit } from '@/composables/task-housing-find-new/edit'
+import { useModals } from '@/composables/modals'
 // Components
+import PanelTaskHousingFindNewEditHeader from '@/components/panels/entities/task-housing/find-new-edit/panel-header.vue'
 import CompEntityTaskHousingBuildingTypesField from '@/components/entity/tasks/housing/fields/field-building-type.vue'
 import CompEntityTaskHousingLocationField from '@/components/entity/tasks/housing/fields/field-location.vue'
 import CompEntityTaskScheduleField from '@/components/entity/tasks/fields/field-schedule.vue'
-import CompEntityAdEntityBadge from '@/components/entity/ad/ad-entity-badge.vue'
 import CompPanelsOverlay from '@/components/panels/p-overlay.vue'
 import CompUiButton from '@/components/ui/ui-button.vue'
 
 const props = defineProps<PanelTaskHousingEditCreateProps>()
 
+const { prompt } = useModals()
 const { t } = useI18n()
 const {
+  changeStatus,
   saveChanges,
   editableBuildingTypes,
   buildingTypesError,
   editableSchedule,
   editableLocation,
+  editableStatus,
   locationError,
   adEntityType,
   hasChanges,
@@ -34,6 +38,23 @@ const save = async (): Promise<void> => {
   const saved = await saveChanges()
   if (saved) overlayRef.value?.closePanel()
 }
+
+const beforeClose = async (): Promise<boolean> => {
+  if (!hasChanges.value) return true
+
+  const { resolution } = prompt({
+    title: t('sentences.youHaveUnsavedChanges'),
+    confirmText: t('global.discardChanges'),
+    confirmButtonType: 'danger',
+    messages: [
+      t('entities.task.unsavedChanges'),
+      t('sentences.doYouWishToDiscardThem')
+    ]
+  })
+
+  const proceed = await resolution
+  return proceed ?? false
+}
 </script>
 
 <template>
@@ -41,14 +62,15 @@ const save = async (): Promise<void> => {
     close-on-overlay-click
     show-close-icon
     ref="overlayRef"
+    :before-close-guard="beforeClose"
     :is-loading="isSaving"
     :width="620">
 
     <template #header>
-      <div class="--group">
-        <CompEntityAdEntityBadge :ad-entity="adEntityType" />
-        <p class="--text-xl --font-bold">{{ t('panels.task.editTitle') }}</p>
-      </div>
+      <PanelTaskHousingFindNewEditHeader
+        :ad-entity-type="adEntityType"
+        :change-status="changeStatus"
+        :status="editableStatus" />
     </template>
 
     <CompEntityTaskHousingLocationField

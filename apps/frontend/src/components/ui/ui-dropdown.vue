@@ -19,7 +19,8 @@ const isOpen = ref(false)
 
 useClickoutSide([triggerRef, optionsRef], () => {
   if (!props.closeOnClickOutside) return
-  if (isOpen.value) isOpen.value = false
+  if (!isOpen.value) return
+  isOpen.value = false
 })
 
 const toggle = () => {

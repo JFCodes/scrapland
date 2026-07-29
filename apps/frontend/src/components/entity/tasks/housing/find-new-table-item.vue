@@ -48,8 +48,8 @@ const editTask = () => {
     </td>
     <td>
       <div class="--group">
+        <CompEntityTaskScheduleExecution :status="task._task_status" :task-id="task._id" />
         <CompUiIconButton filled type="info" :icon="Edit" @click="editTask" />
-        <CompEntityTaskScheduleExecution :task-id="task._id" />
       </div>
     </td>
   </tr>

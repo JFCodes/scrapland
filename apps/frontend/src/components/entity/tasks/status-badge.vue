@@ -12,5 +12,7 @@ defineProps<{ taskStatus: E_TASK_STATUS }>()
   <CompUiTypeBadge :type="TASK_STATUS_BADGE_TYPE[taskStatus]">
     <component :is="TASK_STATUS_BADGE_ICON[taskStatus]" :size="14" />
     {{ $t(`enums.taskStatus.${taskStatus}`) }}
+
+    <slot name="after-icon"></slot>
   </CompUiTypeBadge>
 </template>

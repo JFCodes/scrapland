@@ -21,7 +21,6 @@ class WebSocketClient {
   }
 
   public connect(): void {
-    console.log({ websocketUrl })
     const readyState = this.socket?.readyState
     if (readyState === WebSocket.CONNECTING || readyState === WebSocket.OPEN) return
 
