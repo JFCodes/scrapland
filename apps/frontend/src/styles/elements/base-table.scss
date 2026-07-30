@@ -30,4 +30,8 @@
     border-bottom: solid 1px var(--c-gray-600);
     padding: var(--s-xs);
   }
+
+  &--fixed {
+    table-layout: fixed;
+  }
 }

@@ -13,7 +13,7 @@ import CompEntityTaskScheduleBadge from '@/components/entity/tasks/schedule-badg
 import CompEntityTaskStatusBadge from '@/components/entity/tasks/status-badge.vue'
 import CompEntityTaskTargetBadge from '@/components/entity/tasks/target-badge.vue'
 import CompUiIconButton from '@/components/ui/ui-icon-button.vue'
-import { SquarePlay, Edit } from '@lucide/vue'
+import { FileClock, Edit } from '@lucide/vue'
 
 const props = defineProps<{
   task: T_Task_Ad_Housing_FindNew
@@ -53,7 +53,7 @@ const showLatestsExecutions = () => {
     </td>
     <td>
       <div class="--group">
-        <CompUiIconButton type="light" :icon="SquarePlay" @click="showLatestsExecutions" />
+        <CompUiIconButton type="light" :icon="FileClock" @click="showLatestsExecutions" />
         <CompUiIconButton filled type="info" :icon="Edit" @click="editTask" />
         <CompEntityTaskScheduleExecution :status="task._task_status" :task-id="task._id" />
       </div>

@@ -17,6 +17,7 @@ export type UIToast = {
 
 export type UiNavBarLink = {
   linkTo: RouteLocationRaw
+  separatorLeft?: boolean
   name: E_ROUTER_PAGES
   icon: Component
   badge?: number

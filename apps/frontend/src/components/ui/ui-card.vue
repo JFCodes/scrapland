@@ -54,6 +54,7 @@ defineProps<{
   position: relative;
   overflow: hidden;
   display: flex;
+  flex-shrink: 0;
 
   &__header {
     padding: var(--s-sm) var(--s-md);

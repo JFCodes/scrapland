@@ -11,7 +11,7 @@ defineProps<{ executions: Array<T_Execution> }>()
 </script>
 
 <template>
-  <table class="--base-table">
+  <table class="--base-table --base-table--fixed">
     <thead>
       <tr>
         <td>#</td>

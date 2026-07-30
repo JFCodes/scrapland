@@ -22,8 +22,9 @@ const { linkTooltip } = useTooltips()
     <div class="nav-bar__links --group">
       <CompUiIconButton
         v-for="link in links"
-        :link-to="link.linkTo"
         :type="routeIsActive(link.name) ? 'light' : 'link'"
+        :class="{ '--mr-xl': link.separatorLeft }"
+        :link-to="link.linkTo"
         :icon="link.icon"
         :key="link.name"
         @mouseenter="(event: MouseEvent) => linkTooltip(event, link.name)" />

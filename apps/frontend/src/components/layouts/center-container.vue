@@ -1,5 +1,10 @@
+<script setup lang="ts">
+defineProps < { width?: number } > ()
+</script>
 <template>
-  <div class="center-container --container-page">
+  <div
+    class="center-container --container-page"
+    :style="{ ...(width && { width: `${width}px` }) }">
     <slot></slot>
   </div>
 </template>

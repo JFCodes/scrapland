@@ -42,6 +42,7 @@ const pages: Record<E_ROUTER_PAGES, string> = {
   [E_ROUTER_PAGES.HOME]: 'Home',
   [E_ROUTER_PAGES.HOME_INDEX]: '',
   [E_ROUTER_PAGES.EXECUTIONS]: 'Executions',
+  [E_ROUTER_PAGES.EXECUTIONS_HISTORY]: 'Execution history',
   [E_ROUTER_PAGES.EXECUTIONS_ALL]: 'Executions',
   [E_ROUTER_PAGES.EXECUTIONS_QUEUE]: 'Queued executions',
   [E_ROUTER_PAGES.EXECUTIONS_RUNNING]: 'Running executions',
@@ -96,6 +97,7 @@ export default {
     all: 'All',
     area: 'Area',
     askingPrice: 'Asking price',
+    atDate: 'at {date}',
     buildingTypes: 'Building Types',
     cancel: 'Cancel',
     classify: 'Classify',
@@ -129,6 +131,9 @@ export default {
     },
     adsHousingDashboard: {
       sectionByStatusTitle: 'Housing ads by status'
+    },
+    executionHistory: {
+      title: 'Executions'
     }
   },
   components: {},
@@ -141,6 +146,12 @@ export default {
         cron: 'This cron job runs: {cronDescription}'
       },
     },
+    execution: {
+      aborted: 'Execution was interrupted',
+      executionStatusHistory: 'Execution status history',
+      missingAbortedReason: 'Abort reason not provided',
+      missingFailedReason: 'Failed reason not provided',
+    }
   },
   tooltips: {
     targetLocation1: 'Location option is based on the source website.',

@@ -46,9 +46,11 @@ const styleString = computed<string>(() => {
       `message--${type}`,
     ]">
 
-    <slot name="icon">
-      <component :is="ICON_COMPONENT[type]" :color="iconColor" :size="20" />
-    </slot>
+    <div class="message__icon">
+      <slot name="icon">
+        <component :is="ICON_COMPONENT[type]" :color="iconColor" :size="20" />
+      </slot>
+    </div>
 
     <div>
       <slot name="message">
@@ -66,6 +68,10 @@ const styleString = computed<string>(() => {
   gap: var(--s-sm);
   display: flex;
   width: 100%;
+
+  &__icon {
+    flex-shrink: 0;
+  }
 
   &--opaque {
     &.message--info {

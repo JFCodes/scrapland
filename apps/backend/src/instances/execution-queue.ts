@@ -21,13 +21,15 @@ class ExecutionQueueClass {
 
   // When server stats, aborts all running execution.
   public async cleanRunningExecutions (): Promise<void> {
-    await db
-      .update(DBSchema_Execution)
-      .set({
-        abortReason: 'Server interrupted while execution was running.',
-        status: E_EXECUTION_STATUS.ABORTED,
-      })
+    const runningExecutions = await db
+      .select()
+      .from(DBSchema_Execution)
       .where(eq(DBSchema_Execution.status, E_EXECUTION_STATUS.RUNNING))
+
+    runningExecutions.forEach(execution => {
+      const model = new ExecutionModel(execution)
+      model.setAborted('Server shutdown while execution was running.')
+    })
   }
 
   // Add a task to execute.

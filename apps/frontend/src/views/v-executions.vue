@@ -13,13 +13,15 @@ import {
   TvMinimalPlay,
   OctagonMinus,
   ListOrdered,
+  FileClock,
   RefreshCw,
   CircleX,
 } from '@lucide/vue'
 
 const executionsStore = useExecutionsStore()
 
-const linksData: Array<{ name: E_ROUTER_PAGES, icon: Component }> = [
+const linksData: Array<{ name: E_ROUTER_PAGES, icon: Component, separator?: boolean }> = [
+  { name: E_ROUTER_PAGES.EXECUTIONS_HISTORY, icon: FileClock, separator: true },
   { name: E_ROUTER_PAGES.EXECUTIONS_ALL, icon: TvMinimalPlay },
   { name: E_ROUTER_PAGES.EXECUTIONS_QUEUE, icon: ListOrdered },
   { name: E_ROUTER_PAGES.EXECUTIONS_RUNNING, icon: RefreshCw },
@@ -30,6 +32,7 @@ const linksData: Array<{ name: E_ROUTER_PAGES, icon: Component }> = [
 
 const links = computed<Array<UiNavBarLink>>(() => {
   return linksData.map(data => ({
+    separatorLeft: data.separator,
     linkTo: { name: data.name },
     name: data.name,
     icon: data.icon,
