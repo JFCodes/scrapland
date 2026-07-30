@@ -1,14 +1,15 @@
 import {
   type T_API_PAYLOAD_Task_Housing_FindNEw_Patch,
   type T_API_RESPONSE_Task_Housing_FindNew,
+  type T_API_RESPONSE_Ads_StatusCounter,
   type T_Task_Ad_Housing_FindNew_Patch,
+  type T_API_PAYLOAD_Ad_Housing_Patch,
   type T_API_RESPONSE_Ads_Housing,
   type T_API_RESPONSE_Executions,
+  type T_API_Response_Ad_Housing,
   type T_API_RESPONSE_Tasks,
   type T_API_RESPONSE_Ping,
   type T_API_Pagination,
-  type T_API_PAYLOAD_Ad_Housing_Patch,
-  type T_API_Response_Ad_Housing,
 } from '@scrapland/data-model'
 // App
 import type { RequestQueryValues, RequestOptions } from '@/api/types'
@@ -23,14 +24,21 @@ class Api {
   })
 
   tasks = {
-    execute: (taskId: string) => this.request<unknown>({
-      path: `tasks/${taskId}/execute`,
-      method: 'POST',
-    }),
     all: () => this.request<T_API_RESPONSE_Tasks>({
       path: 'tasks/all',
       method: 'GET'
     }),
+    execute: (taskId: string) => this.request<unknown>({
+      path: `tasks/${taskId}/execute`,
+      method: 'POST',
+    }),
+    latestsExecutions: (pagination: T_API_Pagination, query?: RequestQueryValues) => {
+      return this.request<T_API_RESPONSE_Executions, never, T_API_Pagination>({
+        query: { ...query, ...pagination },
+        path: `tasks/latest-executions`,
+        method: 'GET'
+      })
+    },
     housing: {
       findNew: {
         patch: (taskId: string, payload: T_Task_Ad_Housing_FindNew_Patch) => {
@@ -45,9 +53,9 @@ class Api {
   }
 
   executions = {
-    all: (pagination: T_API_Pagination) => this.request<T_API_RESPONSE_Executions, never, T_API_Pagination>({
+    all: (pagination: T_API_Pagination, query?: RequestQueryValues) => this.request<T_API_RESPONSE_Executions, never, T_API_Pagination>({
+      query: { ...query, ...pagination },
       path: 'executions/all',
-      query: pagination,
       method: 'GET',
     }),
   }
@@ -64,7 +72,14 @@ class Api {
         path: `ads/housing/${adId}`,
         method: 'PATCH',
         body: payload,
-      })
+      }),
+
+      statusCounter: () => {
+        return this.request<T_API_RESPONSE_Ads_StatusCounter>({
+          path: 'ads/housing/status-counter',
+          method: 'GET'
+        })
+      }
     }
   }
 

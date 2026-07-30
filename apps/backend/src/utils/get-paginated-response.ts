@@ -16,7 +16,7 @@ export function getPaginatedResponse <T>(
   // TODO: this should come from global constants
   const { page, size } = pagination
 
-  if (size <= 10) return returnBlank()
+  if (size < 1) return returnBlank()
   if (page === 0) return returnBlank()
 
   const start = (page -1) * size

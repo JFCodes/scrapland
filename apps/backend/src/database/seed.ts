@@ -1,8 +1,8 @@
 import {
   DBSchema_Task_Ad_Housing_FindNew,
-  DBSchema_Ad_Housing,
   E_TASK_SCHEDULE_TYPE,
-  E_TARGET
+  E_TARGET,
+  E_TASK_STATUS
 } from '@scrapland/data-model'
 // App
 import { db } from './'
@@ -18,6 +18,7 @@ async function seedRemaxPortugal (): Promise<void> {
   await db.insert(DBSchema_Task_Ad_Housing_FindNew).values({
     _task_target: E_TARGET.REMAX_PORTUGAL,
     _task_schedule: { type: E_TASK_SCHEDULE_TYPE.MANUAL },
+    _task_status: E_TASK_STATUS.PUBLISHED,
     buildingTypes: ['single-house'],
     location: 'leiria/leiria/r',
     operation: 'buy'

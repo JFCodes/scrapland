@@ -19,7 +19,7 @@ export const useAdsStore = defineStore('ads', () => {
     totalItems: totalAdsHousing,
     loadMore: loadMoreAdsHousing,
     load: loadAdsHousing,
-  } = usePaginated(adsHousing, API.ads.housing.all)
+  } = usePaginated({ data: adsHousing, request: API.ads.housing.all })
 
   const patchAdHousing = (adId: string, payload: T_Ad_Housing_Patch): Promise<null | T_Ad_Housing> => {
     return API.ads.housing

@@ -29,6 +29,13 @@ const entityTypes: Record<E_ENTITY_TYPE, string> = {
   [E_ENTITY_TYPE.AD]: 'Ads',
 }
 
+const entityName: Record<E_ENTITY_TYPE, string> = {
+  [E_ENTITY_TYPE.EXECUTION]: 'Execution',
+  [E_ENTITY_TYPE.TARGET]: 'Target',
+  [E_ENTITY_TYPE.TASK]: 'Task',
+  [E_ENTITY_TYPE.AD]: 'Ad',
+}
+
 const pages: Record<E_ROUTER_PAGES, string> = {
   [E_ROUTER_PAGES.NOTIFICATIONS]: 'Notifications',
   [E_ROUTER_PAGES.SETTINGS]: 'Settings',
@@ -94,6 +101,8 @@ export default {
     classify: 'Classify',
     confirm: 'Confirm',
     discardChanges: 'Discard changes',
+    duration: 'Duration',
+    finishedAt: 'Finished at',
     location: 'Location',
     createdAt: 'Created ad',
     noParking: 'No parking',
@@ -101,19 +110,25 @@ export default {
     save: 'Save',
     schedule: 'Schedule',
     scheduleExecution: 'Schedule execution',
+    startedAt: 'Started at',
     status: 'Status',
     target: 'Target',
     targetId: 'Source id',
     task: 'Task',
   },
   sentences: {
-    youHaveUnsavedChanges: 'You you have unsaved changes.',
     doYouWishToDiscardThem: `'Do you wish to discard them?'`,
+    mostRecent: 'Most recent {count} items',
+    unknownApiError: 'Unknown api error with code #{code}',
+    youHaveUnsavedChanges: 'You you have unsaved changes.',
   },
   pages: {
     adsHousingAll: {
       indexTitle: 'All housing ads',
       showing: 'showing {loaded} of {total} housing ads',
+    },
+    adsHousingDashboard: {
+      sectionByStatusTitle: 'Housing ads by status'
     }
   },
   components: {},
@@ -137,7 +152,10 @@ export default {
     task: {
       createTitle: 'Create new task',
       editTitle: 'Edit task',
-    }
+    },
+    latestExecutions: {
+      title: 'Latests executions'
+    },
   },
   toasts: {
     executionQueued: {
@@ -171,6 +189,7 @@ export default {
     executionStatus,
     adEntityType,
     entityTypes,
+    entityName,
     taskStatus,
     taskType,
     adStatus,

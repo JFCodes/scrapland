@@ -52,8 +52,9 @@ const showAdHousingPanel = () => {
           <div class="--group --font-bold">
             <template v-if="adHousing.constructionYear">
               <Hammer :size="16" />
-              <p>{{ adHousing.constructionYear }} - </p>
+              <p>{{ adHousing.constructionYear }}</p>
             </template>
+            <span> - </span>
             <p>{{ adHousing.price.toLocaleString() }}</p>
             <Euro :size="16" />
           </div>

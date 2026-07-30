@@ -9,7 +9,7 @@ export const useExecutionsStore = defineStore('executions', () => {
 
   const executions = ref<Array<T_Execution>>([])
 
-  const { load, isLoadingMore, isLoading } = usePaginated(executions, API.executions.all)
+  const { load, isLoadingMore, isLoading } = usePaginated({ data: executions, request: API.executions.all })
 
   return {
     load,

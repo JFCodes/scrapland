@@ -1,4 +1,4 @@
-import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core'
 // App
 import { getEntityBaseSchemaFields } from '../base-schema-fields'
 import type { T_Execution_StatusHistory } from './types'
@@ -10,8 +10,10 @@ export const DBSchema_Execution = sqliteTable('execution', {
   statusHistory: text('statusHistory', { mode: 'json' }).notNull().$type<Array<T_Execution_StatusHistory>>().$default(() => []),
   status: text('status').notNull().$type<E_EXECUTION_STATUS>(),
   failureReason: text('failureReason'),
+  finishedAt: integer('finishedAt'),
   abortReason: text('abortReason'),
   taskId: text('taskId').notNull(),
+  startedAt: integer('startedAt'),
 })
 
 export type T_Execution = typeof DBSchema_Execution.$inferSelect

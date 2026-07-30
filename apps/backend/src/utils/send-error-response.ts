@@ -2,6 +2,7 @@ import { E_ENTITY_TYPE, E_TASK_STATUS, type T_API_RESPONSE_Error } from '@scrapl
 import { F_ReadableEnum } from '@scrapland/functions'
 import type { Response, Request } from 'express'
 
+type NotFoundOptions = { req: Request, res: Response }
 type CustomOptions = {
   error: Omit<T_API_RESPONSE_Error, 'type'>
   res: Response
@@ -10,11 +11,25 @@ type CustomOptions = {
 
 // Generic
 type MissingResource = { req: Request, res: Response, resource: E_ENTITY_TYPE, selector: string }
-type MissingOrInvalidOptions = { req: Request, res: Response, param: string }
+type MissingOrInvalidOptions = { req: Request, res: Response, name: string }
 // Tasks
 type TaskCannotExecuteNonPublished = { req: Request, res: Response, status: E_TASK_STATUS, taskId: string }
 type TaskFailedToScheduleExecution = { req: Request, res: Response, taskId: string }
 type TaskPatchFailed = { req: Request, res: Response, taskId: string }
+
+export const notFound = (options: NotFoundOptions): void => {
+  const { req, res } = options
+
+  const details = [`Request to path '${req.path}' with method '${req.method}' is not supported`]
+  const data: T_API_RESPONSE_Error = {
+    message: 'Api request failed #404',
+    type: 'api-error',
+    level: 'warning',
+    code: 404,
+    details,
+  }
+  res.status(404).json(data)
+}
 
 export const customError = (options: CustomOptions): void => {
   // TODO: logging with request data
@@ -24,11 +39,17 @@ export const customError = (options: CustomOptions): void => {
   res.status(error.code).json(data)
 }
 
-
 export const missingOrInvalidParam = (options: MissingOrInvalidOptions): void => {
-  const { param, req, res } = options
+  const { name, req, res } = options
 
-  const message = `Missing or invalid param '${param}'`
+  const message = `Missing or invalid param '${name}'`
+  return customError({ req, res,  error: { code: 400, message, level: 'danger' } })
+}
+
+export const missingOrInvalidQuery = (options: MissingOrInvalidOptions): void => {
+  const { name, req, res } = options
+
+  const message = `Missing or invalid query '${name}'`
   return customError({ req, res,  error: { code: 400, message, level: 'danger' } })
 }
 

@@ -50,6 +50,7 @@ defineProps<{
   background-color: var(--c-card-background);
   border-radius: var(--radius-md);
   flex-direction: column;
+  height: fit-content;
   position: relative;
   overflow: hidden;
   display: flex;

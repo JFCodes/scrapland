@@ -2,9 +2,10 @@
 import type { T_Task_Ad_Housing_FindNew } from '@scrapland/data-model'
 import { F_DateFormats } from '@scrapland/functions'
 // App
-import type { PanelTaskHousingEditCreateProps } from '@/components/panels/types'
+import type { PanelExecutionsTaskLatestExecutions, PanelTaskHousingEditCreateProps } from '@/components/panels/types'
 import { usePanelStore } from '@/stores/panel'
 // Components
+import CompPanelExecutionTaskLatestsExecutions from '@/components/panels/entities/executions/task-latests-executions.vue'
 import CompEntityAdHousingBuildingTypeBadges from '@/components/entity/ad/housing/ad-building-types-badges.vue'
 import CompPanelTaskHousingFindNewEditCreate from '@/components/panels/entities/task-housing/find-new-edit.vue'
 import CompEntityTaskScheduleExecution from '@/components/entity/tasks/schedule-execution-button.vue'
@@ -12,7 +13,7 @@ import CompEntityTaskScheduleBadge from '@/components/entity/tasks/schedule-badg
 import CompEntityTaskStatusBadge from '@/components/entity/tasks/status-badge.vue'
 import CompEntityTaskTargetBadge from '@/components/entity/tasks/target-badge.vue'
 import CompUiIconButton from '@/components/ui/ui-icon-button.vue'
-import { Edit } from '@lucide/vue'
+import { SquarePlay, Edit } from '@lucide/vue'
 
 const props = defineProps<{
   task: T_Task_Ad_Housing_FindNew
@@ -23,6 +24,10 @@ const panelStore = usePanelStore()
 
 const editTask = () => {
   panelStore.show<PanelTaskHousingEditCreateProps>(CompPanelTaskHousingFindNewEditCreate, { task: props.task })
+}
+
+const showLatestsExecutions = () => {
+  panelStore.show<PanelExecutionsTaskLatestExecutions>(CompPanelExecutionTaskLatestsExecutions, { task: props.task })
 }
 </script>
 
@@ -48,8 +53,9 @@ const editTask = () => {
     </td>
     <td>
       <div class="--group">
-        <CompEntityTaskScheduleExecution :status="task._task_status" :task-id="task._id" />
+        <CompUiIconButton type="light" :icon="SquarePlay" @click="showLatestsExecutions" />
         <CompUiIconButton filled type="info" :icon="Edit" @click="editTask" />
+        <CompEntityTaskScheduleExecution :status="task._task_status" :task-id="task._id" />
       </div>
     </td>
   </tr>

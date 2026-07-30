@@ -1,23 +1,41 @@
 import type { T_API_RESPONSE_Error } from '@scrapland/data-model'
+import { useI18n } from 'vue-i18n'
 // App
 import { useToastsStore } from '@/stores/toasts'
+import { err } from 'cron-validate/lib/result'
 
 export function useApiErrorHandling () {
   const toastsStore = useToastsStore()
+  const { t } = useI18n()
+
+  const onUnknownError = (error: unknown): void => {
+    const errorCode = Number(error)
+    const code = !isNaN(errorCode) && isFinite(errorCode)
+      ? errorCode
+      : ''
+
+    const title = t('sentences.unknownApiError', { code })
+    toastsStore.launch({ title, type: 'danger' })
+  }
 
   const onApiError = (error: unknown): void => {
-    if (typeof error !== 'object') return
-    if (error === null) return
-    if (!('type' in error)) return
+    const parsed = parseApiError(error)
+    if (parsed === null) return onUnknownError(error)
 
-    const apiError = error as T_API_RESPONSE_Error
-    const type = apiError.level ?? 'danger'
-    const messages = !apiError.details || apiError.details.length === 0
-      ? [`Api error #${apiError.code}`]
-      : apiError.details
+    const type = parsed.level ?? 'danger'
+    const messages = !parsed.details || parsed.details.length === 0
+      ? [`Api error #${parsed.code}`]
+      : parsed.details
 
+    toastsStore.launch({ type, messages, title: parsed.message })
+  }
 
-    toastsStore.launch({ type, messages, title: apiError.message })
+  const parseApiError = (error: unknown): null | T_API_RESPONSE_Error => {
+    if (typeof error !== 'object') return null
+    if (error === null) return null
+    if (!('type' in error)) return null
+
+    return error as T_API_RESPONSE_Error
   }
 
   return { onApiError }

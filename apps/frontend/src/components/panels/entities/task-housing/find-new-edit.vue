@@ -70,6 +70,7 @@ const beforeClose = async (): Promise<boolean> => {
       <PanelTaskHousingFindNewEditHeader
         :ad-entity-type="adEntityType"
         :change-status="changeStatus"
+        :target="task._task_target"
         :status="editableStatus" />
     </template>
 

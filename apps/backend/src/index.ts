@@ -4,6 +4,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 import http from 'http'
 // App
+import { controller as NotFoundController } from './controllers/not-found'
 import { controller as NoCacheController } from './controllers/no-cache'
 import { ExecutionQueue } from './instances/execution-queue'
 import { router as ApiRouter } from './routers'
@@ -21,6 +22,8 @@ app.use(express.json())
 app.use(cors({ origin: '*' }))
 
 app.use('/api', NoCacheController, ApiRouter)
+
+app.use(NotFoundController)
 
 const httpServer = http.createServer(app)
 const websocketServer = new WebSocketServer({

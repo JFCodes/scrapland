@@ -17,7 +17,9 @@ const slots = defineSlots<{
 const props = defineProps<{
   beforeCloseGuard?: () => boolean | Promise<boolean>
   closeOnOverlayClick?: boolean
+  closeOnEscapePress?: boolean
   showCloseIcon?: boolean
+  contentDark?: boolean
   isLoading?: boolean
   width?: number
 }>()
@@ -47,20 +49,32 @@ const onOverlayClick = (event: MouseEvent) => {
   close()
 }
 
+const onEscapePress = (): void => {
+  if (!props.closeOnEscapePress) return
+  close()
+}
+
 defineExpose({ 'closePanel': close })
 onMounted(() => {
-  nextTick().then(() => panelIsOpen.value = true)
+  nextTick().then(() => {
+    panelIsOpen.value = true
+    overlayRef.value?.focus()
+  })
 })
 </script>
 
 <template>
-  <div ref="overlayRef" class="panel-overlay" @click="onOverlayClick">
+  <div
+    class="panel-overlay"
+    ref="overlayRef"
+    tabindex="-1"
+    @keydown.esc="onEscapePress"
+    @click="onOverlayClick">
     <Transition name="slide-in">
 
       <div
         v-if="panelIsOpen"
         class="panel"
-        :class="{ 'panel--open': panelIsOpen }"
         :style="{
           width: `${width || DEFAULT_WIDTH}px`,
           right: panelIsOpen ? '0px' : '-100%',
@@ -76,7 +90,7 @@ onMounted(() => {
           <slot name="header"></slot>
         </div>
 
-        <div class="panel__content">
+        <div class="panel__content" :class="{ 'panel__content--dark': contentDark }">
           <slot :close-panel="close"></slot>
         </div>
 
@@ -129,6 +143,10 @@ onMounted(() => {
     max-height: 100%;
     overflow-y: auto;
     flex: 1;
+
+    &--dark {
+      background-color: var(--c-dark-blue);
+    }
   }
 
   &__footer {
@@ -139,6 +157,7 @@ onMounted(() => {
     gap: var(--s-sm);
     display: flex;
   }
+
 }
 
 .slide-in-enter-active,

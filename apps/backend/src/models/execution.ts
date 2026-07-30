@@ -2,7 +2,6 @@ import { eq } from 'drizzle-orm'
 import {
   type T_Execution_StatusHistory,
   type T_Execution,
-  DBSchema_Task_Ad_Housing_FindNew,
   DBSchema_Execution,
   E_EXECUTION_STATUS,
   T_Execution_Patch,
@@ -58,7 +57,21 @@ export class ExecutionModel {
       { status, date: new Date().getTime() },
     ]
 
-    const payload = { ...otherFields, statusHistory, status }
+    const time = new Date().getTime()
+    const isStarting = status === E_EXECUTION_STATUS.RUNNING
+    const isFinishing =
+      status === E_EXECUTION_STATUS.FAILED
+      || status === E_EXECUTION_STATUS.COMPLETED
+      || status === E_EXECUTION_STATUS.ABORTED
+
+    const payload = {
+      ...otherFields,
+      ...(isFinishing && { finishedAt: time }),
+      ...(isStarting && { startedAt: time }),
+      statusHistory,
+      status
+    }
+    
     const execution = await db
       .update(DBSchema_Execution)
       .set(payload)
