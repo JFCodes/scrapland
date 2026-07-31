@@ -121,6 +121,7 @@ export default {
     schedule: 'Schedule',
     scheduleExecution: 'Schedule execution',
     select: 'select',
+    showDeleted: 'Show deleted',
     startedAt: 'Started at',
     status: 'Status',
     target: 'Target',

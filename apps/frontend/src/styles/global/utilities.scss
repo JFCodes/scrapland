@@ -3,6 +3,7 @@
 .--help { cursor: help; }
 .--no-focus-visible { outline: none; }
 .--rotate-180 { transform: rotate(180deg); }
+.--hidden { display: none; }
 
 .--divider {
   border-bottom: solid 1px var(--color-border);
