@@ -23,6 +23,7 @@ const taskStatus: Record<E_TASK_STATUS, string> = {
 }
 
 const entityTypes: Record<E_ENTITY_TYPE, string> = {
+  [E_ENTITY_TYPE.APP_SETTINGS]: 'App settings',
   [E_ENTITY_TYPE.EXECUTION]: 'Executions',
   [E_ENTITY_TYPE.TARGET]: 'Targets',
   [E_ENTITY_TYPE.TASK]: 'Tasks',
@@ -30,6 +31,7 @@ const entityTypes: Record<E_ENTITY_TYPE, string> = {
 }
 
 const entityName: Record<E_ENTITY_TYPE, string> = {
+  [E_ENTITY_TYPE.APP_SETTINGS]: 'App settings',
   [E_ENTITY_TYPE.EXECUTION]: 'Execution',
   [E_ENTITY_TYPE.TARGET]: 'Target',
   [E_ENTITY_TYPE.TASK]: 'Task',
@@ -152,7 +154,10 @@ export default {
       schedule: {
         interval: 'Not set | This task runs every minute | This task runs every {count} minutes',
         manual: 'This task only runs on a manual trigger',
-        cron: 'This cron job runs: {cronDescription}'
+        cron: 'This cron job runs: {cronDescription}',
+        intervalDescriptionHourWithMinutes: 'Every 1 hour and {minutes} minutes | Every {count} hours and {minutes} minutes',
+        intervalDescriptionMinutes: 'Every {tilde} {minutes} minutes',
+        intervalDescriptionHour: 'Every 1 hour | Every {count} hours',
       },
     },
     execution: {
@@ -213,6 +218,13 @@ export default {
     pickTaskType: {
       title: 'Select task type'
     }
+  },
+  errorMessages: {
+    taskScheduleIntervalEveryMs: {
+      invalid: 'Invalid interval value',
+      mustBePositive: 'Interval must be a positive number',
+      mustBeAtLeast: 'Value must be higher then {min} ms'
+    },
   },
   enums: {
     adHousingBuildingTypes,

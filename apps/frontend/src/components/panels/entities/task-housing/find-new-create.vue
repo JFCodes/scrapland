@@ -59,7 +59,7 @@ const beforeClose = async (): Promise<boolean> => {
     ref="overlayRef"
     :before-close-guard="beforeClose"
     :is-loading="isCreating"
-    :width="620">
+    :width="720">
 
     <template #header>
       <CompPanelTaskHousingFindNewCreateHeader />

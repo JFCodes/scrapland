@@ -2,7 +2,9 @@
 import { type T_Task_Schedule, E_TASK_SCHEDULE_TYPE } from '@scrapland/data-model'
 import { computed } from 'vue'
 // App
+import { useScheduleInterval } from '@/composables/use-schedule-interval'
 import { useCronValidation } from '@/composables/cron-validation'
+import { useAppSettings } from '@/stores/app-settings'
 import type { UiSelectOption } from '@/components/types'
 // Components
 import CompFormsFormField from '@/components/forms/f-form-field.vue'
@@ -10,10 +12,10 @@ import CompFormCronInput from '@/components/forms/f-cron-input.vue'
 import CompFormSelect from '@/components/forms/f-select.vue'
 import CompFormInput from '@/components/forms/f-input.vue'
 
-const DEFAULT_INTERVAL_MS = 60 * 60 * 1000 // 1 hour
+const { getEveryMsError, forceValidEveryMs, getDescription } = useScheduleInterval()
+const appSettings = useAppSettings()
 
 const schedule = defineModel<T_Task_Schedule>({ default: () => ({ type: E_TASK_SCHEDULE_TYPE.MANUAL }) })
-
 const { cronDescription, cronIsInvalid, cronErrors } = useCronValidation(() => schedule.value)
 
 const typeOptions: Array<UiSelectOption<E_TASK_SCHEDULE_TYPE>> = [
@@ -24,15 +26,20 @@ const typeOptions: Array<UiSelectOption<E_TASK_SCHEDULE_TYPE>> = [
 
 const everyMsError = computed<null | string>(() => {
   if (schedule.value.type !== E_TASK_SCHEDULE_TYPE.INTERVAL) return null
-
-  console.log({ ms: schedule.value.everyMs })
-  const msValue = schedule.value.everyMs
-  if (isNaN(msValue)) return 'Invalid interval value'
-  if (!isFinite(msValue)) return 'Invalid interval value'
-  if (!msValue) return 'Interval must be a positive number'
-
-  return null
+  return getEveryMsError(schedule.value)
 })
+
+const intervalDescription = computed<string>(() => {
+  if (schedule.value.type !== E_TASK_SCHEDULE_TYPE.INTERVAL) return ''
+  return getDescription(schedule.value)
+})
+
+const onEveryMsBlur = (): void => {
+  if (schedule.value.type !== 'interval') return
+
+  const validValue = forceValidEveryMs(schedule.value.everyMs)
+  if (validValue !== schedule.value.everyMs) schedule.value.everyMs = validValue
+}
 
 const updateType = (scheduleType: E_TASK_SCHEDULE_TYPE): void => {
   switch (scheduleType) {
@@ -40,10 +47,10 @@ const updateType = (scheduleType: E_TASK_SCHEDULE_TYPE): void => {
       schedule.value = { type: E_TASK_SCHEDULE_TYPE.MANUAL }
       break
     case E_TASK_SCHEDULE_TYPE.INTERVAL:
-      // 60 * 60 * 1000 // every hour 
+      const { TASKS_SCHEDULE_INTERVAL_DEFAULT_VALUE } = appSettings.settings
       schedule.value = {
+        everyMs: TASKS_SCHEDULE_INTERVAL_DEFAULT_VALUE,
         type: E_TASK_SCHEDULE_TYPE.INTERVAL,
-        everyMs: DEFAULT_INTERVAL_MS,
         startAt: new Date(),
       }
       break
@@ -55,17 +62,6 @@ const updateType = (scheduleType: E_TASK_SCHEDULE_TYPE): void => {
       break
   }
 }
-
-const parseEveryMs = (): void => {
-  if (schedule.value.type !== 'interval') return
-
-  const { everyMs } = schedule.value
-  const minimumValue = 60 * 5 * 1000 // 5 minutes
-
-  const isValid = !isNaN(everyMs) && isFinite(everyMs) && everyMs >= minimumValue
-  if (!isValid) schedule.value.everyMs = minimumValue
-}
-
 </script>
 
 <template>
@@ -78,14 +74,21 @@ const parseEveryMs = (): void => {
       :options="typeOptions"
       @update:model-value="scheduleType => updateType(scheduleType as E_TASK_SCHEDULE_TYPE)" />
 
-    <CompFormInput
-      v-if="schedule.type === 'interval'"
-      v-model="schedule.everyMs"
-      label="Interval (ms)"
-      :attributes="{ type: 'number' }"
-      :has-error="everyMsError !== null"
-      :error="everyMsError"
-      @on-blur="parseEveryMs" />
+    <template v-if="schedule.type === 'interval'">
+      <div>
+        <CompFormInput
+          v-model="schedule.everyMs"
+          label="Interval (ms)"
+          :attributes="{ type: 'number' }"
+          :has-error="everyMsError !== null"
+          :error="everyMsError"
+          @on-blur="onEveryMsBlur" />
+      </div>
+      <CompFormsFormField label="Interval description">
+        <p>{{ intervalDescription }}</p>
+      </CompFormsFormField>
+    </template>
+
 
     <template v-if="schedule.type === 'cron'">
       <div>

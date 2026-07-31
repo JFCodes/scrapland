@@ -4,6 +4,7 @@ import { router as ExecutionsRouter } from './routes/executions'
 import { router as TasksRouter } from './routes/tasks'
 import { router as AdsRouter } from './routes/ads'
 // Controllers
+import { controller as GetAppSettings } from '../controllers/get-app-settings'
 import { controller as PingController } from '../controllers/ping'
 
 export const router: RouterType = Router()
@@ -12,4 +13,5 @@ router.use('/executions', ExecutionsRouter)
 router.use('/tasks', TasksRouter)
 router.use('/ads', AdsRouter)
 
+router.get('/app-settings', GetAppSettings)
 router.get('/ping', PingController)

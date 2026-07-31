@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia'
 import { markRaw, ref, type Component } from 'vue'
+import { defineStore } from 'pinia'
 
 type ActivePanel<Props extends object> = {
   component: Component

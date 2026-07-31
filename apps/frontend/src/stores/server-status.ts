@@ -1,12 +1,15 @@
 import { onMounted, watch, ref } from 'vue'
 import { defineStore } from 'pinia'
 // App
+import { useAppSettings } from '@/stores/app-settings'
 import { API } from '@/api'
 
 const OFFLINE_CHECK_TIMING = 2000
 const ONLINE_CHECK_TIMING = 5000
 
 export const useServerStatusStore = defineStore('server-status', () => {
+  const appSettings = useAppSettings()
+
   let checkInterval: null | number = null
   const isInitializing = ref(true)
   const serverOk = ref(true)
@@ -21,7 +24,9 @@ export const useServerStatusStore = defineStore('server-status', () => {
 
   // Private
   async function initialize (): Promise<void> {
+    await appSettings.initialize()
     await checkStatus()
+
     isInitializing.value = false
   }
 

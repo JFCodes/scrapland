@@ -7,13 +7,12 @@ import http from 'http'
 import { controller as NotFoundController } from './controllers/not-found'
 import { controller as NoCacheController } from './controllers/no-cache'
 import { ExecutionQueue } from './instances/execution-queue'
+import { WebsocketRegistry } from './websocket/registry'
+import { AppSettings } from './instances/app-settings'
 import { router as ApiRouter } from './routers'
 import { seedDatabase } from './database/seed'
 
-import { WebsocketRegistry } from './websocket/registry'
 // import { scheduler } from './schedule/scheduler'
-
-const PORT = 3000
 
 const app = express()
 
@@ -33,9 +32,12 @@ const websocketServer = new WebSocketServer({
 
 websocketServer.on('connection', (socket) => WebsocketRegistry.registerClient(socket))
 await ExecutionQueue.cleanRunningExecutions()
-// scheduler.initialize()
+await AppSettings.initialize()
 seedDatabase()
 
+// scheduler.initialize()
+
+const PORT = AppSettings.settings.BACKEND_SERVER_PORT
 httpServer.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`)
 })

@@ -5,23 +5,31 @@ import {
   type T_Task_Ad_Housing_FindNew_Patch,
   type T_API_PAYLOAD_Ad_Housing_Patch,
   type T_API_RESPONSE_Ads_Housing,
+  type T_API_Response_AppSettings,
   type T_API_RESPONSE_Executions,
   type T_API_Response_Ad_Housing,
   type T_API_RESPONSE_Tasks,
   type T_API_RESPONSE_Ping,
   type T_API_Pagination,
+  DEFAULT_APP_SETTINGS,
 } from '@scrapland/data-model'
 // App
 import type { RequestQueryValues, RequestOptions } from '@/api/types'
 
+// TODO: we need a mechanism to launch the frontend
+// with the actual setting for BACKEND_SERVER_PORT
+// If the user has changed backend server port, we are initializing
+// the api with the 3000 port and the ping/server-status/get-app-settings
+// will fail and we never update the correct server port
+
 class Api {
-  baseUrl = 'http://localhost:3000/api'
+  backendServerPort = DEFAULT_APP_SETTINGS.BACKEND_SERVER_PORT
   wsClientId: null | string = null
 
-  ping = () => this.request<T_API_RESPONSE_Ping>({
-    path: 'ping',
-    method: 'GET'
-  })
+  baseUrl = this.getBaseUrl(this.backendServerPort)
+
+  appSettings = () => this.request<T_API_Response_AppSettings>({ path: 'app-settings', method: 'GET' })
+  ping = () => this.request<T_API_RESPONSE_Ping>({ method: 'GET', path: 'ping' })
 
   tasks = {
     all: () => this.request<T_API_RESPONSE_Tasks>({
@@ -85,6 +93,15 @@ class Api {
 
   public setWsClientId (clientId: string): void {
     this.wsClientId = clientId
+  }
+
+  public getBaseUrl (port: number): string {
+    return `http://localhost:${port}/api`
+  }
+
+  public setServerPort(port: number): void {
+    this.baseUrl = this.getBaseUrl(port)
+    this.backendServerPort = port
   }
 
   private async request<Response, Body = never, Query extends RequestQueryValues = never> (
