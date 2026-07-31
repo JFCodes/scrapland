@@ -5,6 +5,7 @@ import { onMounted, ref } from 'vue'
 import { AD_STATUS_ORDERED, AD_STATUS_BADGE_ICON, AD_STATUS_BADGE_TYPE } from '@/components/constants'
 import { useApiErrorHandling } from '@/composables/api-error-handling'
 import { E_ROUTER_PAGES, E_ROUTER_QUERIES } from '@/router/enums'
+import { useAppI18n } from '@/composables/use-i18n'
 import { API } from '@/api'
 // Components
 import CompSkeleton from '@/components/skeletons/ads-housing-dashboard-counter.vue'
@@ -13,6 +14,7 @@ import CompUiTitleMain from '@/components/ui/ui-title-main.vue'
 import CompUiCard from '@/components/ui/ui-card.vue'
 
 const { onApiError } = useApiErrorHandling()
+const { t } = useAppI18n()
 
 const statusCounters = ref<null | Record<E_AD_STATUS, number>>(null)
 const isLoading = ref(false)
@@ -37,7 +39,7 @@ onMounted(loadData)
 
 <template>
   <div>
-    <CompUiTitleMain class="--mb-md" :title="$t('pages.adsHousingDashboard.sectionByStatusTitle')" />
+    <CompUiTitleMain class="--mb-md" :title="t('pages.adsHousingDashboard.sectionByStatusTitle')" />
 
     <section class="section">
       <template v-if="isLoading">
@@ -66,7 +68,7 @@ onMounted(loadData)
 
               <div>
                 <p class="section__card-counter --text-xl --font-bold">{{ statusCounters[status] }}</p>
-                <p>{{ $t(`enums.adStatus.${status}`) }}</p>
+                <p>{{ t(`enums.adStatus.${status}`) }}</p>
               </div>
             </div>
 

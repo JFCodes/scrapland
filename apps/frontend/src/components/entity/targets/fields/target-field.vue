@@ -3,10 +3,13 @@ import { E_TARGET } from '@scrapland/data-model'
 import { F_ReadableEnum } from '@scrapland/functions'
 // App
 import type { UiSelectOption } from '@/components/types'
+import { useAppI18n } from '@/composables/use-i18n'
 // Components
 import CompFormSelect from '@/components/forms/f-select.vue'
 
 defineProps<{ error?: null | string }>()
+
+const { t } = useAppI18n()
 
 const target = defineModel<null | E_TARGET>({ default: null })
 
@@ -26,7 +29,7 @@ const updateModel = (value: null | string | Array<string>) => {
   <CompFormSelect
     close-on-click-outside
     close-on-option-click
-    :label="$t('global.target')"
+    :label="t('global.target')"
     :model-value="target"
     :options="targetOptions"
     :has-error="!!error"

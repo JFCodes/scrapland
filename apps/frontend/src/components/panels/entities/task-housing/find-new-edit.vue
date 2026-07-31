@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
 // App
 import type { PanelTaskHousingEditCreateProps, OverLayExposed } from '@/components/panels/types'
 import { useTaskHousingFindNewEdit } from '@/composables/task-housing-find-new/edit'
+import { useAppI18n } from '@/composables/use-i18n'
 import { useModals } from '@/composables/modals'
 // Components
 import PanelTaskHousingFindNewEditHeader from '@/components/panels/entities/task-housing/find-new-edit/panel-header.vue'
@@ -16,13 +16,14 @@ import CompUiButton from '@/components/ui/ui-button.vue'
 const props = defineProps<PanelTaskHousingEditCreateProps>()
 
 const { prompt } = useModals()
-const { t } = useI18n()
+const { t } = useAppI18n()
 const {
   changeStatus,
   saveChanges,
   editableBuildingTypes,
   buildingTypesError,
   editableSchedule,
+  isChangingStatus,
   editableLocation,
   editableStatus,
   locationError,
@@ -68,6 +69,7 @@ const beforeClose = async (): Promise<boolean> => {
 
     <template #header>
       <PanelTaskHousingFindNewEditHeader
+        :is-changing-status="isChangingStatus"
         :ad-entity-type="adEntityType"
         :change-status="changeStatus"
         :target="task._task_target"

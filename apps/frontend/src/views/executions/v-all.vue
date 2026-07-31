@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // App
 import { useExecutionsStore } from '@/stores/executions'
+import { useAppI18n } from '@/composables/use-i18n'
 // Components
 import CompLayoutVerticalScrollContent from '@/components/layouts/vertical-scroll-content.vue'
 import CompLayoutCenterContainer from '@/components/layouts/center-container.vue'
@@ -8,6 +9,7 @@ import CompEntityExecutionsTable from '@/components/entity/executions/e-table.vu
 import CompUiTitleMain from '@/components/ui/ui-title-main.vue'
 
 const executionsStore = useExecutionsStore()
+const { t } = useAppI18n()
 
 </script>
 
@@ -16,7 +18,7 @@ const executionsStore = useExecutionsStore()
     <CompLayoutVerticalScrollContent>
 
       <template #top>
-        <CompUiTitleMain :title="$t('global.allExecutions')" />
+        <CompUiTitleMain :title="t('global.allExecutions')" />
       </template>
 
       <CompEntityExecutionsTable :executions="executionsStore.executions" />

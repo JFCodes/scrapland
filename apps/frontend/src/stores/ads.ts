@@ -1,15 +1,15 @@
 import type { T_Ad_Housing, T_Ad_Housing_Patch, T_Execution } from '@scrapland/data-model'
 import { defineStore } from 'pinia'
-import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
 // App
 import { usePaginated } from '@/composables/paginated'
+import { useAppI18n } from '@/composables/use-i18n'
 import { useToastsStore } from '@/stores/toasts'
 import { API } from '@/api'
 
 export const useAdsStore = defineStore('ads', () => {
   const toastsStore = useToastsStore()
-  const { t } = useI18n()
+  const { t } = useAppI18n()
 
   const adsHousing = ref<Array<T_Ad_Housing>>([])
 

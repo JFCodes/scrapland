@@ -2,6 +2,7 @@
 import type { T_Ad_Housing } from '@scrapland/data-model'
 import { onMounted, ref } from 'vue'
 // App
+import { useAppI18n } from '@/composables/use-i18n'
 import { API } from '@/api'
 // Components
 import CompEntityAdHousingGridItem from '@/components/entity/ad/housing/grid-item.vue'
@@ -9,6 +10,8 @@ import CompUiTitleMain from '@/components/ui/ui-title-main.vue'
 import CompSkeleton from '@/components/skeletons/ads-housing-grid-item.vue'
 
 const MOST_RECENT_COUNT = 10
+
+const { t } = useAppI18n()
 
 const isLoading = ref(false)
 const ads = ref<Array<T_Ad_Housing>>([])
@@ -26,7 +29,7 @@ onMounted(pullData)
 
 <template>
   <div>
-    <CompUiTitleMain class="--mb-md" :title="$t('sentences.mostRecent', { count: MOST_RECENT_COUNT })" />
+    <CompUiTitleMain class="--mb-md" :title="t('sentences.mostRecent', { count: MOST_RECENT_COUNT })" />
 
     <section class="section">
       <template v-if="isLoading">

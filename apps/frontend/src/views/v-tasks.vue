@@ -2,6 +2,7 @@
 import { E_ENTITY_TYPE } from '@scrapland/data-model'
 // App
 import { useCreateEntityTaskLaunch } from '@/composables/create-entity/tasks/launch'
+import { useAppI18n } from '@/composables/use-i18n'
 import { useTasksStore } from '@/stores/tasks'
 // Components
 import CompLayoutVerticalScrollContent from '@/components/layouts/vertical-scroll-content.vue'
@@ -11,6 +12,7 @@ import CompUiTitleMain from '@/components/ui/ui-title-main.vue'
 import CompUiButton from '@/components/ui/ui-button.vue'
 
 const { launch } = useCreateEntityTaskLaunch()
+const { t } = useAppI18n()
 const tasksStore = useTasksStore()
 
 </script>
@@ -24,7 +26,7 @@ const tasksStore = useTasksStore()
 
           <CompUiButton
             type="info"
-            :label="$t('global.createTask')"
+            :label="t('global.createTask')"
             @click="launch()" />
         </div>
       </template>

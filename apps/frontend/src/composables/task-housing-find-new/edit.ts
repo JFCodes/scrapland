@@ -11,17 +11,22 @@ import {
 // App
 import { useTaskScheduleValidation } from '@/composables/fields/task-schedule/validation'
 import { useApiErrorHandling } from '@/composables/api-error-handling'
+import { useAppI18n } from '@/composables/use-i18n'
 import { useToastsStore } from '@/stores/toasts'
+import { useModals } from '@/composables/modals'
 import { useTasksStore } from '@/stores/tasks'
 import { API } from '@/api'
 
 export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Housing_FindNew>) {
   const { onApiError } = useApiErrorHandling()
+  const { prompt } = useModals()
+  const { t } = useAppI18n()
   const toastsStore = useToastsStore()
   const tasksStore = useTasksStore()
   const taskValue = toValue(task)
 
   const adEntityType = ref<E_AD_ENTITY_TYPE>(toValue(task)._task_adEntityType)
+  const isChangingStatus = ref(false)
   const isSaving = ref(false)
   // EditableFields
   const editableBuildingTypes = ref<Array<T_Ad_Housing_BuildingType>>(taskValue.buildingTypes ?? [])
@@ -87,7 +92,13 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
   }
 
   const changeStatus = async (status: E_TASK_STATUS): Promise<void> => {
+    if (status === E_TASK_STATUS.DELETED) {
+      const proceed = await promptDelete()
+      if (!proceed) return
+    }
+
     const taskValue = toValue(task)
+    isChangingStatus.value = true
     await API.tasks.housing.findNew
       .patch(taskValue._id, { _task_status: status })
       .then(result => {
@@ -95,6 +106,21 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
         tasksStore.updateTask(result)
       })
       .catch(onApiError)
+      .finally(() => isChangingStatus.value = false)
+  }
+
+  const promptDelete = async (): Promise<null | boolean> => {
+    const { resolution } = prompt({
+      title: t('entities.task.deletePrompt.title'),
+      messages: [
+        t('entities.task.deletePrompt.message'),
+        t('sentences.thisActionIsIrreversible'),
+      ],
+      confirmButtonType: 'danger',
+      confirmText: t('global.delete')
+    })
+
+    return resolution
   }
 
   return {
@@ -102,6 +128,7 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
     saveChanges,
     editableBuildingTypes,
     buildingTypesError,
+    isChangingStatus,
     editableSchedule,
     editableLocation,
     editableStatus,

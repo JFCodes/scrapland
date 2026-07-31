@@ -3,6 +3,7 @@ import type { T_Execution, T_Task } from '@scrapland/data-model'
 import { computed } from 'vue'
 // App
 import { useExecutionsStore } from '@/stores/executions'
+import { useAppI18n } from '@/composables/use-i18n'
 import { useTasksStore } from '@/stores/tasks'
 // Components
 import CompLayoutVerticalScrollContent from '@/components/layouts/vertical-scroll-content.vue'
@@ -13,6 +14,7 @@ type ExecutionAndTask = { execution: T_Execution, task: T_Task }
 
 const executionsStore = useExecutionsStore()
 const tasksStore = useTasksStore()
+const { t } = useAppI18n()
 
 const executionsAnsTask = computed<Array<ExecutionAndTask>>(() => {
   const pairs: Array<ExecutionAndTask> = []
@@ -28,7 +30,7 @@ const executionsAnsTask = computed<Array<ExecutionAndTask>>(() => {
 <template>
   <CompLayoutVerticalScrollContent :max-width="800">
     <template #top>
-      <CompUiTitleMain :title="$t('pages.executionHistory.title')" />
+      <CompUiTitleMain :title="t('pages.executionHistory.title')" />
     </template>
 
     <div class="--group-v">

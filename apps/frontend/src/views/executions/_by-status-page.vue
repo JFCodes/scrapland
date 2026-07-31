@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import type { E_EXECUTION_STATUS, T_Execution } from '@scrapland/data-model'
-import { useI18n } from 'vue-i18n'
 import { computed } from 'vue'
 // App
 import { useExecutionsStore } from '@/stores/executions'
+import { useAppI18n } from '@/composables/use-i18n'
 // Components
 import CompLayoutVerticalScrollContent from '@/components/layouts/vertical-scroll-content.vue'
 import CompEntityExecutionsTable from '@/components/entity/executions/e-table.vue'
@@ -11,7 +11,7 @@ import CompLayoutCenterContainer from '@/components/layouts/center-container.vue
 import CompUiTitleMain from '@/components/ui/ui-title-main.vue'
 
 const executionsStore = useExecutionsStore()
-const { t } = useI18n()
+const { t } = useAppI18n()
 
 const props = defineProps<{ status: E_EXECUTION_STATUS }>()
 

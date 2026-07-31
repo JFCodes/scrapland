@@ -11,3 +11,4 @@ type StringifyLeaves<T> = {
 }
 
 export type MessageSchema = StringifyLeaves<typeof en>
+export type AppLocale = 'en'

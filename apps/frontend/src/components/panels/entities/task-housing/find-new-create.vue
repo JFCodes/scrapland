@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
 // App
 import { useTaskHousingFindNewCreate } from '@/composables/task-housing-find-new/create'
 import type { PanelTaskHousingEditCreateProps } from '@/components/panels/types'
 import type { OverLayExposed } from '@/components/panels/types'
+import { useAppI18n } from '@/composables/use-i18n'
 import { useModals } from '@/composables/modals'
 import { usePanelStore } from '@/stores/panel'
 // Components
@@ -20,7 +20,7 @@ import CompUiButton from '@/components/ui/ui-button.vue'
 
 const panelStore = usePanelStore()
 const { prompt } = useModals()
-const { t } = useI18n()
+const { t } = useAppI18n()
 const {
   createTask,
   displayEquivalentTaskWarning,
@@ -107,8 +107,8 @@ const beforeClose = async (): Promise<boolean> => {
       <div class="--group-v">
         <CompUiMessage v-if="displayEquivalentTaskWarning" type="info">
           <template #message>
-            <p class="--font-bold">{{ $t('panels.taskHousingFindNew.equivalentMessage.title') }}</p>
-            <p>{{ $t('panels.taskHousingFindNew.equivalentMessage.message') }}</p>
+            <p class="--font-bold">{{ t('panels.taskHousingFindNew.equivalentMessage.title') }}</p>
+            <p>{{ t('panels.taskHousingFindNew.equivalentMessage.message') }}</p>
           </template>
         </CompUiMessage>
 
@@ -117,7 +117,7 @@ const beforeClose = async (): Promise<boolean> => {
           <CompUiButton
             filled
             type="success"
-            :label="$t('global.create')"
+            :label="t('global.create')"
             :disabled="!isValid"
             @click="create" />
         </div>

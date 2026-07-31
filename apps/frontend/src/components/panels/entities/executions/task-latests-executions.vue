@@ -4,12 +4,15 @@ import { onMounted, ref } from 'vue'
 // App
 import type { PanelExecutionsTaskLatestExecutions } from '@/components/panels/types'
 import { usePaginated } from '@/composables/paginated'
+import { useAppI18n } from '@/composables/use-i18n'
 import { API } from '@/api'
 // Components
 import CompEntityExecutionCard from '@/components/entity/executions/execution-card.vue'
 import CompPanelsOverlay from '@/components/panels/p-overlay.vue'
 
 const props = defineProps<PanelExecutionsTaskLatestExecutions>()
+
+const { t } = useAppI18n()
 
 const executions = ref<Array<T_Execution>>([])
 const { load, isLoading } = usePaginated({
@@ -31,7 +34,7 @@ onMounted(() => {
     :is-loading="isLoading"
     :width="620">
     <template #header>
-      <p class="--text-xl --font-bold">{{ $t('panels.latestExecutions.title') }}</p>
+      <p class="--text-xl --font-bold">{{ t('panels.latestExecutions.title') }}</p>
     </template>
 
     <div class="--group-v">

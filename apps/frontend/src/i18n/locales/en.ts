@@ -103,6 +103,7 @@ export default {
     area: 'Area',
     askingPrice: 'Asking price',
     atDate: 'at {date}',
+    delete: 'Delete',
     buildingTypes: 'Building Types',
     cancel: 'Cancel',
     classify: 'Classify',
@@ -129,6 +130,7 @@ export default {
   sentences: {
     doYouWishToDiscardThem: `'Do you wish to discard them?'`,
     mostRecent: 'Most recent {count} items',
+    thisActionIsIrreversible: 'This action is irreversible. Are sure you want to proceed?',
     unknownApiError: 'Unknown api error with code #{code}',
     youHaveUnsavedChanges: 'You you have unsaved changes.',
   },
@@ -161,6 +163,10 @@ export default {
         intervalDescriptionMinutes: 'Every {tilde} {minutes} minutes',
         intervalDescriptionHour: 'Every 1 hour | Every {count} hours',
       },
+      deletePrompt: {
+        message: 'Are you sure you want to delete the task?',
+        title: 'Delete task',
+      }
     },
     execution: {
       aborted: 'Execution was interrupted',

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { onMounted, computed, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
 // App
 import type { UiTableHeader, UiSelectOption } from '@/components/types'
 import { useRouterUtils } from '@/composables/router-utils'
 import { AD_STATUS_ORDERED } from '@/components/constants'
-import { useAdsStore } from '@/stores/ads'
+import { useAppI18n } from '@/composables/use-i18n'
 import { E_ROUTER_QUERIES } from '@/router/enums'
+import { useAdsStore } from '@/stores/ads'
 // Components
 import CompEntityAdHousingTableRow from '@/components/entity/ad/housing/table-row.vue'
 import CompEntityAdHousingGridItem from '@/components/entity/ad/housing/grid-item.vue'
@@ -17,7 +17,7 @@ import { E_AD_STATUS } from '@scrapland/data-model'
 import CompUiLoading from '@/components/ui/ui-loading.vue'
 
 const { writableQueryArray } = useRouterUtils()
-const { t } = useI18n()
+const { t } = useAppI18n()
 const adsStore = useAdsStore()
 
 let loadDebounceTime: null | ReturnType<typeof window.setTimeout> = null
@@ -63,7 +63,7 @@ onMounted(searchAds)
   <CompUiLoading v-if="adsStore.isLoadingAdsHousing" />
 
   <CompLayoutIndexView
-    :title="$t('pages.adsHousingAll.indexTitle')"
+    :title="t('pages.adsHousingAll.indexTitle')"
     :sub-title="showing"
     @on-content-scroll-end="() => adsStore.loadMoreAdsHousing()">
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { T_Execution } from '@scrapland/data-model'
 // App
+import { useAppI18n } from '@/composables/use-i18n'
 import { useTasksStore } from '@/stores/tasks'
 // Components
 import CompEntityExecutionsTableItem from '@/components/entity/executions/e-table-item.vue'
@@ -8,6 +9,9 @@ import CompEntityExecutionsTableItem from '@/components/entity/executions/e-tabl
 const tasksStore = useTasksStore()
 
 defineProps<{ executions: Array<T_Execution> }>()
+
+const { t } = useAppI18n()
+
 </script>
 
 <template>
@@ -15,9 +19,9 @@ defineProps<{ executions: Array<T_Execution> }>()
     <thead>
       <tr>
         <td>#</td>
-        <td>{{ $t('global.createdAt') }}</td>
-        <td>{{ $t('global.task') }}</td>
-        <td>{{ $t('global.status') }}</td>
+        <td>{{ t('global.createdAt') }}</td>
+        <td>{{ t('global.task') }}</td>
+        <td>{{ t('global.status') }}</td>
       </tr>
     </thead>
 

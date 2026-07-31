@@ -1,15 +1,15 @@
-import { useI18n } from 'vue-i18n'
 // App
 import type { TooltipMessageProps } from '@/components/tooltips/types'
 import { TOOLTIP_POSITION } from '@/stores/tooltip/types'
 import type { E_ROUTER_PAGES } from '@/router/enums'
+import { useAppI18n } from '@/composables/use-i18n'
 import { useTooltipStore } from '@/stores/tooltip'
 // Components
 import TooltipMessage from '@/components/tooltips/t-message.vue'
 
 export function useTooltips () {
   const tooltipStore = useTooltipStore()
-  const { t } = useI18n()
+  const { t } = useAppI18n()
 
   const linkTooltip = (event: MouseEvent, name: E_ROUTER_PAGES) => {
     if (!event.target) return

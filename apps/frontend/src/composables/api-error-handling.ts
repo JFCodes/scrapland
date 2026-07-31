@@ -1,12 +1,11 @@
 import type { T_API_RESPONSE_Error } from '@scrapland/data-model'
-import { useI18n } from 'vue-i18n'
 // App
+import { useAppI18n } from '@/composables/use-i18n'
 import { useToastsStore } from '@/stores/toasts'
-import { err } from 'cron-validate/lib/result'
 
 export function useApiErrorHandling () {
   const toastsStore = useToastsStore()
-  const { t } = useI18n()
+  const { t } = useAppI18n()
 
   const onUnknownError = (error: unknown): void => {
     const errorCode = Number(error)

@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import type { T_Ad_Housing } from '@scrapland/data-model'
+import { useAppI18n } from '@/composables/use-i18n'
 import { computed } from 'vue'
 // Components
 import CompUiTypeBadge from '@/components/ui/ui-type-badge.vue'
 import { SquareParkingOff, SquareParking, Car } from '@lucide/vue'
 
 const props = defineProps<{ adHousing: T_Ad_Housing }>()
+
+const { t } = useAppI18n()
 
 const hasParking = computed(() => {
   if (props.adHousing.typologyHasParking) return true
@@ -22,6 +25,6 @@ const hasParking = computed(() => {
 
   <CompUiTypeBadge v-else type="warning">
     <SquareParkingOff :size="18" />
-    {{ $t('global.noParking') }}
+    {{ t('global.noParking') }}
   </CompUiTypeBadge>
 </template>

@@ -1,6 +1,5 @@
 import { registerOptionPreset } from 'cron-validate/lib/option'
 import { type ModelRef, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import cron from 'cron-validate'
 import {
   CRON_VALIDATE_PRESET_ID,
@@ -13,12 +12,13 @@ import { getCronDescription } from '@/composables/cron-validation/get-cron-descr
 import { useTaskScheduleValidation } from '@/composables/fields/task-schedule/validation'
 import type { UiSelectOption } from '@/components/types'
 import { useAppSettings } from '@/stores/app-settings'
+import { useAppI18n } from '@/composables/use-i18n'
 
 registerOptionPreset(CRON_VALIDATE_PRESET_ID, CRON_VALIDATE_PRESET)
 
 export function useFieldSchedule (schedule: ModelRef<T_Task_Schedule>) {
   const { isValid } = useTaskScheduleValidation(schedule)
-  const { t } = useI18n()
+  const { t } = useAppI18n()
   const appSettings = useAppSettings()
 
   const typeOptions: Array<UiSelectOption<E_TASK_SCHEDULE_TYPE>> = [

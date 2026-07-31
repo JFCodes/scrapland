@@ -4,11 +4,14 @@ import { ref } from 'vue'
 // App
 import { TASK_TYPE_ICONS } from '@/components/constants'
 import type { InjectedProps } from '@/stores/modals'
+import { useAppI18n } from '@/composables/use-i18n'
 // Components
 import CompModalBase from '@/components/modals/m-base.vue'
 import CompUiButton from '@/components/ui/ui-button.vue'
 
 const props = defineProps<InjectedProps<null | E_TASK_TYPE>>()
+
+const { t } = useAppI18n()
 
 const selectedType = ref<E_TASK_TYPE>(E_TASK_TYPE.FIND_NEW_ADS)
 const TASK_TYPES: Array<E_TASK_TYPE> = [E_TASK_TYPE.FIND_NEW_ADS]
@@ -20,7 +23,7 @@ const TASK_TYPES: Array<E_TASK_TYPE> = [E_TASK_TYPE.FIND_NEW_ADS]
     :close-on-escape-press="true"
     :width="400" @close="closeModal(null)">
     <template #header>
-      <p>{{ $t('modals.pickTaskType.title') }}</p>
+      <p>{{ t('modals.pickTaskType.title') }}</p>
     </template>
 
     <template #content>
@@ -34,7 +37,7 @@ const TASK_TYPES: Array<E_TASK_TYPE> = [E_TASK_TYPE.FIND_NEW_ADS]
           @click="selectedType = taskType">
 
           <component :is="TASK_TYPE_ICONS[taskType]" :size="32" />
-          <p>{{ $t(`enums.taskType.${taskType}`) }}</p>
+          <p>{{ t(`enums.taskType.${taskType}`) }}</p>
         </button>
 
       </div>
@@ -42,10 +45,10 @@ const TASK_TYPES: Array<E_TASK_TYPE> = [E_TASK_TYPE.FIND_NEW_ADS]
 
     <template #footer>
       <div class="--group --group--end">
-        <CompUiButton :label="$t('global.cancel')" @click="closeModal(null)" />
+        <CompUiButton :label="t('global.cancel')" @click="closeModal(null)" />
         <CompUiButton
           filled
-          :label="$t('global.select')"
+          :label="t('global.select')"
           :type="'success'"
           @click="props.closeModal(selectedType)" />
       </div>

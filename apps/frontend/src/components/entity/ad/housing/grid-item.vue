@@ -2,8 +2,9 @@
 import type { T_Ad_Housing } from '@scrapland/data-model'
 // App
 import type { PanelAdHousingProps } from '@/components/panels/types'
-import { usePanelStore } from '@/stores/panel'
+import { useAppI18n } from '@/composables/use-i18n'
 import { useModals } from '@/composables/modals'
+import { usePanelStore } from '@/stores/panel'
 // Components
 import CompEntityAdHousingParkingBadge from '@/components/entity/ad/housing/parking-badge.vue'
 import CompEntityAdHousingContactBadge from '@/components/entity/ad/housing/contact-badge.vue'
@@ -26,6 +27,7 @@ import {
 const props = defineProps<{ adHousing: T_Ad_Housing }>()
 
 const { adHousingGallery } = useModals()
+const { t } = useAppI18n()
 const panelStore = usePanelStore()
 
 const showGalleryModal = () => {
@@ -78,7 +80,7 @@ const showAdHousingPanel = () => {
         </div>
 
         <div class="--group --mb-sm">
-          <p class="grid-item__title --font-bold">{{ $t('global.area') }}</p>
+          <p class="grid-item__title --font-bold">{{ t('global.area') }}</p>
           <House :size="22" />
           <p>{{ adHousing.areaLiving }}</p>
           <BrickWall :size="22" />
@@ -88,7 +90,7 @@ const showAdHousingPanel = () => {
         </div>
 
         <div class="--group --mb-sm">
-          <p class="grid-item__title --font-bold">{{ $t('global.rooms') }}</p>
+          <p class="grid-item__title --font-bold">{{ t('global.rooms') }}</p>
           <BedSingle :size="22" />
           <p>{{ adHousing.typologyBedrooms }}</p>
           <Bath :size="22" />

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
 // App
 import { useTooltips } from '@/composables/tooltips'
+import { useAppI18n } from '@/composables/use-i18n'
 // Components
 import CompFormInput from '@/components/forms/f-input.vue'
 import { BadgeInfo } from '@lucide/vue'
@@ -9,7 +9,7 @@ import { BadgeInfo } from '@lucide/vue'
 defineProps<{ error?: null | string }>()
 
 const { sourceLocationInfo } = useTooltips()
-const { t } = useI18n()
+const { t } = useAppI18n()
 
 const location = defineModel<string>({ default: '' })
 
@@ -28,7 +28,7 @@ const showLocationTooltip = (event: MouseEvent): void => {
     v-model="location"
     :has-error="!!error"
     :error="error"
-    :label="$t('global.location')">
+    :label="t('global.location')">
     <template #after-label>
       <BadgeInfo class="--help" :size="16" @mouseenter="showLocationTooltip" />
     </template>

@@ -3,6 +3,7 @@ import { computed, markRaw } from 'vue'
 // App
 import { LIST_VIEW, type UiIconToggleItem } from '@/components/types'
 import { useRouterUtils } from '@/composables/router-utils'
+import { useAppI18n } from '@/composables/use-i18n'
 import { E_ROUTER_QUERIES } from '@/router/enums'
 // Components
 import CompLayoutVerticalScrollContent from '@/components/layouts/vertical-scroll-content.vue'
@@ -23,6 +24,7 @@ defineProps<{
 }>()
 
 const { writableQuery } = useRouterUtils()
+const { t } = useAppI18n()
 
 const listView = writableQuery(E_ROUTER_QUERIES.LIST_VIEW, LIST_VIEW.GRID)
 
@@ -50,7 +52,7 @@ const iconToggle = computed<Array<UiIconToggleItem<string>>>(() => {
     <template #top>
       <div class="--group --group--spread">
         <div>
-          <CompUiTitleMain :title="$t('pages.adsHousingAll.indexTitle')" />
+          <CompUiTitleMain :title="t('pages.adsHousingAll.indexTitle')" />
           <span>{{ subTitle }}</span>
         </div>
 

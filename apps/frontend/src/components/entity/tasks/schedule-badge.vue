@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { E_TASK_SCHEDULE_TYPE, type T_Task_Schedule } from '@scrapland/data-model'
-import { useI18n } from 'vue-i18n'
 // App
 import { getCronDescription } from '@/composables/cron-validation/get-cron-description'
 import { TASK_SCHEDULE_TYPE_ICONS } from '@/components/constants'
 import { useTooltips } from '@/composables/tooltips'
+import { useAppI18n } from '@/composables/use-i18n'
 // Component
 import CompUiTypeBadge from '@/components/ui/ui-type-badge.vue'
 
 const props = defineProps<{ schedule: T_Task_Schedule }>()
 
 const { scheduleTypeTooltip } = useTooltips()
-const { t } = useI18n()
+const { t } = useAppI18n()
 
 const onMouseEnter = (event: MouseEvent) => {
   const message = getScheduleTypeDescription(props.schedule)
