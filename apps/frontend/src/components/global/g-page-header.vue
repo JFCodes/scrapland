@@ -7,8 +7,8 @@ import { useRouterUtils } from '@/composables/router-utils'
 import { useTooltips } from '@/composables/tooltips'
 import { E_ROUTER_PAGES } from '@/router/enums'
 // Components
+import { TvMinimalPlay, MonitorCog, BellDot, Cctv, Home } from '@lucide/vue'
 import CompUiIconButton from '@/components/ui/ui-icon-button.vue'
-import { TvMinimalPlay, MonitorCog, BellDot, Home } from '@lucide/vue'
 import { E_AD_ENTITY_TYPE } from '@scrapland/data-model'
 
 type Link = {
@@ -23,6 +23,7 @@ const { linkTooltip } = useTooltips()
 
 const globalLinks: Array<Link> = [
   { name: E_ROUTER_PAGES.HOME, icon: Home, to: { name: E_ROUTER_PAGES.HOME } },
+  { name: E_ROUTER_PAGES.TASKS, icon: Cctv, to: { name: E_ROUTER_PAGES.TASKS } },
   { name: E_ROUTER_PAGES.EXECUTIONS, icon: TvMinimalPlay, to: { name: E_ROUTER_PAGES.EXECUTIONS } },
   { name: E_ROUTER_PAGES.NOTIFICATIONS, icon: MonitorCog, to: { name: E_ROUTER_PAGES.NOTIFICATIONS } },
   { name: E_ROUTER_PAGES.SETTINGS, icon: BellDot, to: { name: E_ROUTER_PAGES.SETTINGS } },

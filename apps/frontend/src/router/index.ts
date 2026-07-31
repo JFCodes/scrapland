@@ -5,6 +5,7 @@ import { route as ExecutionsRoute } from '@/router/routes/executions'
 import { route as SettingsRoute } from '@/router/routes/settings'
 import { route as VehiclesRoute } from '@/router/routes/vehicles'
 import { route as HousingRoute } from '@/router/routes/housing'
+import { route as TasksRoute } from '@/router/routes/tasks'
 import { route as HomeRoute } from '@/router/routes/home'
 
 const router = createRouter({
@@ -15,6 +16,7 @@ const router = createRouter({
     SettingsRoute,
     VehiclesRoute,
     HousingRoute,
+    TasksRoute,
     HomeRoute,
   ],
 })

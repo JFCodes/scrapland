@@ -26,7 +26,7 @@ const updateModel = (value: null | string | Array<string>) => {
   <CompFormSelect
     close-on-click-outside
     close-on-option-click
-    :label="$t('global.buildingTypes')"
+    :label="$t('global.target')"
     :model-value="target"
     :options="targetOptions"
     :has-error="!!error"

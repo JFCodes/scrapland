@@ -1,4 +1,5 @@
 import {
+  type T_API_PAYLOAD_Task_Housing_FindNEw_Create,
   type T_API_PAYLOAD_Task_Housing_FindNEw_Patch,
   type T_API_RESPONSE_Task_Housing_FindNew,
   type T_API_RESPONSE_Ads_StatusCounter,
@@ -55,7 +56,14 @@ class Api {
             method: 'PATCH',
             body: payload,
           })
-        }
+        },
+        create: (payload: T_API_PAYLOAD_Task_Housing_FindNEw_Create) => {
+          return this.request<T_API_RESPONSE_Task_Housing_FindNew, T_API_PAYLOAD_Task_Housing_FindNEw_Create>({
+            path: `tasks/housing/find-new`,
+            method: 'POST', 
+            body: payload,
+          })
+        },
       }
     }
   }

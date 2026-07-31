@@ -16,7 +16,6 @@ export const useAppSettings = defineStore('app-settings', () => {
       .then(result => {
         API.setServerPort(result.BACKEND_SERVER_PORT)
         settings.value = result
-        console.log({ result })
       })
       .catch(onApiError)
   }

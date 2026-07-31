@@ -1,7 +1,7 @@
+import { CRON_VALIDATE_PRESET_ID, CRON_VALIDATE_PRESET } from '@scrapland/data-model'
 import { registerOptionPreset } from 'cron-validate/lib/option'
 import cronstrue from 'cronstrue'
 // App
-import { CRON_VALIDATE_PRESET_ID, CRON_VALIDATE_PRESET } from '@/composables/cron-validation/preset'
 import type { T_Task_ScheduleCron } from '@scrapland/data-model'
 
 registerOptionPreset(CRON_VALIDATE_PRESET_ID, CRON_VALIDATE_PRESET)

@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import { E_TASK_TYPE } from '@scrapland/data-model'
+import { E_AD_ENTITY_TYPE } from '@scrapland/data-model'
 import { ref } from 'vue'
 // App
-import { TASK_TYPE_ICONS } from '@/components/constants'
+import { AD_ENTITY_ICON } from '@/components/constants'
 import type { InjectedProps } from '@/stores/modals'
 // Components
 import CompModalBase from '@/components/modals/m-base.vue'
 import CompUiButton from '@/components/ui/ui-button.vue'
 
-const props = defineProps<InjectedProps<null | E_TASK_TYPE>>()
+const props = defineProps<InjectedProps<null | E_AD_ENTITY_TYPE>>()
 
-const selectedType = ref<E_TASK_TYPE>(E_TASK_TYPE.FIND_NEW_ADS)
-const TASK_TYPES: Array<E_TASK_TYPE> = [E_TASK_TYPE.FIND_NEW_ADS]
+const selectedType = ref<E_AD_ENTITY_TYPE>(E_AD_ENTITY_TYPE.HOUSING)
+const TASK_TYPES: Array<E_AD_ENTITY_TYPE> = [
+  E_AD_ENTITY_TYPE.HOUSING,
+  E_AD_ENTITY_TYPE.VEHICLE
+]
 
 </script>
 
@@ -33,8 +36,8 @@ const TASK_TYPES: Array<E_TASK_TYPE> = [E_TASK_TYPE.FIND_NEW_ADS]
           :key="taskType"
           @click="selectedType = taskType">
 
-          <component :is="TASK_TYPE_ICONS[taskType]" :size="32" />
-          <p>{{ $t(`enums.taskType.${taskType}`) }}</p>
+          <component :is="AD_ENTITY_ICON[taskType]" :size="32" />
+          <p>{{ $t(`enums.adEntityType.${taskType}`) }}</p>
         </button>
 
       </div>

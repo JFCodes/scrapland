@@ -1,6 +1,7 @@
 export enum E_ROUTER_PAGES {
   NOTIFICATIONS = 'notifications',
   SETTINGS = 'settings',
+  TASKS = 'tasks',
   HOME = 'home',
     HOME_INDEX = 'home-index',
   EXECUTIONS = 'executions',
@@ -32,6 +33,7 @@ export enum E_ROUTER_QUERIES {
 export const CONST_ROUTER_PATHS: Record<E_ROUTER_PAGES, string> = {
   [E_ROUTER_PAGES.NOTIFICATIONS]: '/notifications',
   [E_ROUTER_PAGES.SETTINGS]: '/settings',
+  [E_ROUTER_PAGES.TASKS]: '/tasks',
   [E_ROUTER_PAGES.HOME]: '/',
     [E_ROUTER_PAGES.HOME_INDEX]: '',
   [E_ROUTER_PAGES.EXECUTIONS]: '/executions',

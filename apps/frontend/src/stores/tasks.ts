@@ -41,8 +41,13 @@ export const useTasksStore = defineStore('tasks', () => {
     tasks.value[index] = updated
   }
 
+  const appendTask = (task: T_Task): void => {
+    tasks.value.push(task)
+  }
+
   return {
     updateTask,
+    appendTask,
     load,
     housingFindNewTasks,
     taskMap,

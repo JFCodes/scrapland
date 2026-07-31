@@ -51,8 +51,6 @@ const getStatusHistoryText = (entry: T_Execution_StatusHistory): string => {
   const date = F_DateFormats.dateAndHour(entry.date)
   return t('global.atDate', { status, date })
 }
-
-console.log(props.execution)
 </script>
 
 <template>

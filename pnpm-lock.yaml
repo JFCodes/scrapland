@@ -382,6 +382,9 @@ importers:
 
   packages/data-model:
     dependencies:
+      cron-validate:
+        specifier: 1.4.5
+        version: 1.4.5
       drizzle-orm:
         specifier: ^0.45.2
         version: 0.45.2(@types/better-sqlite3@7.6.13)(better-sqlite3@12.11.1)
@@ -401,6 +404,9 @@ importers:
       '@scrapland/data-model':
         specifier: workspace:*
         version: link:../data-model
+      cron-validate:
+        specifier: 1.4.5
+        version: 1.4.5
       luxon:
         specifier: ^3.7.2
         version: 3.7.2

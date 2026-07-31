@@ -9,7 +9,7 @@ import { db } from '../../../../database'
 export async function controller(req: Request, res: Response<T_API_RESPONSE_Task_Housing_FindNew>) {
 
   const taskId = req.params.taskId
-  if (!taskId || typeof taskId !== 'string') return missingOrInvalidParam({ req, res, param: 'task-id' })
+  if (!taskId || typeof taskId !== 'string') return missingOrInvalidParam({ req, res, name: 'task-id' })
 
   const taskQuery = db
     .select()

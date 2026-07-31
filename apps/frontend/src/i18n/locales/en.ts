@@ -41,6 +41,7 @@ const entityName: Record<E_ENTITY_TYPE, string> = {
 const pages: Record<E_ROUTER_PAGES, string> = {
   [E_ROUTER_PAGES.NOTIFICATIONS]: 'Notifications',
   [E_ROUTER_PAGES.SETTINGS]: 'Settings',
+  [E_ROUTER_PAGES.TASKS]: 'Tasks',
   [E_ROUTER_PAGES.HOME]: 'Home',
   [E_ROUTER_PAGES.HOME_INDEX]: '',
   [E_ROUTER_PAGES.EXECUTIONS]: 'Executions',
@@ -96,6 +97,7 @@ const taskType: Record<E_TASK_TYPE, string> = {
 
 export default {
   global: {
+    adEntity: 'Ad entity',
     all: 'All',
     allExecutions: 'All executions',
     area: 'Area',

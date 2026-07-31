@@ -1,9 +1,12 @@
-import { E_TASK_SCHEDULE_TYPE, type T_Task_Schedule } from '@scrapland/data-model'
 import { type MaybeRefOrGetter, watch, ref, toValue  } from 'vue'
 import { registerOptionPreset } from 'cron-validate/lib/option'
 import cron from 'cron-validate'
-// App
-import { CRON_VALIDATE_PRESET_ID, CRON_VALIDATE_PRESET } from '@/composables/cron-validation/preset'
+import {
+  CRON_VALIDATE_PRESET_ID,
+  CRON_VALIDATE_PRESET,
+  E_TASK_SCHEDULE_TYPE,
+  type T_Task_Schedule
+} from '@scrapland/data-model'
 
 registerOptionPreset(CRON_VALIDATE_PRESET_ID, CRON_VALIDATE_PRESET)
 

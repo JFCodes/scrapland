@@ -1,35 +1,35 @@
 <script setup lang="ts">
-import { E_AD_ENTITY_TYPE } from '@scrapland/data-model'
+import { E_ENTITY_TYPE } from '@scrapland/data-model'
 // App
 import { useCreateEntityTaskLaunch } from '@/composables/create-entity/tasks/launch'
 import { useTasksStore } from '@/stores/tasks'
 // Components
-import CompEntityTaskHousingFindNewTable from '@/components/entity/tasks/housing/find-new-table.vue'
 import CompLayoutVerticalScrollContent from '@/components/layouts/vertical-scroll-content.vue'
 import CompLayoutCenterContainer from '@/components/layouts/center-container.vue'
+import CompEntityTasksTable from '@/components/entity/tasks/tasks-table.vue'
 import CompUiTitleMain from '@/components/ui/ui-title-main.vue'
 import CompUiButton from '@/components/ui/ui-button.vue'
 
 const { launch } = useCreateEntityTaskLaunch()
 const tasksStore = useTasksStore()
-</script>
 
+</script>
 <template>
   <CompLayoutCenterContainer>
     <CompLayoutVerticalScrollContent>
 
       <template #top>
         <div class="--group --group--spread">
-          <CompUiTitleMain :title="$t('pages.adHousingTasks.title')" />
+          <CompUiTitleMain :title="$t(`enums.entityTypes.${E_ENTITY_TYPE.TASK}`)" />
+
           <CompUiButton
             type="info"
             :label="$t('global.createTask')"
-            @click="launch(E_AD_ENTITY_TYPE.HOUSING)" />
+            @click="launch()" />
         </div>
       </template>
 
-      <CompEntityTaskHousingFindNewTable :tasks="tasksStore.housingFindNewTasks" />
-
+      <CompEntityTasksTable :tasks="tasksStore.tasks" />
     </CompLayoutVerticalScrollContent>
   </CompLayoutCenterContainer>
 </template>

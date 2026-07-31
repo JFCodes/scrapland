@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@scrapland/data-model": "workspace:*",
+    "cron-validate": "1.4.5",
     "luxon": "^3.7.2"
   }
 }

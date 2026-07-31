@@ -2,22 +2,27 @@
 import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
 // App
-import type { OverLayExposed } from '@/components/panels/types'
 import { useTaskHousingFindNewCreate } from '@/composables/task-housing-find-new/create'
+import type { PanelTaskHousingEditCreateProps } from '@/components/panels/types'
+import type { OverLayExposed } from '@/components/panels/types'
 import { useModals } from '@/composables/modals'
+import { usePanelStore } from '@/stores/panel'
 // Components
 import CompPanelTaskHousingFindNewCreateHeader from '@/components/panels/entities/task-housing/find-new-create/panel-header.vue'
-import CompEntityTargetFieldsTarget from '@/components/entity/targets/fields/target-field.vue'
 import CompEntityTaskHousingBuildingTypesField from '@/components/entity/tasks/housing/fields/field-building-type.vue'
 import CompEntityTaskHousingLocationField from '@/components/entity/tasks/housing/fields/field-location.vue'
+import CompPanelTaskHousingFindNewEdit from '@/components/panels/entities/task-housing/find-new-edit.vue'
+import CompEntityTargetFieldsTarget from '@/components/entity/targets/fields/target-field.vue'
 import CompEntityTaskScheduleField from '@/components/entity/tasks/fields/field-schedule.vue'
 import CompPanelsOverlay from '@/components/panels/p-overlay.vue'
 import CompUiMessage from '@/components/ui/ui-message.vue'
 import CompUiButton from '@/components/ui/ui-button.vue'
 
+const panelStore = usePanelStore()
 const { prompt } = useModals()
 const { t } = useI18n()
 const {
+  createTask,
   displayEquivalentTaskWarning,
   fieldBuildingTypesError,
   fieldLocationError,
@@ -31,12 +36,23 @@ const {
 } = useTaskHousingFindNewCreate()
 
 const overlayRef = ref<null | OverLayExposed>(null)
+let entityCreated = false
 
 const create = async (): Promise<void> => {
-  console.log('create')
+  const created = await createTask()
+
+  if (created) {
+    entityCreated = true
+    overlayRef.value?.closePanel()
+    window.setTimeout(() => {
+      panelStore.show<PanelTaskHousingEditCreateProps>(CompPanelTaskHousingFindNewEdit, { task: created })
+    }, 500)
+  }
 }
 
 const beforeClose = async (): Promise<boolean> => {
+  if (entityCreated) return true
+
   const { resolution } = prompt({
     title: t('sentences.youHaveUnsavedChanges'),
     confirmText: t('global.discardChanges'),

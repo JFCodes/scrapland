@@ -9,6 +9,7 @@ import {
   type T_Task_Schedule,
 } from '@scrapland/data-model'
 // App
+import { useTaskScheduleValidation } from '@/composables/fields/task-schedule/validation'
 import { useApiErrorHandling } from '@/composables/api-error-handling'
 import { useToastsStore } from '@/stores/toasts'
 import { useTasksStore } from '@/stores/tasks'
@@ -20,13 +21,15 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
   const tasksStore = useTasksStore()
   const taskValue = toValue(task)
 
-  const adEntityType = ref<E_AD_ENTITY_TYPE>(E_AD_ENTITY_TYPE.VEHICLE)
+  const adEntityType = ref<E_AD_ENTITY_TYPE>(toValue(task)._task_adEntityType)
   const isSaving = ref(false)
   // EditableFields
   const editableBuildingTypes = ref<Array<T_Ad_Housing_BuildingType>>(taskValue.buildingTypes ?? [])
   const editableSchedule = ref(JSON.parse(JSON.stringify(taskValue._task_schedule)) as T_Task_Schedule)
   const editableStatus = ref(taskValue._task_status)
   const editableLocation = ref(taskValue.location)
+
+  const { isValid: fieldScheduleIsValid } = useTaskScheduleValidation(editableSchedule)
 
   const locationError = computed(() => {
     if (editableLocation.value.trim() !== '') return null
@@ -39,6 +42,7 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
   })
 
   const isValid = computed(() => {
+    if (!fieldScheduleIsValid.value) return false
     if (buildingTypesError.value) return false
     if (locationError.value) return false
 

@@ -2,6 +2,7 @@ import { E_ENTITY_TYPE, E_TASK_STATUS, type T_API_RESPONSE_Error } from '@scrapl
 import { F_ReadableEnum } from '@scrapland/functions'
 import type { Response, Request } from 'express'
 
+type FailedToInsertEntity = { req: Request, res: Response, entity: E_ENTITY_TYPE }
 type NotFoundOptions = { req: Request, res: Response }
 type CustomOptions = {
   error: Omit<T_API_RESPONSE_Error, 'type'>
@@ -15,6 +16,7 @@ type MissingOrInvalidOptions = { req: Request, res: Response, name: string }
 // Tasks
 type TaskCannotExecuteNonPublished = { req: Request, res: Response, status: E_TASK_STATUS, taskId: string }
 type TaskFailedToScheduleExecution = { req: Request, res: Response, taskId: string }
+type TaskCreateFailed = { req: Request, res: Response, errorMessage: string }
 type TaskPatchFailed = { req: Request, res: Response, taskId: string }
 
 export const notFound = (options: NotFoundOptions): void => {
@@ -69,6 +71,20 @@ export const missingResource = (options: MissingResource): void => {
   })
 }
 
+export const failedToInsertEntity = (options: FailedToInsertEntity): void => {
+  const { req, res, entity } = options
+  const entityName = F_ReadableEnum(entity)
+  return customError({
+    req,
+    res,
+    error: {
+      message: `DB Insert of entity '${entityName}' failed'`,
+      level: 'danger',
+      code: 500
+    }
+  })
+}
+
 export const taskErrors = {
   cannotExecuteNonPublished: (options: TaskCannotExecuteNonPublished) => {
     const { status, taskId, req, res } = options
@@ -95,5 +111,12 @@ export const taskErrors = {
     const message = 'Failed to update task'
     const details = [`There was an unknown problem trying to updated task with id '${taskId}'`]
     return customError({ req, res, error: { code: 500, message, details} })
+  },
+
+  failedToCreate: (options: TaskCreateFailed) => {
+    const { errorMessage, req, res } = options
+    const message = 'Failed to create task'
+    const details = [errorMessage]
+    return customError({ req, res, error: { code: 400, message, details } })
   }
 }

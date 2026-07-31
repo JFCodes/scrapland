@@ -1,5 +1,5 @@
 import { DBSchema_Execution, type T_Execution } from '@scrapland/data-model'
-import { eq } from 'drizzle-orm'
+import { desc, eq } from 'drizzle-orm'
 // App
 import { db } from '../../database'
 
@@ -8,5 +8,6 @@ export function getTaskLatestExecutions (taskId: string): Array<T_Execution>  {
     .select()
     .from(DBSchema_Execution)
     .where(eq(DBSchema_Execution.taskId, taskId))
+    .orderBy(desc(DBSchema_Execution._createdAt))
     .all()
 }

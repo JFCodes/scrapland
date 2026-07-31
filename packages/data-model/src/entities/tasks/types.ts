@@ -5,7 +5,6 @@ type T_Task_ScheduleBase<T extends E_TASK_SCHEDULE_TYPE> = { type: T }
 
 export type T_Task_ScheduleInterval = T_Task_ScheduleBase<E_TASK_SCHEDULE_TYPE.INTERVAL> & {
   everyMs: number
-  startAt?: Date
 }
 
 export type T_Task_ScheduleCron = T_Task_ScheduleBase<E_TASK_SCHEDULE_TYPE.CRON> & {
