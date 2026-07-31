@@ -13,12 +13,19 @@ import {
 import CompEntityExecutionStatusAbortedMessage from '@/components/entity/executions/e-status-aborted-message.vue'
 import CompEntityExecutionStatusFailedMessage from '@/components/entity/executions/e-status-failed-message.vue'
 import CompEntityExecutionStatusBadge from '@/components/entity/executions/e-status-badge.vue'
+import CompEntityTaskTargetBadge from '@/components/entity/tasks/target-badge.vue'
+import CompEntityAdEntityBadge from '@/components/entity/ad/ad-entity-badge.vue'
+import CompEntityTaskTypeBadge from '@/components/entity/tasks/type-badge.vue'
 import CompUiCollapsible from '@/components/ui/ui-collapsible.vue'
 import CompUiCard from '@/components/ui/ui-card.vue'
 
 const { t } = useI18n()
 
-const props = defineProps<{ execution: T_Execution, task: T_Task }>()
+const props = defineProps<{
+  showTaskData?: boolean
+  execution: T_Execution
+  task: T_Task
+}>()
 
 const getDateFormatted = (value: null | number): string => {
   return value !== null ? F_DateFormats.dateAndHour(value) : '-'
@@ -44,17 +51,29 @@ const getStatusHistoryText = (entry: T_Execution_StatusHistory): string => {
   const date = F_DateFormats.dateAndHour(entry.date)
   return t('global.atDate', { status, date })
 }
+
+console.log(props.execution)
 </script>
 
 <template>
   <CompUiCard>
     <template #header>
       <div class="--group --group--spread">
-        <p>
-          {{ $t(`enums.entityName.${E_ENTITY_TYPE.EXECUTION}`) }}:
-          <span class="--font-bold">{{ F_GetLastUuidSegment(execution._id) }}</span>
-        </p>
-        <CompEntityExecutionStatusBadge :status="execution.status" />
+        <div>
+          <div v-if="showTaskData" class="--group --mb-sm">
+            <CompEntityTaskTypeBadge :task-type="task._task_type" />
+            <CompEntityAdEntityBadge :ad-entity="task._task_adEntityType" />
+            <CompEntityTaskTargetBadge :target="task._task_target" />
+          </div>
+          <p>
+            {{ $t(`enums.entityName.${E_ENTITY_TYPE.EXECUTION}`) }}:
+            <span class="--font-bold">{{ F_GetLastUuidSegment(execution._id) }}</span>
+          </p>
+        </div>
+
+        <div class="--group">
+          <CompEntityExecutionStatusBadge :status="execution.status" />
+        </div>
       </div>
     </template>
 

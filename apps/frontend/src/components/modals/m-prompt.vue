@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
 // App
 import type { ModalPromptProps } from '@/components/modals/types'
@@ -9,8 +8,6 @@ import CompModalBase from '@/components/modals/m-base.vue'
 import CompUiButton from '@/components/ui/ui-button.vue'
 
 const props = defineProps<ModalPromptProps & InjectedProps<boolean>>()
-
-const { t } = useI18n()
 
 const isConfirming = ref(false)
 
@@ -45,10 +42,10 @@ const confirm = async () => {
 
     <template #footer>
       <div class="--group --group--end">
-        <CompUiButton :label="cancelText || t('global.cancel')" @click="closeModal(false)" />
+        <CompUiButton :label="cancelText || $t('global.cancel')" @click="closeModal(false)" />
         <CompUiButton
           filled
-          :label="confirmText || t('global.confirm')"
+          :label="confirmText || $t('global.confirm')"
           :type="confirmButtonType ?? 'success'"
           @click="confirm" />
       </div>

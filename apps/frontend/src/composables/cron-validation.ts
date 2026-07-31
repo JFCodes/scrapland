@@ -13,7 +13,7 @@ export function useCronValidation (schedule: MaybeRefOrGetter<T_Task_Schedule>) 
     const scheduleValue = toValue(schedule)
     if (scheduleValue.type !== 'cron') return null
 
-    return cron(scheduleValue.expression, { preset: 'npm-cron-schedule' })
+    return cron(scheduleValue.expression, { preset: CRON_VALIDATE_PRESET_ID })
   })
 
   const cronDescription = computed<string>(() => {

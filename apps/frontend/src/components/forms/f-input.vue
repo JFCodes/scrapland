@@ -34,6 +34,7 @@ const value = defineModel<string | number>({ default: '' })
       <input
         v-model="value"
         class="--base-input input"
+        v-bind="attributes"
         :class="{ '--base-input--error': hasError }"
         :id="id"
         @blur="emits('on-blur')" />

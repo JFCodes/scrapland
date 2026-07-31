@@ -1,0 +1,35 @@
+<script setup lang="ts">
+import { E_TARGET } from '@scrapland/data-model'
+import { F_ReadableEnum } from '@scrapland/functions'
+// App
+import type { UiSelectOption } from '@/components/types'
+// Components
+import CompFormSelect from '@/components/forms/f-select.vue'
+
+defineProps<{ error?: null | string }>()
+
+const target = defineModel<null | E_TARGET>({ default: null })
+
+// Only list targets that are capable of housing/find-new
+const targetOptions: Array<UiSelectOption<E_TARGET>> = [
+  { label: F_ReadableEnum(E_TARGET.REMAX_PORTUGAL), value: E_TARGET.REMAX_PORTUGAL }
+]
+
+const updateModel = (value: null | string | Array<string>) => {
+  if (typeof value !== 'string' || !value) return
+
+  target.value = value as E_TARGET
+}
+</script>
+
+<template>
+  <CompFormSelect
+    close-on-click-outside
+    close-on-option-click
+    :label="$t('global.buildingTypes')"
+    :model-value="target"
+    :options="targetOptions"
+    :has-error="!!error"
+    :error="error"
+    @update:model-value="updateModel" />
+</template>

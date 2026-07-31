@@ -9,6 +9,7 @@ import { API } from '@/api'
 // Components
 import CompSkeleton from '@/components/skeletons/ads-housing-dashboard-counter.vue'
 import CompUiTypeBadge from '@/components/ui/ui-type-badge.vue'
+import CompUiTitleMain from '@/components/ui/ui-title-main.vue'
 import CompUiCard from '@/components/ui/ui-card.vue'
 
 const { onApiError } = useApiErrorHandling()
@@ -36,9 +37,8 @@ onMounted(loadData)
 
 <template>
   <div>
-    <h3 class="--text-white --text-lg --font-bold --mb-md">
-      {{ $t('pages.adsHousingDashboard.sectionByStatusTitle') }}
-    </h3>
+    <CompUiTitleMain class="--mb-md" :title="$t('pages.adsHousingDashboard.sectionByStatusTitle')" />
+
     <section class="section">
       <template v-if="isLoading">
         <CompSkeleton v-for="i in essentialStatus.length" :key="i" />

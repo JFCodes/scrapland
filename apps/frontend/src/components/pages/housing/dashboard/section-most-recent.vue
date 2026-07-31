@@ -5,6 +5,7 @@ import { onMounted, ref } from 'vue'
 import { API } from '@/api'
 // Components
 import CompEntityAdHousingGridItem from '@/components/entity/ad/housing/grid-item.vue'
+import CompUiTitleMain from '@/components/ui/ui-title-main.vue'
 import CompSkeleton from '@/components/skeletons/ads-housing-grid-item.vue'
 
 const MOST_RECENT_COUNT = 10
@@ -25,9 +26,7 @@ onMounted(pullData)
 
 <template>
   <div>
-    <h3 class="--text-white --text-lg --font-bold --mb-md">
-      {{ $t('sentences.mostRecent', { count: MOST_RECENT_COUNT }) }}
-    </h3>
+    <CompUiTitleMain class="--mb-md" :title="$t('sentences.mostRecent', { count: MOST_RECENT_COUNT })" />
 
     <section class="section">
       <template v-if="isLoading">

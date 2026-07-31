@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { type T_Task_Schedule, E_TASK_SCHEDULE_TYPE } from '@scrapland/data-model'
+import { computed } from 'vue'
 // App
 import { useCronValidation } from '@/composables/cron-validation'
 import type { UiSelectOption } from '@/components/types'
@@ -21,6 +22,18 @@ const typeOptions: Array<UiSelectOption<E_TASK_SCHEDULE_TYPE>> = [
   { label: 'cron', value: E_TASK_SCHEDULE_TYPE.CRON },
 ]
 
+const everyMsError = computed<null | string>(() => {
+  if (schedule.value.type !== E_TASK_SCHEDULE_TYPE.INTERVAL) return null
+
+  console.log({ ms: schedule.value.everyMs })
+  const msValue = schedule.value.everyMs
+  if (isNaN(msValue)) return 'Invalid interval value'
+  if (!isFinite(msValue)) return 'Invalid interval value'
+  if (!msValue) return 'Interval must be a positive number'
+
+  return null
+})
+
 const updateType = (scheduleType: E_TASK_SCHEDULE_TYPE): void => {
   switch (scheduleType) {
     case E_TASK_SCHEDULE_TYPE.MANUAL:
@@ -37,7 +50,7 @@ const updateType = (scheduleType: E_TASK_SCHEDULE_TYPE): void => {
     case E_TASK_SCHEDULE_TYPE.CRON:
       schedule.value = {
         type: E_TASK_SCHEDULE_TYPE.CRON,
-        expression: '0 * * * * *',
+        expression: '0 * * * *',
       }
       break
   }
@@ -69,6 +82,9 @@ const parseEveryMs = (): void => {
       v-if="schedule.type === 'interval'"
       v-model="schedule.everyMs"
       label="Interval (ms)"
+      :attributes="{ type: 'number' }"
+      :has-error="everyMsError !== null"
+      :error="everyMsError"
       @on-blur="parseEveryMs" />
 
     <template v-if="schedule.type === 'cron'">

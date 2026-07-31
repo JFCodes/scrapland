@@ -3,6 +3,7 @@ import {
   E_EXECUTION_STATUS,
   E_AD_ENTITY_TYPE,
   E_TASK_STATUS,
+  E_TASK_TYPE,
   E_AD_STATUS,
 } from '@scrapland/data-model'
 import { type Component, markRaw } from 'vue'
@@ -25,6 +26,7 @@ import {
   Bookmark,
   TagPlus,
   CircleX,
+  ZoomIn,
   BadgeX,
   Clock2,
   Pause,
@@ -61,6 +63,10 @@ export const TASK_SCHEDULE_TYPE_ICONS: Record<E_TASK_SCHEDULE_TYPE, Component> =
   [E_TASK_SCHEDULE_TYPE.INTERVAL]: markRaw(TimerReset),
   [E_TASK_SCHEDULE_TYPE.MANUAL]: markRaw(Hand),
   [E_TASK_SCHEDULE_TYPE.CRON]: markRaw(Clock2),
+}
+
+export const TASK_TYPE_ICONS: Record<E_TASK_TYPE, Component> = {
+  [E_TASK_TYPE.FIND_NEW_ADS]: markRaw(ZoomIn)
 }
 
 export const EXECUTION_STATUS_BADGE_TYPE: Record<E_EXECUTION_STATUS, UiButtonType> = {

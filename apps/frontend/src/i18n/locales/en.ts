@@ -95,13 +95,16 @@ const taskType: Record<E_TASK_TYPE, string> = {
 export default {
   global: {
     all: 'All',
+    allExecutions: 'All executions',
     area: 'Area',
     askingPrice: 'Asking price',
     atDate: 'at {date}',
     buildingTypes: 'Building Types',
     cancel: 'Cancel',
     classify: 'Classify',
+    createTask: 'Create task',
     confirm: 'Confirm',
+    create: 'Create',
     discardChanges: 'Discard changes',
     duration: 'Duration',
     finishedAt: 'Finished at',
@@ -112,6 +115,7 @@ export default {
     save: 'Save',
     schedule: 'Schedule',
     scheduleExecution: 'Schedule execution',
+    select: 'select',
     startedAt: 'Started at',
     status: 'Status',
     target: 'Target',
@@ -132,11 +136,16 @@ export default {
     adsHousingDashboard: {
       sectionByStatusTitle: 'Housing ads by status'
     },
+    executionsByStatus: {
+      title: '{status} executions'
+    },
     executionHistory: {
       title: 'Executions'
+    },
+    adHousingTasks: {
+      title: 'Housing tasks'
     }
   },
-  components: {},
   entities: {
     task: {
       unsavedChanges: `Some changes in this task aren't saved`,
@@ -167,6 +176,12 @@ export default {
     latestExecutions: {
       title: 'Latests executions'
     },
+    taskHousingFindNew: {
+      equivalentMessage: {
+        message: 'There is already a task created with similar fields. Check if you want to create another one that might have significant overlap with the existing task',
+        title: 'You already have a similar task',
+      }
+    }
   },
   toasts: {
     executionQueued: {
@@ -192,6 +207,11 @@ export default {
     patchAdError: {
       title: 'Failed to update ad',
       message: `Failed to save changes to add with id '{adId}'`
+    }
+  },
+  modals: {
+    pickTaskType: {
+      title: 'Select task type'
     }
   },
   enums: {

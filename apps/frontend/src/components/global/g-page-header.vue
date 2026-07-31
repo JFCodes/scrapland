@@ -2,16 +2,14 @@
 import type { RouteLocationRaw } from 'vue-router'
 import type { Component } from 'vue'
 // App
+import { AD_ENTITY_ICON } from '@/components/constants'
 import { useRouterUtils } from '@/composables/router-utils'
 import { useTooltips } from '@/composables/tooltips'
 import { E_ROUTER_PAGES } from '@/router/enums'
 // Components
 import CompUiIconButton from '@/components/ui/ui-icon-button.vue'
 import { TvMinimalPlay, MonitorCog, BellDot, Home } from '@lucide/vue'
-
-// import { useDiscoveryTasksStore } from '@/stores/discovery-tasks'
-// import DiscoverTaskActiveExecution from '@/components/entities/discovery-task/active-execution.vue'
-// import DiscoverTaskLastExecution from '@/components/entities/discovery-task/last-execution.vue'
+import { E_AD_ENTITY_TYPE } from '@scrapland/data-model'
 
 type Link = {
   to: RouteLocationRaw,
@@ -23,11 +21,16 @@ type Link = {
 const { routeIsActive } = useRouterUtils()
 const { linkTooltip } = useTooltips()
 
-const links: Array<Link> = [
+const globalLinks: Array<Link> = [
   { name: E_ROUTER_PAGES.HOME, icon: Home, to: { name: E_ROUTER_PAGES.HOME } },
   { name: E_ROUTER_PAGES.EXECUTIONS, icon: TvMinimalPlay, to: { name: E_ROUTER_PAGES.EXECUTIONS } },
   { name: E_ROUTER_PAGES.NOTIFICATIONS, icon: MonitorCog, to: { name: E_ROUTER_PAGES.NOTIFICATIONS } },
   { name: E_ROUTER_PAGES.SETTINGS, icon: BellDot, to: { name: E_ROUTER_PAGES.SETTINGS } },
+]
+
+const adEntityTypeLinks: Array<Link> = [
+  { name: E_ROUTER_PAGES.HOUSING, icon: AD_ENTITY_ICON[E_AD_ENTITY_TYPE.HOUSING], to: { name: E_ROUTER_PAGES.HOUSING } },
+  { name: E_ROUTER_PAGES.VEHICLES, icon: AD_ENTITY_ICON[E_AD_ENTITY_TYPE.VEHICLE], to: { name: E_ROUTER_PAGES.VEHICLES } },
 ]
 
 </script>
@@ -41,6 +44,13 @@ const links: Array<Link> = [
       </p>
 
       <div class="header__content-middle --group">
+        <CompUiIconButton
+          v-for="link in adEntityTypeLinks"
+          :type="routeIsActive(link.name) ? 'light' : 'link'"
+          :link-to="link.to"
+          :icon="link.icon"
+          :key="link.name"
+          @mouseenter="(event: MouseEvent) => linkTooltip(event, link.name)" />
         <!-- <DiscoverTaskActiveExecution
           v-if="discoveryTasksStore.activeTaskExecution"
           :execution="discoveryTasksStore.activeTaskExecution" /> -->
@@ -53,7 +63,7 @@ const links: Array<Link> = [
 
       <div class="--group">
         <CompUiIconButton
-          v-for="link in links"
+          v-for="link in globalLinks"
           :type="routeIsActive(link.name) ? 'light' : 'link'"
           :link-to="link.to"
           :icon="link.icon"

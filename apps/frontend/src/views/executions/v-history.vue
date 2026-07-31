@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import type { T_Execution, T_Task } from '@scrapland/data-model'
 import { computed } from 'vue'
 // App
 import { useExecutionsStore } from '@/stores/executions'
 import { useTasksStore } from '@/stores/tasks'
 // Components
+import CompLayoutVerticalScrollContent from '@/components/layouts/vertical-scroll-content.vue'
 import CompEntityExecutionCard from '@/components/entity/executions/execution-card.vue'
-import CompLayoutCenterContainer from '@/components/layouts/center-container.vue'
-import type { T_Execution, T_Task } from '@scrapland/data-model'
+import CompUiTitleMain from '@/components/ui/ui-title-main.vue'
 
 type ExecutionAndTask = { execution: T_Execution, task: T_Task }
 
@@ -22,38 +23,22 @@ const executionsAnsTask = computed<Array<ExecutionAndTask>>(() => {
 
   return pairs
 })
-
 </script>
 
 <template>
-  <CompLayoutCenterContainer :width="800">
-    <div class="layout">
-      <h3 class="--text-white --text-lg --font-bold --mb-md">
-        {{ $t('pages.executionHistory.title') }}
-      </h3>
+  <CompLayoutVerticalScrollContent :max-width="800">
+    <template #top>
+      <CompUiTitleMain :title="$t('pages.executionHistory.title')" />
+    </template>
 
-      <div class="layout__list --group-v">
-        <CompEntityExecutionCard
-          v-for="pair in executionsAnsTask"
-          :execution="pair.execution"
-          :key="pair.execution._id"
-          :task="pair.task" />
-      </div>
+    <div class="--group-v">
+      <CompEntityExecutionCard
+        v-for="pair in executionsAnsTask"
+        show-task-data
+        :execution="pair.execution"
+        :key="pair.execution._id"
+        :task="pair.task" />
     </div>
-  </CompLayoutCenterContainer>
+
+  </CompLayoutVerticalScrollContent>
 </template>
-
-<style lang="scss">
-.layout {
-  flex-direction: column;
-  overflow: hidden;
-  display: flex;
-  height: 100%;
-
-  &__list {
-    padding-right: var(--s-lg);
-    overflow-y: auto;
-    flex: 1;
-  }
-}
-</style>
