@@ -118,6 +118,7 @@ export default {
     noParking: 'No parking',
     notes: 'Notes',
     optional: 'Optional',
+    priceRange: 'Price range',
     rooms: 'Rooms',
     save: 'Save',
     schedule: 'Schedule',

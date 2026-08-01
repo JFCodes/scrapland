@@ -10,7 +10,13 @@ export async function controller(req: Request, res: Response) {
   let insert: T_Task_Ad_Housing_FindNew_Insert
   try {
     const minIntervalEveryMs = AppSettings.settings.TASKS_SCHEDULE_INTERVAL_MINIMUM_VALUE
-    insert = F_PARSER_TaskAdHousingInsertPayload(req.body, { minIntervalEveryMs })
+    const maxPriceValue = AppSettings.settings.HOUSING_TASK_PRICE_MAX_VALUE
+    
+    insert = F_PARSER_TaskAdHousingInsertPayload(req.body, {
+      minIntervalEveryMs,
+      maxPriceValue
+    })
+    
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)
     return taskErrors.failedToCreate({ req, res, errorMessage })

@@ -5,17 +5,21 @@ import {
   E_TARGET,
 } from '@scrapland/data-model'
 // App
-import { isNonEmptyString,  isEnumValue, isArrayOf, isTaskSchedule } from '../validators'
+import { isNonEmptyString,  isEnumValue, isArrayOf, isTaskSchedule, isNumber } from '../validators'
 
 type Options = {
   minIntervalEveryMs: number
+  maxPriceValue: number
 }
 
 // TODO: custom target validations
 // Example: some targets don't allow not having building types, or only allow one, etc...
 
 export function F_PARSER_TaskAdHousingInsertPayload (body: any, options: Options): T_Task_Ad_Housing_FindNew_Insert {
+  const { maxPriceValue } = options
+
   if (typeof body !== 'object') throw Error('body is not an object structure')
+
 
   const _task_target = isEnumValue(body._task_target, E_TARGET)
   if (!_task_target) throw Error('Missing or invalid target')
@@ -35,11 +39,17 @@ export function F_PARSER_TaskAdHousingInsertPayload (body: any, options: Options
   // Optional - can be null
   const _task_notes = isNonEmptyString(body._task_notes)
 
+  const _price_min = isNumber(body._price_min, { minValue: 0 })
+  const _price_max = isNumber(body._price_max, { minValue: _price_min ?? 1, maxValue: maxPriceValue })
+
   return {
     _task_adEntityType,
     _task_schedule,
     _task_target,
     _task_notes,
+    _price_min,
+    _price_max,
+    
     buildingTypes,
     location,
   }

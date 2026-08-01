@@ -1,11 +1,13 @@
 import { sqliteTable, text} from 'drizzle-orm/sqlite-core'
 // App
-import { getTaskBaseSchemaFields } from '../base-schema-fields'
 import { E_AD_ENTITY_TYPE, type T_Ad_Housing_BuildingType, type T_Ad_Housing_Operation } from '../../ads'
+import { getTaskPriceSchemaFields} from '../_price-schema-fields'
+import { getTaskBaseSchemaFields } from '../_base-schema-fields'
 import { E_TASK_TYPE } from '../enums'
 
 export const DBSchema_Task_Ad_Housing_FindNew = sqliteTable('task-ad-housing-find-new', {
   ...getTaskBaseSchemaFields(E_AD_ENTITY_TYPE.HOUSING, E_TASK_TYPE.FIND_NEW_ADS),
+  ...getTaskPriceSchemaFields(),
   buildingTypes: text('buildingTypes', { mode: 'json' }).$type<Array<T_Ad_Housing_BuildingType>>(),
   operation: text('operation').$type<T_Ad_Housing_Operation>(),
   location: text('location').notNull(),  

@@ -12,6 +12,7 @@ import CompPanelTaskHousingFindNewCreateHeader from '@/components/panels/entitie
 import CompEntityTaskHousingBuildingTypesField from '@/components/entity/tasks/housing/fields/field-building-type.vue'
 import CompEntityTaskHousingLocationField from '@/components/entity/tasks/housing/fields/field-location.vue'
 import CompPanelTaskHousingFindNewEdit from '@/components/panels/entities/task-housing/find-new-edit.vue'
+import CompEntityTaskMinMaxPriceField from '@/components/entity/tasks/fields/field-min-max-price.vue'
 import CompEntityTargetFieldsTarget from '@/components/entity/targets/fields/target-field.vue'
 import CompEntityTaskScheduleField from '@/components/entity/tasks/fields/field-schedule.vue'
 import CompEntityTaskFieldNotes from '@/components/entity/tasks/fields/field-notes.vue'
@@ -31,6 +32,8 @@ const {
   fieldTargetError,
   fieldLocation,
   fieldSchedule,
+  fieldPriceMin,
+  fieldPriceMax,
   fieldTarget,
   fieldNotes,
   isCreating,
@@ -101,6 +104,11 @@ const beforeClose = async (): Promise<boolean> => {
 
       <CompEntityTaskScheduleField
         v-model="fieldSchedule"
+        class="--mb-sm" />
+
+      <CompEntityTaskMinMaxPriceField
+        v-model:price-min="fieldPriceMin"
+        v-model:price-max="fieldPriceMax"
         class="--mb-sm" />
 
       <CompEntityTaskFieldNotes

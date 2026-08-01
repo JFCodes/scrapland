@@ -5,9 +5,7 @@ import type { Request, Response } from 'express'
 import { db } from '../../database'
 
 export function controller(_: Request, res: Response<T_API_RESPONSE_Tasks>) {
-  const housingFindNew = db.select().from(DBSchema_Task_Ad_Housing_FindNew).all()
-
-  const tasks = [...housingFindNew]
+  const tasks = db.select().from(DBSchema_Task_Ad_Housing_FindNew).all()
 
   res.status(200).json(tasks)
 }

@@ -9,6 +9,7 @@ import { useModals } from '@/composables/modals'
 import PanelTaskHousingFindNewEditHeader from '@/components/panels/entities/task-housing/find-new-edit/panel-header.vue'
 import CompEntityTaskHousingBuildingTypesField from '@/components/entity/tasks/housing/fields/field-building-type.vue'
 import CompEntityTaskHousingLocationField from '@/components/entity/tasks/housing/fields/field-location.vue'
+import CompEntityTaskMinMaxPriceField from '@/components/entity/tasks/fields/field-min-max-price.vue'
 import CompEntityTaskScheduleField from '@/components/entity/tasks/fields/field-schedule.vue'
 import CompEntityTaskFieldNotes from '@/components/entity/tasks/fields/field-notes.vue'
 import CompPanelsOverlay from '@/components/panels/p-overlay.vue'
@@ -26,6 +27,8 @@ const {
   editableSchedule,
   isChangingStatus,
   editableLocation,
+  editablePriceMin,
+  editablePriceMax,
   editableStatus,
   locationError,
   editableNotes,
@@ -67,7 +70,6 @@ const beforeClose = async (): Promise<boolean> => {
 
 <template>
   <CompPanelsOverlay
-    close-on-overlay-click
     show-close-icon
     ref="overlayRef"
     :before-close-guard="beforeClose"
@@ -94,6 +96,11 @@ const beforeClose = async (): Promise<boolean> => {
       :error="buildingTypesError" />
 
     <CompEntityTaskScheduleField v-model="editableSchedule" class="--mb-sm" />
+
+    <CompEntityTaskMinMaxPriceField
+      v-model:price-min="editablePriceMin"
+      v-model:price-max="editablePriceMax"
+      class="--mb-sm" />
 
     <CompEntityTaskFieldNotes v-model="editableNotes" />
 

@@ -1,5 +1,5 @@
+import { F_Task_ScheduleChanged, F_GetTaskPriceRange } from '@scrapland/functions'
 import { type MaybeRefOrGetter, computed, ref, toValue } from 'vue'
-import { F_Task_ScheduleChanged } from '@scrapland/functions'
 import {
   E_AD_ENTITY_TYPE,
   E_TASK_STATUS,
@@ -31,6 +31,8 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
   // EditableFields
   const editableBuildingTypes = ref<Array<T_Ad_Housing_BuildingType>>(taskValue.buildingTypes ?? [])
   const editableSchedule = ref(JSON.parse(JSON.stringify(taskValue._task_schedule)) as T_Task_Schedule)
+  const editablePriceMax = ref(taskValue._price_max ?? Infinity)
+  const editablePriceMin = ref(taskValue._price_min ?? 0)
   const editableStatus = ref(taskValue._task_status)
   const editableLocation = ref(taskValue.location)
   const editableNotes = ref(taskValue._task_notes)
@@ -65,17 +67,27 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
     if (compareToBuildingTypes !== buildingTypes) return true
     if (editableLocation.value !== compareTo.location) return true
     if (editableNotes.value !== compareTo._task_notes) return true
+
+    const nullablePriceMin = editablePriceMin.value === 0 ? null : editablePriceMin.value
+    if (nullablePriceMin !== compareTo._price_min) return true
+
+    const nullablePriceMax = isFinite(editablePriceMax.value) ? editablePriceMax.value : null
+    if (nullablePriceMax !== compareTo._price_max) return true
   })
 
   const saveChanges = async (): Promise<null | T_Task_Ad_Housing_FindNew> => {
     const taskValue = toValue(task)
     isSaving.value = true
 
+    const range = F_GetTaskPriceRange(editablePriceMin.value, editablePriceMax.value)
+
     const payload: T_Task_Ad_Housing_FindNew_Patch = {
       buildingTypes: editableBuildingTypes.value,
       _task_schedule: editableSchedule.value,
       _task_notes: editableNotes.value,
       location: editableLocation.value,
+      _price_min: range.min,
+      _price_max: range.max,
     }
 
     return await API.tasks.housing.findNew
@@ -134,6 +146,8 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
     isChangingStatus,
     editableSchedule,
     editableLocation,
+    editablePriceMin,
+    editablePriceMax,
     editableStatus,
     locationError,
     editableNotes,

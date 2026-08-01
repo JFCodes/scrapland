@@ -58,3 +58,5 @@ export type UiIconToggleItem<K extends string> = {
 export type UiTableHeader = {
   label: string
 }
+
+export type UiValueRange = [number, number]

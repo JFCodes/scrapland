@@ -1,3 +1,5 @@
+import { F_GetTaskPriceRange } from '@scrapland/functions'
+import { computed, ref } from 'vue'
 import {
   type T_Task_Ad_Housing_FindNew_Insert,
   type T_Task_Ad_Housing_FindNew,
@@ -7,7 +9,6 @@ import {
   E_TARGET,
   E_AD_ENTITY_TYPE,
 } from '@scrapland/data-model'
-import { computed, ref } from 'vue'
 // App
 import { useTaskScheduleValidation } from '@/composables/fields/task-schedule/validation'
 import { useApiErrorHandling } from '@/composables/api-error-handling'
@@ -24,7 +25,9 @@ export function useTaskHousingFindNewCreate () {
   const fieldSchedule = ref<T_Task_Schedule>({ type: E_TASK_SCHEDULE_TYPE.MANUAL })
   const fieldTarget = ref<null | E_TARGET>(null)
   const fieldNotes = ref<null | string>(null)
+  const fieldPriceMax = ref<number>(Infinity)
   const fieldLocation = ref<string>('')
+  const fieldPriceMin = ref<number>(0)
 
   const { isValid: fieldScheduleIsValid } = useTaskScheduleValidation(fieldSchedule)
 
@@ -65,11 +68,15 @@ export function useTaskHousingFindNewCreate () {
     if (!isValid.value) return null
     if (!fieldTarget.value) return null
 
+    const priceRange = F_GetTaskPriceRange(fieldPriceMin.value, fieldPriceMax.value)
+
     const payload: T_Task_Ad_Housing_FindNew_Insert = {
       _task_adEntityType: E_AD_ENTITY_TYPE.HOUSING,
       _task_schedule: fieldSchedule.value,
       _task_target: fieldTarget.value,
       _task_notes: fieldNotes.value,
+      _price_min: priceRange.min,
+      _price_max: priceRange.max,
       buildingTypes: fieldBuildingTypes.value,
       location: fieldLocation.value,
     }
@@ -93,6 +100,8 @@ export function useTaskHousingFindNewCreate () {
     fieldTargetError,
     fieldSchedule,
     fieldLocation,
+    fieldPriceMin,
+    fieldPriceMax,
     fieldTarget,
     isCreating,
     fieldNotes,
