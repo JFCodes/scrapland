@@ -10,6 +10,7 @@ import PanelTaskHousingFindNewEditHeader from '@/components/panels/entities/task
 import CompEntityTaskHousingBuildingTypesField from '@/components/entity/tasks/housing/fields/field-building-type.vue'
 import CompEntityTaskHousingLocationField from '@/components/entity/tasks/housing/fields/field-location.vue'
 import CompEntityTaskScheduleField from '@/components/entity/tasks/fields/field-schedule.vue'
+import CompEntityTaskFieldNotes from '@/components/entity/tasks/fields/field-notes.vue'
 import CompPanelsOverlay from '@/components/panels/p-overlay.vue'
 import CompUiButton from '@/components/ui/ui-button.vue'
 
@@ -27,6 +28,7 @@ const {
   editableLocation,
   editableStatus,
   locationError,
+  editableNotes,
   adEntityType,
   hasChanges,
   isSaving,
@@ -34,14 +36,19 @@ const {
 } = useTaskHousingFindNewEdit(() => props.task)
 
 const overlayRef = ref<null | OverLayExposed>(null)
+let hasMadeChanges = false
 
 const save = async (): Promise<void> => {
   const saved = await saveChanges()
-  if (saved) overlayRef.value?.closePanel()
+  if (!saved) return
+
+  hasMadeChanges = true
+  overlayRef.value?.closePanel()
 }
 
 const beforeClose = async (): Promise<boolean> => {
   if (!hasChanges.value) return true
+  if (hasMadeChanges) return true
 
   const { resolution } = prompt({
     title: t('sentences.youHaveUnsavedChanges'),
@@ -86,7 +93,9 @@ const beforeClose = async (): Promise<boolean> => {
       class="--mb-sm"
       :error="buildingTypesError" />
 
-    <CompEntityTaskScheduleField v-model="editableSchedule" />
+    <CompEntityTaskScheduleField v-model="editableSchedule" class="--mb-sm" />
+
+    <CompEntityTaskFieldNotes v-model="editableNotes" />
 
     <template #footer="{ closePanel }">
       <CompUiButton type="link" :label="t('global.discardChanges')" @click="closePanel" />

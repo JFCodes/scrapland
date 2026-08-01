@@ -33,6 +33,7 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
   const editableSchedule = ref(JSON.parse(JSON.stringify(taskValue._task_schedule)) as T_Task_Schedule)
   const editableStatus = ref(taskValue._task_status)
   const editableLocation = ref(taskValue.location)
+  const editableNotes = ref(taskValue._task_notes)
 
   const { isValid: fieldScheduleIsValid } = useTaskScheduleValidation(editableSchedule)
 
@@ -63,6 +64,7 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
     if (F_Task_ScheduleChanged(compareTo._task_schedule, editableSchedule.value)) return true
     if (compareToBuildingTypes !== buildingTypes) return true
     if (editableLocation.value !== compareTo.location) return true
+    if (editableNotes.value !== compareTo._task_notes) return true
   })
 
   const saveChanges = async (): Promise<null | T_Task_Ad_Housing_FindNew> => {
@@ -72,6 +74,7 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
     const payload: T_Task_Ad_Housing_FindNew_Patch = {
       buildingTypes: editableBuildingTypes.value,
       _task_schedule: editableSchedule.value,
+      _task_notes: editableNotes.value,
       location: editableLocation.value,
     }
 
@@ -133,6 +136,7 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
     editableLocation,
     editableStatus,
     locationError,
+    editableNotes,
     adEntityType,
     hasChanges,
     isSaving,

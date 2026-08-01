@@ -1,10 +1,16 @@
 <script setup lang="ts">
-defineProps<{ label: string }>()
+// Aoo
+import { useAppI18n } from '@/composables/use-i18n'
+
 defineSlots<{
   default(props: { id: string }): void
   'before-label'(): void
   'after-label'(): void
 }>()
+
+defineProps<{ label: string, optional?: boolean }>()
+
+const { t } = useAppI18n()
 
 const internalId = crypto.randomUUID()
 </script>
@@ -12,8 +18,14 @@ const internalId = crypto.randomUUID()
 <template>
   <div class="form-field">
     <label class="form-field__label --font-bold --uppercase" :for="internalId">
+
       <slot name="before-label"></slot>
+
       {{ label }}
+      <span v-if="optional" class="--text-xs">
+        ({{ t('global.optional') }})
+      </span>
+
       <slot name="after-label"></slot>
     </label>
 

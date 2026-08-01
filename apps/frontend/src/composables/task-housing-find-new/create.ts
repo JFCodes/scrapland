@@ -23,6 +23,7 @@ export function useTaskHousingFindNewCreate () {
   const fieldBuildingTypes = ref<Array<T_Ad_Housing_BuildingType>>([])
   const fieldSchedule = ref<T_Task_Schedule>({ type: E_TASK_SCHEDULE_TYPE.MANUAL })
   const fieldTarget = ref<null | E_TARGET>(null)
+  const fieldNotes = ref<null | string>(null)
   const fieldLocation = ref<string>('')
 
   const { isValid: fieldScheduleIsValid } = useTaskScheduleValidation(fieldSchedule)
@@ -66,9 +67,10 @@ export function useTaskHousingFindNewCreate () {
 
     const payload: T_Task_Ad_Housing_FindNew_Insert = {
       _task_adEntityType: E_AD_ENTITY_TYPE.HOUSING,
-      buildingTypes: fieldBuildingTypes.value,
       _task_schedule: fieldSchedule.value,
       _task_target: fieldTarget.value,
+      _task_notes: fieldNotes.value,
+      buildingTypes: fieldBuildingTypes.value,
       location: fieldLocation.value,
     }
 
@@ -93,6 +95,7 @@ export function useTaskHousingFindNewCreate () {
     fieldLocation,
     fieldTarget,
     isCreating,
+    fieldNotes,
     isValid,
   }
 }

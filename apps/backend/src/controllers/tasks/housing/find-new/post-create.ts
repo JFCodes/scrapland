@@ -1,5 +1,5 @@
 import { DBSchema_Task_Ad_Housing_FindNew, E_ENTITY_TYPE, T_Task_Ad_Housing_FindNew_Insert } from '@scrapland/data-model'
-import { F_TaskAdHousing_ValidateInsertPayload } from '@scrapland/functions'
+import { F_PARSER_TaskAdHousingInsertPayload } from '@scrapland/functions'
 import type { Request, Response } from 'express'
 // App
 import { failedToInsertEntity, taskErrors } from '../../../../utils/send-error-response'
@@ -10,7 +10,7 @@ export async function controller(req: Request, res: Response) {
   let insert: T_Task_Ad_Housing_FindNew_Insert
   try {
     const minIntervalEveryMs = AppSettings.settings.TASKS_SCHEDULE_INTERVAL_MINIMUM_VALUE
-    insert = F_TaskAdHousing_ValidateInsertPayload(req.body, { minIntervalEveryMs })
+    insert = F_PARSER_TaskAdHousingInsertPayload(req.body, { minIntervalEveryMs })
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)
     return taskErrors.failedToCreate({ req, res, errorMessage })

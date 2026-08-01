@@ -116,6 +116,8 @@ export default {
     location: 'Location',
     createdAt: 'Created ad',
     noParking: 'No parking',
+    notes: 'Notes',
+    optional: 'Optional',
     rooms: 'Rooms',
     save: 'Save',
     schedule: 'Schedule',

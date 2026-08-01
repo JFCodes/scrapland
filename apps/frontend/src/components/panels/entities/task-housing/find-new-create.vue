@@ -14,6 +14,7 @@ import CompEntityTaskHousingLocationField from '@/components/entity/tasks/housin
 import CompPanelTaskHousingFindNewEdit from '@/components/panels/entities/task-housing/find-new-edit.vue'
 import CompEntityTargetFieldsTarget from '@/components/entity/targets/fields/target-field.vue'
 import CompEntityTaskScheduleField from '@/components/entity/tasks/fields/field-schedule.vue'
+import CompEntityTaskFieldNotes from '@/components/entity/tasks/fields/field-notes.vue'
 import CompPanelsOverlay from '@/components/panels/p-overlay.vue'
 import CompUiMessage from '@/components/ui/ui-message.vue'
 import CompUiButton from '@/components/ui/ui-button.vue'
@@ -31,6 +32,7 @@ const {
   fieldLocation,
   fieldSchedule,
   fieldTarget,
+  fieldNotes,
   isCreating,
   isValid,
 } = useTaskHousingFindNewCreate()
@@ -99,7 +101,12 @@ const beforeClose = async (): Promise<boolean> => {
 
       <CompEntityTaskScheduleField
         v-model="fieldSchedule"
-        class="--md-sm" />
+        class="--mb-sm" />
+
+      <CompEntityTaskFieldNotes
+        v-model="fieldNotes"
+        class="--mb-sm" />
+
     </template>
 
 
