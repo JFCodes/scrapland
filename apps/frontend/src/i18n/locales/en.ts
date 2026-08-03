@@ -1,5 +1,6 @@
 import {
   type T_Ad_Housing_BuildingType,
+  type T_Ad_Housing_Operation,
   E_TASK_SCHEDULE_TYPE,
   E_EXECUTION_STATUS,
   E_AD_ENTITY_TYPE,
@@ -91,6 +92,11 @@ const adHousingBuildingTypes: Record<T_Ad_Housing_BuildingType, string> = {
   'apartment': 'Apartment',
 }
 
+const adHousingOperation: Record<T_Ad_Housing_Operation, string> = {
+  rent: 'Rent',
+  buy: 'Buy'
+}
+
 const taskType: Record<E_TASK_TYPE, string> = {
   [E_TASK_TYPE.FIND_NEW_ADS]: 'find new ads'
 }
@@ -117,6 +123,7 @@ export default {
     createdAt: 'Created ad',
     noParking: 'No parking',
     notes: 'Notes',
+    operation: 'Operation',
     optional: 'Optional',
     priceRange: 'Price range',
     rooms: 'Rooms',
@@ -240,6 +247,7 @@ export default {
   },
   enums: {
     adHousingBuildingTypes,
+    adHousingOperation,
     taskScheduleType,
     executionStatus,
     adEntityType,

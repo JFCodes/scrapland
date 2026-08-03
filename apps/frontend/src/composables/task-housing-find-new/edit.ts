@@ -6,6 +6,7 @@ import {
   type T_Task_Ad_Housing_FindNew_Patch,
   type T_Ad_Housing_BuildingType,
   type T_Task_Ad_Housing_FindNew,
+  type T_Ad_Housing_Operation,
   type T_Task_Schedule,
 } from '@scrapland/data-model'
 // App
@@ -31,6 +32,7 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
   // EditableFields
   const editableBuildingTypes = ref<Array<T_Ad_Housing_BuildingType>>(taskValue.buildingTypes ?? [])
   const editableSchedule = ref(JSON.parse(JSON.stringify(taskValue._task_schedule)) as T_Task_Schedule)
+  const editableOperation = ref<null | T_Ad_Housing_Operation>(taskValue.operation)
   const editablePriceMax = ref(taskValue._price_max ?? Infinity)
   const editablePriceMin = ref(taskValue._price_min ?? 0)
   const editableStatus = ref(taskValue._task_status)
@@ -64,9 +66,10 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
     const compareToBuildingTypes = [...compareTo.buildingTypes ?? []].sort().join(',')
 
     if (F_Task_ScheduleChanged(compareTo._task_schedule, editableSchedule.value)) return true
-    if (compareToBuildingTypes !== buildingTypes) return true
+    if (editableOperation.value !== compareTo.operation) return true
     if (editableLocation.value !== compareTo.location) return true
     if (editableNotes.value !== compareTo._task_notes) return true
+    if (compareToBuildingTypes !== buildingTypes) return true
 
     const nullablePriceMin = editablePriceMin.value === 0 ? null : editablePriceMin.value
     if (nullablePriceMin !== compareTo._price_min) return true
@@ -84,6 +87,7 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
     const payload: T_Task_Ad_Housing_FindNew_Patch = {
       buildingTypes: editableBuildingTypes.value,
       _task_schedule: editableSchedule.value,
+      operation: editableOperation.value,
       _task_notes: editableNotes.value,
       location: editableLocation.value,
       _price_min: range.min,
@@ -143,6 +147,7 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
     saveChanges,
     editableBuildingTypes,
     buildingTypesError,
+    editableOperation,
     isChangingStatus,
     editableSchedule,
     editableLocation,

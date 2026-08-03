@@ -19,8 +19,10 @@ async function seedRemaxPortugal (): Promise<void> {
     _task_target: E_TARGET.REMAX_PORTUGAL,
     _task_schedule: { type: E_TASK_SCHEDULE_TYPE.MANUAL },
     _task_status: E_TASK_STATUS.PUBLISHED,
+    _price_min: 200_000,
+    _price_max: 420_000,
     buildingTypes: ['single-house'],
     location: 'leiria/leiria/r',
-    operation: 'buy'
+    operation: 'buy',
   })
 }

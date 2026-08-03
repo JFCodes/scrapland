@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { E_ENTITY_TYPE, E_TASK_STATUS } from '@scrapland/data-model'
+import { F_GetFiltered } from '@scrapland/functions'
 import { computed, ref } from 'vue'
 // App
 import { useCreateEntityTaskLaunch } from '@/composables/create-entity/tasks/launch'
@@ -21,8 +22,29 @@ const showDeleted = ref(false)
 
 const filteredTasks = computed(() => {
   if (showDeleted.value) return tasksStore.tasks
-  return tasksStore.housingFindNewTasks.filter(t => t._task_status !== E_TASK_STATUS.DELETED)
+
+  return F_GetFiltered(tasksStore.housingFindNewTasks, {
+    value: E_TASK_STATUS.DELETED,
+    comparison: 'not-equal',
+    key: '_task_status',
+  })
 })
+
+const deletedCount = computed(() => {
+  return F_GetFiltered(tasksStore.housingFindNewTasks, {
+    value: E_TASK_STATUS.DELETED,
+    comparison: 'equal',
+    key: '_task_status',
+  }).length
+})
+
+const deletedLabel = computed<string>(() => {
+  const deletedText = t('global.showDeleted')
+  return deletedCount.value > 0
+    ? `${deletedText} (${deletedCount.value})`
+    : deletedText
+})
+
 </script>
 <template>
   <CompLayoutCenterContainer>
@@ -33,7 +55,7 @@ const filteredTasks = computed(() => {
           <CompUiTitleMain :title="$t(`enums.entityTypes.${E_ENTITY_TYPE.TASK}`)" />
 
           <div class="--group">
-            <CompFormCheckbox v-model="showDeleted" :label="t('global.showDeleted')" />
+            <CompFormCheckbox v-model="showDeleted" :label="deletedLabel" />
             <CompUiButton
               type="info"
               :label="t('global.createTask')"

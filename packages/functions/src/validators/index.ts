@@ -1,5 +1,6 @@
 export { isNonEmptyString } from './is-non-empty-string'
 export { isCronExpression } from './is-cron-expression'
+export { isValueOfArray } from './is-value-of-array'
 export { isTaskSchedule } from './is-task-schedule'
 export { isArrayOfEnum } from './is-array-of-enum'
 export { isEnumValue } from './is-enum-value'

@@ -19,6 +19,5 @@ export async function ReturnOutcomeWithError<T> (options: Options<T>): Promise<T
     : (fallback || String(error))
 
   await browser.close()
-
   return outcome.withError(errorType, message)
 }

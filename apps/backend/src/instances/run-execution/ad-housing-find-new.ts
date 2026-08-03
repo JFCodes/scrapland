@@ -1,10 +1,14 @@
+
+import {
+  TargetExecution_ImovirtualPortugal_Housing_FindNew,
+  TargetExecution_RemaxPortugal_Housing_FindNew
+} from '@scrapland/targets'
 import {
   type T_RunOutcome_Ad_Housing_FindNew,
   type T_Task_Ad_Housing_FindNew,
   type T_RunOutcome,
   E_TARGET,
 } from '@scrapland/data-model'
-import { TargetExecution_RemaxPortugal_Housing_FindNew } from '@scrapland/targets'
 // App
 import { upsertAdsHousing } from '../../models/ad/upsert-ads-housing'
 
@@ -16,16 +20,15 @@ export async function ExecuteAdHousingFindNew (task: T_Task_Ad_Housing_FindNew):
 
   const outcome =  await executionFunction(task)
 
-  // Upsert ads!!!
+  // Upsert ads
   await upsertAdsHousing(outcome.data.ads)
-
-  
 
   return outcome
 }
 
 function getTargetFunction (target: E_TARGET): null | ExecutionFunction {
   switch (target) {
+    case E_TARGET.IMOVIRTUAL_PORTUGAL: return TargetExecution_ImovirtualPortugal_Housing_FindNew
     case E_TARGET.REMAX_PORTUGAL: return TargetExecution_RemaxPortugal_Housing_FindNew
     default: return null
   }

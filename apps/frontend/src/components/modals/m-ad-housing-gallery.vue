@@ -11,7 +11,11 @@ defineProps<ModalAdHousingGalleryProps & InjectedProps<null>>()
 </script>
 
 <template>
-  <CompModalBase close-on-escape-press :width="1400" @close="closeModal(null)">
+  <CompModalBase
+    close-on-escape-press
+    :width="1400"
+    @overlay-click="closeModal(null)"
+    @close="closeModal(null)">
     <template #content>
 
       <div class="close --pointer" @click="closeModal(null)">

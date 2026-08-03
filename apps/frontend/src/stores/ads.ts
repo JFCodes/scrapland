@@ -1,14 +1,14 @@
-import type { T_Ad_Housing, T_Ad_Housing_Patch, T_Execution } from '@scrapland/data-model'
+import type { T_Ad_Housing, T_Ad_Housing_Patch } from '@scrapland/data-model'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 // App
+import { useApiErrorHandling } from '@/composables/api-error-handling'
 import { usePaginated } from '@/composables/paginated'
 import { useAppI18n } from '@/composables/use-i18n'
-import { useToastsStore } from '@/stores/toasts'
 import { API } from '@/api'
 
 export const useAdsStore = defineStore('ads', () => {
-  const toastsStore = useToastsStore()
+  const { onApiError } = useApiErrorHandling()
   const { t } = useAppI18n()
 
   const adsHousing = ref<Array<T_Ad_Housing>>([])
@@ -25,12 +25,8 @@ export const useAdsStore = defineStore('ads', () => {
     return API.ads.housing
       .patch(adId, payload)
       .then(result => updateAdHousing(result))
-      .catch(() => {
-        toastsStore.launch({
-          messages: [t('toasts.patchAdError.message')],
-          title: t('toasts.patchAdError.title'),
-          type: 'danger',
-        })
+      .catch(error => {
+        onApiError(error)
         return null
       })
   }

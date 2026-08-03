@@ -12,7 +12,7 @@ const { t } = useAppI18n()
 </script>
 
 <template>
-  <table class="--base-table --base-table--fixed">
+  <table class="--base-table">
     <thead>
       <tr>
         <th>#</th>

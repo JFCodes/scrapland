@@ -1,11 +1,19 @@
 import {
   type T_Task_Ad_Housing_FindNew_Insert,
   CONST_T_AD_HOUSING_BUILDING_TYPE,
+  CONST_T_AD_HOUSING_OPERATION,
   E_AD_ENTITY_TYPE,
   E_TARGET,
 } from '@scrapland/data-model'
 // App
-import { isNonEmptyString,  isEnumValue, isArrayOf, isTaskSchedule, isNumber } from '../validators'
+import {
+  isNonEmptyString,
+  isTaskSchedule,
+  isValueOfArray,
+  isEnumValue,
+  isArrayOf,
+  isNumber,
+} from '../validators'
 
 type Options = {
   minIntervalEveryMs: number
@@ -38,6 +46,7 @@ export function F_PARSER_TaskAdHousingInsertPayload (body: any, options: Options
 
   // Optional - can be null
   const _task_notes = isNonEmptyString(body._task_notes)
+  const operation = isValueOfArray(body.operation, CONST_T_AD_HOUSING_OPERATION)
 
   const _price_min = isNumber(body._price_min, { minValue: 0 })
   const _price_max = isNumber(body._price_max, { minValue: _price_min ?? 1, maxValue: maxPriceValue })
@@ -51,6 +60,7 @@ export function F_PARSER_TaskAdHousingInsertPayload (body: any, options: Options
     _price_max,
     
     buildingTypes,
+    operation,
     location,
   }
 }

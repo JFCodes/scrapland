@@ -10,6 +10,7 @@ import { usePanelStore } from '@/stores/panel'
 // Components
 import CompPanelTaskHousingFindNewCreateHeader from '@/components/panels/entities/task-housing/find-new-create/panel-header.vue'
 import CompEntityTaskHousingBuildingTypesField from '@/components/entity/tasks/housing/fields/field-building-type.vue'
+import CompEntityTaskHousingOperationField from '@/components/entity/tasks/housing/fields/field-operation.vue'
 import CompEntityTaskHousingLocationField from '@/components/entity/tasks/housing/fields/field-location.vue'
 import CompPanelTaskHousingFindNewEdit from '@/components/panels/entities/task-housing/find-new-edit.vue'
 import CompEntityTaskMinMaxPriceField from '@/components/entity/tasks/fields/field-min-max-price.vue'
@@ -30,6 +31,7 @@ const {
   fieldLocationError,
   fieldBuildingTypes,
   fieldTargetError,
+  fieldOperation,
   fieldLocation,
   fieldSchedule,
   fieldPriceMin,
@@ -92,6 +94,10 @@ const beforeClose = async (): Promise<boolean> => {
       :error="fieldTargetError" />
 
     <template v-if="fieldTarget">
+      <CompEntityTaskHousingOperationField
+        v-model="fieldOperation"
+        class="--mb-sm" />
+
       <CompEntityTaskHousingBuildingTypesField
         v-model="fieldBuildingTypes"
         class="--mb-sm"

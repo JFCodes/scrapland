@@ -5,8 +5,8 @@ import {
   E_RUN_OUTCOME_ERROR_TYPE,
 } from '@scrapland/data-model'
 // App
-import { DismissCookieBanner, GetBrowserAndPage } from '../engine'
 import { ReturnOutcomeWithError } from '../instances/return-outcome-with-error'
+import { DismissCookieBanner, GetBrowserAndPage } from '../engine'
 import { RunOutcomeModel } from '../instances/run-outcome-model'
 import {
   type MultiSearchPaginatedPayload,
@@ -53,7 +53,7 @@ export async function TargetExecution_RemaxPortugal_Housing_FindNew (
     const errorType = E_RUN_OUTCOME_ERROR_TYPE.ROUTINE_EXECUTION_ERROR
     return await ReturnOutcomeWithError({ errorType, outcome, browser, error })
   }
-  
+
 
   // 3. Get search url
   let searchUrl: string
@@ -64,7 +64,7 @@ export async function TargetExecution_RemaxPortugal_Housing_FindNew (
     return await ReturnOutcomeWithError({ errorType, outcome, browser, error })
   }
 
-  // Intercept api search request
+  // 4. Intercept api search request
   let response: { data: MultiSearchPaginated, payload: MultiSearchPaginatedPayload }
   try {
     response = await InterceptFirstAPIRequest(page, searchUrl)
@@ -78,7 +78,7 @@ export async function TargetExecution_RemaxPortugal_Housing_FindNew (
   const currentPayload = response.payload
   const rawAds = response.data.results
 
-  // Use intercepted api payload to request all remaining pages
+  // 5. Use intercepted api payload to request all remaining pages
   if (totalPages > 1) {
     for (let nextPage = 2; nextPage <= totalPages; nextPage++) {
       const result = await RequestResultsPage(page, currentPayload, nextPage)

@@ -13,6 +13,7 @@ const emits = defineEmits<{ 'status-change': [status: E_AD_STATUS] }>()
 const props = defineProps<{
   changeStatus?: (status: E_AD_STATUS) => void | Promise<void>
   isOptionsLoading?: boolean
+  isLoading?: boolean
   status: E_AD_STATUS
 }>()
 
@@ -28,6 +29,7 @@ const changeAndClose = async (status: E_AD_STATUS, close: () => void): Promise<v
   <CompUiDropdown close-on-click-outside>
     <template #trigger="{ toggle, isOpen }">
       <ComponentEntityAdStatusBadge
+        :is-loading="isLoading"
         :ad-status="status"
         :height="32"
         :width="200"

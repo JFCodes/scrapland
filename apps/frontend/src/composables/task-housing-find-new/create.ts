@@ -4,6 +4,7 @@ import {
   type T_Task_Ad_Housing_FindNew_Insert,
   type T_Task_Ad_Housing_FindNew,
   type T_Ad_Housing_BuildingType,
+  type T_Ad_Housing_Operation,
   type T_Task_Schedule,
   E_TASK_SCHEDULE_TYPE,
   E_TARGET,
@@ -21,8 +22,9 @@ export function useTaskHousingFindNewCreate () {
 
   const isCreating = ref(false)
   
-  const fieldBuildingTypes = ref<Array<T_Ad_Housing_BuildingType>>([])
   const fieldSchedule = ref<T_Task_Schedule>({ type: E_TASK_SCHEDULE_TYPE.MANUAL })
+  const fieldBuildingTypes = ref<Array<T_Ad_Housing_BuildingType>>([])
+  const fieldOperation = ref<T_Ad_Housing_Operation>('buy')
   const fieldTarget = ref<null | E_TARGET>(null)
   const fieldNotes = ref<null | string>(null)
   const fieldPriceMax = ref<number>(Infinity)
@@ -78,6 +80,7 @@ export function useTaskHousingFindNewCreate () {
       _price_min: priceRange.min,
       _price_max: priceRange.max,
       buildingTypes: fieldBuildingTypes.value,
+      operation: fieldOperation.value,
       location: fieldLocation.value,
     }
 
@@ -98,6 +101,7 @@ export function useTaskHousingFindNewCreate () {
     fieldBuildingTypes,
     fieldLocationError,
     fieldTargetError,
+    fieldOperation,
     fieldSchedule,
     fieldLocation,
     fieldPriceMin,

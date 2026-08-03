@@ -1,0 +1,11 @@
+.--thumbnail {
+  height: 120px;
+  width: 150px;
+
+  > img {
+    object-position: center center;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}

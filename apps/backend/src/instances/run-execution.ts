@@ -5,6 +5,7 @@ import {
   type T_Task_Ad_Housing_FindNew,
   type T_RunOutcome,
   type T_Task,
+  E_RUN_OUTCOME_RESULT,
 } from '@scrapland/data-model'
 import { ExecutionModel } from '../models/execution'
 import { ExecuteAdHousingFindNew } from './run-execution/ad-housing-find-new'
@@ -26,9 +27,13 @@ export async function RunExecution (executionModel: ExecutionModel): Promise<voi
   }
 
   const outcome = await getExecutionFunction(executionModel.task)
-  outcome === null
-    ? await executionModel.setFailed(getNoExecutionFunctionError(executionModel.task))
-    : await executionModel.setCompleted()
+  if (outcome === null ) {
+    await executionModel.setFailed(getNoExecutionFunctionError(executionModel.task))
+  } else {
+    outcome.result === E_RUN_OUTCOME_RESULT.COMPLETED
+      ? await executionModel.setCompleted()
+      : await executionModel.setFailed(outcome.error?.details ?? 'No reason provided')
+  }
 }
 
 async function getExecutionFunction (task: T_Task): Promise<null | T_RunOutcome> {

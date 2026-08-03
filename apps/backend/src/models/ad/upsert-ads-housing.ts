@@ -4,6 +4,8 @@ import { excluded } from '../../database/utils'
 import { db } from '../../database'
 
 export async function upsertAdsHousing (ads: Array<T_Ad_Housing_Insert>): Promise<void> {
+  if (ads.length === 0) return
+
   await db.insert(DBSchema_Ad_Housing)
     .values(ads)
     .onConflictDoUpdate({

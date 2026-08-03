@@ -8,6 +8,7 @@ import { useModals } from '@/composables/modals'
 // Components
 import PanelTaskHousingFindNewEditHeader from '@/components/panels/entities/task-housing/find-new-edit/panel-header.vue'
 import CompEntityTaskHousingBuildingTypesField from '@/components/entity/tasks/housing/fields/field-building-type.vue'
+import CompEntityTaskHousingOperationField from '@/components/entity/tasks/housing/fields/field-operation.vue'
 import CompEntityTaskHousingLocationField from '@/components/entity/tasks/housing/fields/field-location.vue'
 import CompEntityTaskMinMaxPriceField from '@/components/entity/tasks/fields/field-min-max-price.vue'
 import CompEntityTaskScheduleField from '@/components/entity/tasks/fields/field-schedule.vue'
@@ -24,6 +25,7 @@ const {
   saveChanges,
   editableBuildingTypes,
   buildingTypesError,
+  editableOperation,
   editableSchedule,
   isChangingStatus,
   editableLocation,
@@ -84,6 +86,11 @@ const beforeClose = async (): Promise<boolean> => {
         :target="task._task_target"
         :status="editableStatus" />
     </template>
+
+    <CompEntityTaskHousingOperationField
+      v-model="editableOperation"
+      class="--mb-sm" />
+
 
     <CompEntityTaskHousingLocationField
       v-model="editableLocation"

@@ -37,6 +37,7 @@ const filterStatusOptions: Array<UiSelectOption<E_AD_STATUS>> = AD_STATUS_ORDERE
 
 const tableHeaders: Array<UiTableHeader> = [
   { label: '#' },
+  { label: '' },
   { label: t('global.target') },
   { label: t('global.targetId') },
   { label: t('global.askingPrice') },
@@ -89,7 +90,7 @@ onMounted(searchAds)
 
         <!-- Table row template -->
         <template #table-row="{ index, item }">
-          <CompEntityAdHousingTableRow :index="index" :housing-ad="item" />
+          <CompEntityAdHousingTableRow :index="index" :ad-housing="item" />
         </template>
 
         <!-- Grid item template -->

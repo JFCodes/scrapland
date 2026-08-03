@@ -15,7 +15,8 @@ const target = defineModel<null | E_TARGET>({ default: null })
 
 // Only list targets that are capable of housing/find-new
 const targetOptions: Array<UiSelectOption<E_TARGET>> = [
-  { label: F_ReadableEnum(E_TARGET.REMAX_PORTUGAL), value: E_TARGET.REMAX_PORTUGAL }
+  { label: F_ReadableEnum(E_TARGET.IMOVIRTUAL_PORTUGAL), value: E_TARGET.IMOVIRTUAL_PORTUGAL },
+  { label: F_ReadableEnum(E_TARGET.REMAX_PORTUGAL), value: E_TARGET.REMAX_PORTUGAL },
 ]
 
 const updateModel = (value: null | string | Array<string>) => {
