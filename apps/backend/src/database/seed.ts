@@ -38,7 +38,7 @@ async function seedImovirtualPortugal (): Promise<void> {
     _price_min: 200_000,
     _price_max: 420_000,
     buildingTypes: ['single-house'],
-    location: 'leiria/leiria/r',
+    location: 'leiria/leiria',
     operation: 'buy',
   })
 }
