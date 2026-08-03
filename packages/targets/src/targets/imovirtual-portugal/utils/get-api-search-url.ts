@@ -30,6 +30,8 @@ export function GetApiSearchUrl (task: T_Task_Ad_Housing_FindNew, options: Optio
   url += `&page=${pageNumber}`
   url += `&searchingCriteria=${adOperation}`
   url += `&searchingCriteria=${adType}`
+  if (task._price_min) url += `&priceMin=${task._price_min}`
+  if (task._price_max) url += `&priceMax=${task._price_max}`
   url += task.location.split('/').map(l => `&searchingCriteria=${l}`).join('')
 
   return url

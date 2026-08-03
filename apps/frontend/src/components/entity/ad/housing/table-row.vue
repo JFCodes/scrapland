@@ -8,6 +8,7 @@ import { usePanelStore } from '@/stores/panel'
 import { useAdsStore } from '@/stores/ads'
 // Components
 import CompEntityAdHousingBuildingTypesBadges from '@/components/entity/ad/housing/ad-building-types-badges.vue'
+import CompEntityAdHousingOperationBadge from '@/components/entity/ad/housing/ad-operation-badge.vue'
 import CompEntityTasksTargetBadge from '@/components/entity/tasks/target-badge.vue'
 import CompEntityAdStatusPicker from '@/components/entity/ad/ad-status-picker.vue'
 import CompPanelAdHousing from '@/components/panels/entities/ad/ad-housing.vue'
@@ -50,6 +51,9 @@ const changeStatus = (status: E_AD_STATUS): void => {
   </td>
   <td>
     <CompEntityTasksTargetBadge :target="adHousing._ad_target" />
+  </td>
+  <td>
+    <CompEntityAdHousingOperationBadge :operation="adHousing._ad_housing_operation" />
   </td>
   <td>{{ adHousing._ad_targetId }}</td>
   <td>

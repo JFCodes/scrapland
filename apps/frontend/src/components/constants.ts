@@ -1,4 +1,5 @@
 import {
+  type T_Ad_Housing_Operation,
   E_TASK_SCHEDULE_TYPE,
   E_EXECUTION_STATUS,
   E_AD_ENTITY_TYPE,
@@ -19,12 +20,14 @@ import {
   ListOrdered,
   TimerReset,
   BookDashed,
+  DollarSign,
   Building2,
   RefreshCw,
   BanknoteX,
   Handshake,
   Bookmark,
   TagPlus,
+  Receipt,
   CircleX,
   ZoomIn,
   BadgeX,
@@ -116,4 +119,10 @@ export const AD_STATUS_BADGE_ICON: Record<E_AD_STATUS, Component> = {
   [E_AD_STATUS.PROPOSAL_ACCEPTED]: markRaw(BanknoteCheck),
   [E_AD_STATUS.PROPOSAL_REJECTED]: markRaw(BanknoteX),
   [E_AD_STATUS.COMPLETED]: markRaw(Handshake),
+}
+
+export const AD_HOUSING_OPERATION_ICON: Record<'all' | T_Ad_Housing_Operation, Component> = {
+  buy: markRaw(DollarSign),
+  all: markRaw(Handshake),
+  rent: markRaw(Receipt),
 }

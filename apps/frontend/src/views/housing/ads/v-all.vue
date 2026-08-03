@@ -39,6 +39,7 @@ const tableHeaders: Array<UiTableHeader> = [
   { label: '#' },
   { label: '' },
   { label: t('global.target') },
+  { label: t('global.operation') },
   { label: t('global.targetId') },
   { label: t('global.askingPrice') },
   { label: t('global.buildingTypes') },

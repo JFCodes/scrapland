@@ -6,8 +6,10 @@ import { useAppI18n } from '@/composables/use-i18n'
 import { useModals } from '@/composables/modals'
 import { usePanelStore } from '@/stores/panel'
 // Components
+import CompEntityAdHousingOperationBadge from '@/components/entity/ad/housing/ad-operation-badge.vue'
 import CompEntityAdHousingParkingBadge from '@/components/entity/ad/housing/parking-badge.vue'
 import CompEntityAdHousingContactBadge from '@/components/entity/ad/housing/contact-badge.vue'
+import CompEntityTaskTargetBadge from '@/components/entity/tasks/target-badge.vue'
 import CompPanelAdHousing from '@/components/panels/entities/ad/ad-housing.vue'
 import CompUiIconButton from '@/components/ui/ui-icon-button.vue'
 import CompUiCard from '@/components/ui/ui-card.vue'
@@ -49,8 +51,8 @@ const showAdHousingPanel = () => {
   <CompUiCard>
     <template #header>
       <div class="--group --group--spread">
-        <div>
-          <p>{{ adHousing.descriptionShort }}</p>
+        <div class="--no-overflow">
+          <p class="--truncate">{{ adHousing.descriptionShort }}</p>
           <div class="--group --font-bold">
             <template v-if="adHousing.constructionYear">
               <Hammer :size="16" />
@@ -75,6 +77,11 @@ const showAdHousingPanel = () => {
 
       <div>
         <div class="--group --mb-sm">
+          <CompEntityTaskTargetBadge :target="adHousing._ad_target" />
+          <CompEntityAdHousingOperationBadge :operation="adHousing._ad_housing_operation" />
+        </div>
+
+        <div class="--group --mb-md">
           <MapPin :size="22" />
           <p class="--font-bold">{{ adHousing.locationRegion }}</p>
         </div>
@@ -114,8 +121,8 @@ const showAdHousingPanel = () => {
   display: flex;
 
   &__thumbnail {
-    height: 160px;
-    width: 160px;
+    height: 170px;
+    width: 170px;
     border-radius: var(--radius-sm);
     overflow: hidden;
 
