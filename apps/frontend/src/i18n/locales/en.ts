@@ -182,6 +182,9 @@ export default {
     execution: {
       aborted: 'Execution was interrupted',
       executionStatusHistory: 'Execution status history',
+      executionStatusSummary: 'Execution result summary',
+      executionStatusSummaryNewAds: 'New ads found',
+      executionStatusSummaryUpdatedAds: 'Updated ads',
       missingAbortedReason: 'Abort reason not provided',
       missingFailedReason: 'Failed reason not provided',
     }

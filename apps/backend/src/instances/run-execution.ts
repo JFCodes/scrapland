@@ -1,14 +1,15 @@
-// App
 import {
-  E_AD_ENTITY_TYPE,
-  E_TASK_TYPE,
   type T_Task_Ad_Housing_FindNew,
   type T_RunOutcome,
   type T_Task,
   E_RUN_OUTCOME_RESULT,
+  E_AD_ENTITY_TYPE,
+  E_TASK_TYPE,
 } from '@scrapland/data-model'
-import { ExecutionModel } from '../models/execution'
+// App
 import { ExecuteAdHousingFindNew } from './run-execution/ad-housing-find-new'
+import type { ExecutionOutcomeAndSummary  }from './_types'
+import { ExecutionModel } from '../models/execution'
 
 const getNoExecutionFunctionError = (task: T_Task): string => {
   const adEntityType = task._task_adEntityType
@@ -26,17 +27,19 @@ export async function RunExecution (executionModel: ExecutionModel): Promise<voi
     return
   }
 
-  const outcome = await getExecutionFunction(executionModel.task)
-  if (outcome === null ) {
+  const outcomeAndSummary = await getExecutionFunction(executionModel.task)
+  if (outcomeAndSummary === null ) {
     await executionModel.setFailed(getNoExecutionFunctionError(executionModel.task))
   } else {
+    const { outcome, summary } = outcomeAndSummary
+
     outcome.result === E_RUN_OUTCOME_RESULT.COMPLETED
-      ? await executionModel.setCompleted()
+      ? await executionModel.setCompleted(summary)
       : await executionModel.setFailed(outcome.error?.details ?? 'No reason provided')
   }
 }
 
-async function getExecutionFunction (task: T_Task): Promise<null | T_RunOutcome> {
+async function getExecutionFunction (task: T_Task): Promise<null | ExecutionOutcomeAndSummary> {
   switch (task._task_adEntityType) {
 
     case E_AD_ENTITY_TYPE.HOUSING:

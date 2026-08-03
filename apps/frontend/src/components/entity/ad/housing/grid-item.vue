@@ -1,36 +1,26 @@
 <script setup lang="ts">
 import type { T_Ad_Housing } from '@scrapland/data-model'
 // App
-import type { PanelAdHousingProps } from '@/components/panels/types'
 import { useAppI18n } from '@/composables/use-i18n'
 import { useModals } from '@/composables/modals'
-import { usePanelStore } from '@/stores/panel'
 // Components
-import CompEntityAdHousingOperationBadge from '@/components/entity/ad/housing/ad-operation-badge.vue'
+import CompEntityAdHousingGridItemHeader from '@/components/entity/ad/housing/grid-item-header.vue'
 import CompEntityAdHousingParkingBadge from '@/components/entity/ad/housing/parking-badge.vue'
 import CompEntityAdHousingContactBadge from '@/components/entity/ad/housing/contact-badge.vue'
-import CompEntityTaskTargetBadge from '@/components/entity/tasks/target-badge.vue'
-import CompPanelAdHousing from '@/components/panels/entities/ad/ad-housing.vue'
-import CompUiIconButton from '@/components/ui/ui-icon-button.vue'
 import CompUiCard from '@/components/ui/ui-card.vue'
 import {
-  ExternalLink,
   BrickWall,
   BedSingle,
   MapPin,
   Sigma,
   House,
   Bath,
-  Euro,
-  Eye,
-  Hammer
 } from '@lucide/vue'
 
 const props = defineProps<{ adHousing: T_Ad_Housing }>()
 
 const { adHousingGallery } = useModals()
 const { t } = useAppI18n()
-const panelStore = usePanelStore()
 
 const showGalleryModal = () => {
   if (props.adHousing.images.length === 0) return
@@ -40,34 +30,12 @@ const showGalleryModal = () => {
   })
 }
 
-const showAdHousingPanel = () => {
-  panelStore.show<PanelAdHousingProps>(CompPanelAdHousing, {
-    housingAd: props.adHousing
-  })
-}
 </script>
 
 <template>
   <CompUiCard>
     <template #header>
-      <div class="--group --group--spread">
-        <div class="--no-overflow">
-          <p class="--truncate">{{ adHousing.descriptionShort }}</p>
-          <div class="--group --font-bold">
-            <template v-if="adHousing.constructionYear">
-              <Hammer :size="16" />
-              <p>{{ adHousing.constructionYear }}</p>
-            </template>
-            <span> - </span>
-            <p>{{ adHousing.price.toLocaleString() }}</p>
-            <Euro :size="16" />
-          </div>
-        </div>
-        <div class="--group">
-          <CompUiIconButton :href="adHousing.url" :icon="ExternalLink" :is-active="false" />
-          <CompUiIconButton :icon="Eye" :is-active="false" @click="showAdHousingPanel" />
-        </div>
-      </div>
+      <CompEntityAdHousingGridItemHeader :ad-housing="adHousing" />
     </template>
 
     <div class="grid-item">
@@ -76,11 +44,6 @@ const showAdHousingPanel = () => {
       </div>
 
       <div>
-        <div class="--group --mb-sm">
-          <CompEntityTaskTargetBadge :target="adHousing._ad_target" />
-          <CompEntityAdHousingOperationBadge :operation="adHousing._ad_housing_operation" />
-        </div>
-
         <div class="--group --mb-md">
           <MapPin :size="22" />
           <p class="--font-bold">{{ adHousing.locationRegion }}</p>

@@ -29,9 +29,9 @@ defineProps<{
     }">
     <CompUiLoading v-if="isLoading" />
 
-    <div v-if="slots['header']" class="card__header">
+    <header v-if="slots['header']" class="card__header">
       <slot name="header"></slot>
-    </div>
+    </header>
 
     <div class="card__content" :class="{ 'card__content--no-padding': noPadding }">
       <slot></slot>

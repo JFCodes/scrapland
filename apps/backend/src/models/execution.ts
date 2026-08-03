@@ -1,8 +1,6 @@
-import { eq } from 'drizzle-orm'
 import {
-  type T_Execution_StatusHistory,
+  type T_Execution_Summary,
   type T_Execution,
-  DBSchema_Execution,
   E_EXECUTION_STATUS,
   T_Execution_Patch,
   T_Task
@@ -11,7 +9,6 @@ import {
 import { setExecutionStatus } from './execution/set-execution-status'
 import { findTaskWithId } from './task/find-task-with-id'
 import { WebsocketRegistry } from '../websocket/registry'
-import { db } from '../database'
 
 export class ExecutionModel {
   task: null | T_Task = null
@@ -43,8 +40,8 @@ export class ExecutionModel {
     WebsocketRegistry.broadcastAll({ type: 'execution-failed', payload: this.data })
   }
 
-  async setCompleted (): Promise<void> {
-    this.setStatus(E_EXECUTION_STATUS.COMPLETED)
+  async setCompleted (summary: T_Execution_Summary): Promise<void> {
+    this.setStatus(E_EXECUTION_STATUS.COMPLETED, { summary })
     WebsocketRegistry.broadcastAll({ type: 'execution-completed', payload: this.data })
   }
 

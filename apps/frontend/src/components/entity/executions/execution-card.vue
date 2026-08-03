@@ -90,6 +90,21 @@ const getStatusHistoryText = (entry: T_Execution_StatusHistory): string => {
       <p><span class="--font-bold">{{ t('global.duration') }}: </span>{{ duration }}</p>
     </div>
 
+
+    <CompUiCollapsible v-if="execution.summary" class="--mb-sm">
+      <template #header>{{ t('entities.execution.executionStatusSummary') }}</template>
+      <template #collapsible>
+        <p>
+          {{ t('entities.execution.executionStatusSummaryNewAds') }}:
+          <span class="--font-bold"> {{ execution.summary.newAdsCount }}</span>
+        </p>
+        <p>
+          {{ t('entities.execution.executionStatusSummaryUpdatedAds') }}:
+          <span class="--font-bold"> {{ execution.summary.updatedAdsCount }}</span>
+        </p>
+      </template>
+    </CompUiCollapsible>
+
     <CompUiCollapsible>
       <template #header>{{ t('entities.execution.executionStatusHistory') }}</template>
       <template #collapsible>

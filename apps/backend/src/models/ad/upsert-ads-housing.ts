@@ -1,10 +1,26 @@
-import { type T_Ad_Housing_Insert, DBSchema_Ad_Housing } from '@scrapland/data-model'
+import {
+  DBSchema_Ad_Housing,
+  type T_Ad_Housing_Insert,
+  type T_Execution_Summary
+} from '@scrapland/data-model'
 // App
 import { excluded } from '../../database/utils'
 import { db } from '../../database'
 
-export async function upsertAdsHousing (ads: Array<T_Ad_Housing_Insert>): Promise<void> {
-  if (ads.length === 0) return
+export async function upsertAdsHousing (ads: Array<T_Ad_Housing_Insert>): Promise<T_Execution_Summary> {
+  if (ads.length === 0) return { updatedAdsCount: 0, newAdsCount: 0 }
+
+  const allAds = db.select().from(DBSchema_Ad_Housing).all()
+  const toUpsertAds = new Set(ads.map(ad => ad._ad_targetAndId))
+  const updatedAds = new Set<string>()
+
+  allAds.forEach(ad => {
+    const checkId = ad._ad_targetAndId
+
+    if (!toUpsertAds.has(checkId)) return
+    toUpsertAds.delete(checkId)
+    updatedAds.add(checkId)
+  })
 
   await db.insert(DBSchema_Ad_Housing)
     .values(ads)
@@ -41,4 +57,9 @@ export async function upsertAdsHousing (ads: Array<T_Ad_Housing_Insert>): Promis
         imageMain: excluded(DBSchema_Ad_Housing.imageMain),
       }
     })
+
+  return {
+    updatedAdsCount: updatedAds.size,
+    newAdsCount: toUpsertAds.size,
+  }
 }
