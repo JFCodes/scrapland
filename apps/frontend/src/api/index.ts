@@ -1,12 +1,14 @@
 import {
   type T_API_PAYLOAD_Task_Housing_FindNEw_Create,
+  type T_API_PAYLOAD_Task_Vehicle_FindNEw_Create,
   type T_API_PAYLOAD_Task_Housing_FindNEw_Patch,
+  type T_API_PAYLOAD_Task_Vehicle_FindNEw_Patch,
   type T_API_RESPONSE_Task_Housing_FindNew,
+  type T_API_RESPONSE_Task_Vehicle_FindNew,
   type T_API_RESPONSE_Ads_StatusCounter,
-  type T_Task_Ad_Housing_FindNew_Patch,
   type T_API_PAYLOAD_Ad_Housing_Patch,
   type T_API_RESPONSE_Ads_Housing,
-  type T_API_Response_AppSettings,
+  type T_API_RESPONSE_AppSettings,
   type T_API_RESPONSE_Executions,
   type T_API_Response_Ad_Housing,
   type T_API_RESPONSE_Tasks,
@@ -29,7 +31,7 @@ class Api {
 
   baseUrl = this.getBaseUrl(this.backendServerPort)
 
-  appSettings = () => this.request<T_API_Response_AppSettings>({ path: 'app-settings', method: 'GET' })
+  appSettings = () => this.request<T_API_RESPONSE_AppSettings>({ path: 'app-settings', method: 'GET' })
   ping = () => this.request<T_API_RESPONSE_Ping>({ method: 'GET', path: 'ping' })
 
   tasks = {
@@ -50,7 +52,7 @@ class Api {
     },
     housing: {
       findNew: {
-        patch: (taskId: string, payload: T_Task_Ad_Housing_FindNew_Patch) => {
+        patch: (taskId: string, payload: T_API_PAYLOAD_Task_Housing_FindNEw_Patch) => {
           return this.request<T_API_RESPONSE_Task_Housing_FindNew, T_API_PAYLOAD_Task_Housing_FindNEw_Patch>({
             path: `tasks/housing/find-new/${taskId}`,
             method: 'PATCH',
@@ -60,6 +62,24 @@ class Api {
         create: (payload: T_API_PAYLOAD_Task_Housing_FindNEw_Create) => {
           return this.request<T_API_RESPONSE_Task_Housing_FindNew, T_API_PAYLOAD_Task_Housing_FindNEw_Create>({
             path: `tasks/housing/find-new`,
+            method: 'POST', 
+            body: payload,
+          })
+        },
+      }
+    },
+    vehicle: {
+      findNew: {
+        patch: (taskId: string, payload: T_API_PAYLOAD_Task_Vehicle_FindNEw_Patch) => {
+          return this.request<T_API_RESPONSE_Task_Vehicle_FindNew, T_API_PAYLOAD_Task_Vehicle_FindNEw_Patch>({
+            path: `tasks/vehicle/find-new/${taskId}`,
+            method: 'PATCH',
+            body: payload,
+          })
+        },
+        create: (payload: T_API_PAYLOAD_Task_Vehicle_FindNEw_Create) => {
+          return this.request<T_API_RESPONSE_Task_Vehicle_FindNew, T_API_PAYLOAD_Task_Vehicle_FindNEw_Create>({
+            path: `tasks/vehicle/find-new`,
             method: 'POST', 
             body: payload,
           })

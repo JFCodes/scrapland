@@ -13,4 +13,6 @@ export type T_AppSettings = {
   
   HOUSING_TASK_PRICE_RANGE_STEP: number
   HOUSING_TASK_PRICE_MAX_VALUE: number
+  VEHICLE_TASK_PRICE_RANGE_STEP: number
+  VEHICLE_TASK_PRICE_MAX_VALUE: number
 }

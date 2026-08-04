@@ -4,6 +4,7 @@ import { useModals } from '@/composables/modals'
 import { usePanelStore } from '@/stores/panel'
 // Components
 import CompPanelHousingFindNewCreate from '@/components/panels/entities/task-housing/find-new-create.vue'
+import CompPanelVehicleFindNewCreate from '@/components/panels/entities/task-vehicle/find-new-create.vue'
 
 export function useCreateEntityTaskLaunch () {
   const { pickAdEntityType, pickTaskType } = useModals()
@@ -30,8 +31,15 @@ export function useCreateEntityTaskLaunch () {
     }
   }
 
-  function vehiclesTasks (): void {
-    console.log('no tasks for vehicles yet')
+  async function vehiclesTasks (): Promise<void> {
+    const taskType = await promptTaskType()
+    if (!taskType) return
+
+    switch (taskType) {
+      case E_TASK_TYPE.FIND_NEW_ADS:
+        panelStore.show(CompPanelVehicleFindNewCreate, {})
+        break
+    }
   }
 
   async function promptEntityType (): Promise<E_AD_ENTITY_TYPE | null> {

@@ -2,18 +2,12 @@
 import { E_AD_ENTITY_TYPE } from '@scrapland/data-model'
 import { ref } from 'vue'
 // App
-import { useTaskHousingFindNewCreate } from '@/composables/task-housing-find-new/create'
-import type { PanelTaskHousingEditCreateProps } from '@/components/panels/types'
+import { useTaskVehicleFindNewCreate } from '@/composables/task-vehicle-find-new/create'
 import type { OverLayExposed } from '@/components/panels/types'
 import { useAppSettings } from '@/stores/app-settings'
 import { useAppI18n } from '@/composables/use-i18n'
 import { useModals } from '@/composables/modals'
-import { usePanelStore } from '@/stores/panel'
 // Components
-import CompEntityTaskHousingBuildingTypesField from '@/components/entity/tasks/housing/fields/field-building-type.vue'
-import CompEntityTaskHousingOperationField from '@/components/entity/tasks/housing/fields/field-operation.vue'
-import CompEntityTaskHousingLocationField from '@/components/entity/tasks/housing/fields/field-location.vue'
-import CompPanelTaskHousingFindNewEdit from '@/components/panels/entities/task-housing/find-new-edit.vue'
 import CompEntityTaskMinMaxPriceField from '@/components/entity/tasks/fields/field-min-max-price.vue'
 import CompEntityTargetFieldsTarget from '@/components/entity/targets/fields/target-field.vue'
 import CompEntityTaskScheduleField from '@/components/entity/tasks/fields/field-schedule.vue'
@@ -23,26 +17,19 @@ import CompUiMessage from '@/components/ui/ui-message.vue'
 import CompUiButton from '@/components/ui/ui-button.vue'
 
 const appSettings = useAppSettings()
-const panelStore = usePanelStore()
 const { prompt } = useModals()
 const { t } = useAppI18n()
 const {
   createTask,
   displayEquivalentTaskWarning,
-  fieldBuildingTypesError,
-  fieldLocationError,
-  fieldBuildingTypes,
   fieldTargetError,
-  fieldOperation,
-  fieldLocation,
   fieldSchedule,
-  fieldPriceMin,
   fieldPriceMax,
+  fieldPriceMin,
   fieldTarget,
   fieldNotes,
-  isCreating,
   isValid,
-} = useTaskHousingFindNewCreate()
+} = useTaskVehicleFindNewCreate()
 
 const overlayRef = ref<null | OverLayExposed>(null)
 let entityCreated = false
@@ -53,9 +40,9 @@ const create = async (): Promise<void> => {
   if (created) {
     entityCreated = true
     overlayRef.value?.closePanel()
-    window.setTimeout(() => {
-      panelStore.show<PanelTaskHousingEditCreateProps>(CompPanelTaskHousingFindNewEdit, { task: created })
-    }, 500)
+    // window.setTimeout(() => {
+    //   panelStore.show<PanelTaskHousingEditCreateProps>(CompPanelTaskHousingFindNewEdit, { task: created })
+    // }, 500)
   }
 }
 
@@ -83,7 +70,6 @@ const beforeClose = async (): Promise<boolean> => {
     show-close-icon
     ref="overlayRef"
     :before-close-guard="beforeClose"
-    :is-loading="isCreating"
     :width="720">
 
     <template #header>
@@ -92,25 +78,11 @@ const beforeClose = async (): Promise<boolean> => {
 
     <CompEntityTargetFieldsTarget
       v-model="fieldTarget"
+      :ad-entity-type="E_AD_ENTITY_TYPE.VEHICLE"
       class="--mb-sm"
-      :ad-entity-type="E_AD_ENTITY_TYPE.HOUSING"
       :error="fieldTargetError" />
 
     <template v-if="fieldTarget">
-      <CompEntityTaskHousingOperationField
-        v-model="fieldOperation"
-        class="--mb-sm" />
-
-      <CompEntityTaskHousingBuildingTypesField
-        v-model="fieldBuildingTypes"
-        class="--mb-sm"
-        :error="fieldBuildingTypesError" />
-
-      <CompEntityTaskHousingLocationField
-        v-model="fieldLocation"
-        class="--mb-sm"
-        :error="fieldLocationError" />
-
       <CompEntityTaskScheduleField
         v-model="fieldSchedule"
         class="--mb-sm" />
@@ -118,8 +90,8 @@ const beforeClose = async (): Promise<boolean> => {
       <CompEntityTaskMinMaxPriceField
         v-model:price-min="fieldPriceMin"
         v-model:price-max="fieldPriceMax"
-        :max-value="appSettings.settings.HOUSING_TASK_PRICE_MAX_VALUE"
-        :step="appSettings.settings.HOUSING_TASK_PRICE_RANGE_STEP"
+        :max-value="appSettings.settings.VEHICLE_TASK_PRICE_MAX_VALUE"
+        :step="appSettings.settings.VEHICLE_TASK_PRICE_RANGE_STEP"
         class="--mb-sm" />
 
       <CompEntityTaskFieldNotes
@@ -127,7 +99,6 @@ const beforeClose = async (): Promise<boolean> => {
         class="--mb-sm" />
 
     </template>
-
 
     <template #footer="{ closePanel }">
       <div class="--group-v">

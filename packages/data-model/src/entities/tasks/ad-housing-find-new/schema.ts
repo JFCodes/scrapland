@@ -1,4 +1,4 @@
-import { sqliteTable, text} from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
 // App
 import { E_AD_ENTITY_TYPE, type T_Ad_Housing_BuildingType, type T_Ad_Housing_Operation } from '../../ads'
 import { getTaskPriceSchemaFields} from '../_price-schema-fields'

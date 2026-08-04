@@ -27,14 +27,21 @@ export const useTasksStore = defineStore('tasks', () => {
     tasks: tasks.value,
   }))
 
+  const vehicleFindNewTasks = computed(() => filterByAdEntityAndType<T_Task_Ad_Housing_FindNew>({
+    adEntityType: E_AD_ENTITY_TYPE.VEHICLE,
+    taskType: E_TASK_TYPE.FIND_NEW_ADS,
+    tasks: tasks.value,
+  }))
+
   const load = async () => {
     // TODO: alert for errors
     await API.tasks
       .all()
       .then(result => tasks.value = result)
+    console.log(tasks.value)
   }
 
-  const updateTask = (updated: T_Task_Ad_Housing_FindNew): void => {
+  const updateTask = (updated: T_Task): void => {
     const index = tasks.value.findIndex(t => t._id === updated._id)
     if (index === -1) return
 
@@ -49,6 +56,7 @@ export const useTasksStore = defineStore('tasks', () => {
     updateTask,
     appendTask,
     load,
+    vehicleFindNewTasks,
     housingFindNewTasks,
     taskMap,
     tasks,

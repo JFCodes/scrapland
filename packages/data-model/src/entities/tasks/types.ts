@@ -1,5 +1,6 @@
-import { E_TASK_SCHEDULE_TYPE } from './enums'
 import { T_Task_Ad_Housing_FindNew } from './ad-housing-find-new/schema'
+import { T_Task_Ad_Vehicle_FindNew } from './ad-vehicle-find-new/schema'
+import { E_TASK_SCHEDULE_TYPE } from './enums'
 
 type T_Task_ScheduleBase<T extends E_TASK_SCHEDULE_TYPE> = { type: T }
 
@@ -19,4 +20,5 @@ export type T_Task_Schedule =
   | T_Task_ScheduleCron
 
 export type T_Task =
+  | T_Task_Ad_Vehicle_FindNew
   | T_Task_Ad_Housing_FindNew

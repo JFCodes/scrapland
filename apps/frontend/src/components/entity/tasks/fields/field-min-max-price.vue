@@ -2,12 +2,15 @@
 import { computed } from 'vue'
 // App
 import type { UiValueRange } from '@/components/types'
-import { useAppSettings } from '@/stores/app-settings'
 import { useAppI18n } from '@/composables/use-i18n'
 // Components
 import CompFormValueRange from '@/components/forms/f-value-range.vue'
 
-const appSettings = useAppSettings()
+defineProps<{
+  maxValue: number
+  step: number
+}>()
+
 const { t } = useAppI18n()
 
 const minPrice = defineModel<number>('price-min', { default: 0 })
@@ -24,10 +27,10 @@ const updateModels = (range: UiValueRange): void => {
 <template>
   <CompFormValueRange
     optional
-    :max-value="appSettings.settings.HOUSING_TASK_PRICE_MAX_VALUE"
-    :step="appSettings.settings.HOUSING_TASK_PRICE_RANGE_STEP"
     :label="t('global.priceRange')"
+    :max-value="maxValue"
     :model-value="range"
     :min-value="0"
+    :step="step"
     @update:model-value="updateModels" />
 </template>

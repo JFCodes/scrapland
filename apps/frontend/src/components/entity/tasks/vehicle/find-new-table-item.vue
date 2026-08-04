@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { E_AD_ENTITY_TYPE, type T_Task_Ad_Housing_FindNew } from '@scrapland/data-model'
+import { E_AD_ENTITY_TYPE, type T_Task_Ad_Vehicle_FindNew } from '@scrapland/data-model'
 import { F_DateFormats } from '@scrapland/functions'
 // App
-import type { PanelExecutionsTaskLatestExecutions, PanelTaskHousingEditCreateProps } from '@/components/panels/types'
+import type { PanelExecutionsTaskLatestExecutions, PanelTaskVehicleEditCreateProps } from '@/components/panels/types'
 import { useTaskDelete } from '@/composables/edit-entity/tasks/delete'
 import { usePanelStore } from '@/stores/panel'
 // Components
 import CompPanelExecutionTaskLatestsExecutions from '@/components/panels/entities/executions/task-latests-executions.vue'
-import CompEntityAdHousingBuildingTypeBadges from '@/components/entity/ad/housing/ad-building-types-badges.vue'
-import CompPanelTaskHousingFindNewEdit from '@/components/panels/entities/task-housing/find-new-edit.vue'
+import CompPanelTaskVehicleFindNewEdit from '@/components/panels/entities/task-vehicle/find-new-edit.vue'
 import CompEntityTaskScheduleExecution from '@/components/entity/tasks/schedule-execution-button.vue'
 import CompEntityTaskScheduleBadge from '@/components/entity/tasks/schedule-badge.vue'
 import CompEntityTaskStatusBadge from '@/components/entity/tasks/status-badge.vue'
@@ -17,7 +16,7 @@ import CompUiIconButton from '@/components/ui/ui-icon-button.vue'
 import { FileClock, Delete, Edit } from '@lucide/vue'
 
 const props = defineProps<{
-  task: T_Task_Ad_Housing_FindNew
+  task: T_Task_Ad_Vehicle_FindNew
   index: number
 }>()
 
@@ -25,7 +24,7 @@ const { deleteTask } = useTaskDelete()
 const panelStore = usePanelStore()
 
 const editTask = () => {
-  panelStore.show<PanelTaskHousingEditCreateProps>(CompPanelTaskHousingFindNewEdit, { task: props.task })
+  panelStore.show<PanelTaskVehicleEditCreateProps>(CompPanelTaskVehicleFindNewEdit, { task: props.task })
 }
 
 const showLatestsExecutions = () => {
@@ -46,11 +45,6 @@ const showLatestsExecutions = () => {
       <CompEntityTaskTargetBadge :target="task._task_target" />
     </td>
     <td>
-      <div class="--group">
-        <CompEntityAdHousingBuildingTypeBadges :ad-building-types="task.buildingTypes ?? []" />
-      </div>
-    </td>
-    <td>
       <CompEntityTaskScheduleBadge :schedule="task._task_schedule" />
     </td>
     <td>
@@ -58,7 +52,7 @@ const showLatestsExecutions = () => {
         <CompUiIconButton type="light" :icon="FileClock" @click="showLatestsExecutions" />
         <CompUiIconButton filled type="info" :icon="Edit" @click="editTask" />
         <CompEntityTaskScheduleExecution :status="task._task_status" :task-id="task._id" />
-        <CompUiIconButton type="danger" :icon="Delete" @click="deleteTask(E_AD_ENTITY_TYPE.HOUSING, task._id)" />
+        <CompUiIconButton type="danger" :icon="Delete" @click="deleteTask(E_AD_ENTITY_TYPE.VEHICLE, task._id)" />
       </div>
     </td>
   </tr>

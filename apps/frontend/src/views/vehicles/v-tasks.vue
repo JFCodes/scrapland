@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { E_ENTITY_TYPE, E_TASK_STATUS } from '@scrapland/data-model'
+import { E_AD_ENTITY_TYPE, E_TASK_STATUS } from '@scrapland/data-model'
 import { F_GetFiltered } from '@scrapland/functions'
 import { computed, ref } from 'vue'
 // App
@@ -7,9 +7,9 @@ import { useCreateEntityTaskLaunch } from '@/composables/create-entity/tasks/lau
 import { useAppI18n } from '@/composables/use-i18n'
 import { useTasksStore } from '@/stores/tasks'
 // Components
+import CompEntityTaskVehicleFindNewTable from '@/components/entity/tasks/vehicle/find-new-table.vue'
 import CompLayoutVerticalScrollContent from '@/components/layouts/vertical-scroll-content.vue'
 import CompLayoutCenterContainer from '@/components/layouts/center-container.vue'
-import CompEntityTasksTable from '@/components/entity/tasks/tasks-table.vue'
 import CompFormCheckbox from '@/components/forms/f-checkbox.vue'
 import CompUiTitleMain from '@/components/ui/ui-title-main.vue'
 import CompUiButton from '@/components/ui/ui-button.vue'
@@ -20,11 +20,10 @@ const tasksStore = useTasksStore()
 
 const showDeleted = ref(false)
 
-
 const filteredTasks = computed(() => {
-  if (showDeleted.value) return tasksStore.tasks
+  if (showDeleted.value) return tasksStore.vehicleFindNewTasks
 
-  return F_GetFiltered(tasksStore.tasks, {
+  return F_GetFiltered(tasksStore.vehicleFindNewTasks, {
     value: E_TASK_STATUS.DELETED,
     comparison: 'not-equal',
     key: '_task_status',
@@ -32,7 +31,7 @@ const filteredTasks = computed(() => {
 })
 
 const deletedCount = computed(() => {
-  return F_GetFiltered(tasksStore.tasks, {
+  return F_GetFiltered(tasksStore.vehicleFindNewTasks, {
     value: E_TASK_STATUS.DELETED,
     comparison: 'equal',
     key: '_task_status',
@@ -47,25 +46,27 @@ const deletedLabel = computed<string>(() => {
 })
 
 </script>
+
 <template>
   <CompLayoutCenterContainer>
     <CompLayoutVerticalScrollContent>
 
       <template #top>
         <div class="--group --group--spread">
-          <CompUiTitleMain :title="$t(`enums.entityTypes.${E_ENTITY_TYPE.TASK}`)" />
+          <CompUiTitleMain :title="t('pages.adVehicleTasks.title')" />
 
           <div class="--group">
             <CompFormCheckbox v-model="showDeleted" :label="deletedLabel" />
             <CompUiButton
               type="info"
               :label="t('global.createTask')"
-              @click="launch()" />
+              @click="launch(E_AD_ENTITY_TYPE.VEHICLE)" />
           </div>
         </div>
       </template>
 
-      <CompEntityTasksTable :tasks="filteredTasks" />
+      <CompEntityTaskVehicleFindNewTable :tasks="filteredTasks" />
+
     </CompLayoutVerticalScrollContent>
   </CompLayoutCenterContainer>
 </template>

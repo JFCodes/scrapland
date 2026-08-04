@@ -1,16 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 // App
-import type { PanelTaskHousingEditCreateProps, OverLayExposed } from '@/components/panels/types'
-import { useTaskHousingFindNewEdit } from '@/composables/task-housing-find-new/edit'
+import type { PanelTaskVehicleEditCreateProps, OverLayExposed } from '@/components/panels/types'
+import { useTaskVehicleFindNewEdit } from '@/composables/task-vehicle-find-new/edit'
 import { useTaskChangeStatus } from '@/composables/edit-entity/tasks/change-status'
 import { useAppSettings } from '@/stores/app-settings'
 import { useAppI18n } from '@/composables/use-i18n'
 import { useModals } from '@/composables/modals'
 // Components
-import CompEntityTaskHousingBuildingTypesField from '@/components/entity/tasks/housing/fields/field-building-type.vue'
-import CompEntityTaskHousingOperationField from '@/components/entity/tasks/housing/fields/field-operation.vue'
-import CompEntityTaskHousingLocationField from '@/components/entity/tasks/housing/fields/field-location.vue'
 import CompEntityTaskMinMaxPriceField from '@/components/entity/tasks/fields/field-min-max-price.vue'
 import CompEntityTaskScheduleField from '@/components/entity/tasks/fields/field-schedule.vue'
 import CompEntityTaskFieldNotes from '@/components/entity/tasks/fields/field-notes.vue'
@@ -18,26 +15,21 @@ import CompEntityTaskEditHeader from '@/components/entity/tasks/task-edit-header
 import CompPanelsOverlay from '@/components/panels/p-overlay.vue'
 import CompUiButton from '@/components/ui/ui-button.vue'
 
-const props = defineProps<PanelTaskHousingEditCreateProps>()
+const props = defineProps<PanelTaskVehicleEditCreateProps>()
 
 const { changeStatus, isChangingStatus, editableStatus } = useTaskChangeStatus(() => props.task)
 const { prompt } = useModals()
 const { t } = useAppI18n()
 const {
   saveChanges,
-  editableBuildingTypes,
-  buildingTypesError,
-  editableOperation,
   editableSchedule,
-  editableLocation,
   editablePriceMin,
   editablePriceMax,
-  locationError,
   editableNotes,
   hasChanges,
   isSaving,
   isValid
-} = useTaskHousingFindNewEdit(() => props.task)
+} = useTaskVehicleFindNewEdit(() => props.task)
 
 const appSettings = useAppSettings()
 
@@ -87,21 +79,6 @@ const beforeClose = async (): Promise<boolean> => {
         :target="task._task_target"
         :status="editableStatus" />
     </template>
-
-    <CompEntityTaskHousingOperationField
-      v-model="editableOperation"
-      class="--mb-sm" />
-
-
-    <CompEntityTaskHousingLocationField
-      v-model="editableLocation"
-      class="--mb-sm"
-      :error="locationError" />
-
-    <CompEntityTaskHousingBuildingTypesField
-      v-model="editableBuildingTypes"
-      class="--mb-sm"
-      :error="buildingTypesError" />
 
     <CompEntityTaskScheduleField v-model="editableSchedule" class="--mb-sm" />
 

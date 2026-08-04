@@ -1,0 +1,3 @@
+<template>
+  the dashboard
+</template>

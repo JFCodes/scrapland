@@ -5,10 +5,12 @@ import { controller as PostExecuteController } from '../../controllers/tasks/pos
 import { controller as GetAllController } from '../../controllers/tasks/get-all'
 // Routes
 import { router as HousingRouter } from './tasks/housing'
+import { router as VehicleRouter } from './tasks/vehicle'
 
 export const router: RouterType = Router()
 
 router.use('/housing', HousingRouter)
+router.use('/vehicle', VehicleRouter)
 
 router.get('/latest-executions', GetLatestExecutionsController)
 router.get('/all', GetAllController)

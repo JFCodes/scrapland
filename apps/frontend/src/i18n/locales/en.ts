@@ -54,6 +54,9 @@ const pages: Record<E_ROUTER_PAGES, string> = {
   [E_ROUTER_PAGES.EXECUTIONS_FAILED]: 'Failed executions',
   [E_ROUTER_PAGES.EXECUTIONS_COMPLETED]: 'Completed executions',
   [E_ROUTER_PAGES.VEHICLES]: 'Vehicles',
+  [E_ROUTER_PAGES.VEHICLES_DASHBOARD]: 'Dashboard',
+  [E_ROUTER_PAGES.VEHICLES_TASKS]: 'Tasks',
+  [E_ROUTER_PAGES.VEHICLES_ADS]: 'Vehicle ads',
   [E_ROUTER_PAGES.HOUSING]: 'Housing',
   [E_ROUTER_PAGES.HOUSING_DASHBOARD]: 'Dashboard',
   [E_ROUTER_PAGES.HOUSING_TASKS]: 'Tasks',
@@ -161,6 +164,9 @@ export default {
     },
     adHousingTasks: {
       title: 'Housing tasks'
+    },
+    adVehicleTasks: {
+      title: 'Vehicle tasks'
     }
   },
   entities: {

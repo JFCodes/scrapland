@@ -1,10 +1,8 @@
 import { F_Task_ScheduleChanged, F_GetTaskPriceRange } from '@scrapland/functions'
 import { type MaybeRefOrGetter, computed, ref, toValue } from 'vue'
 import type {
-  T_Task_Ad_Housing_FindNew_Patch,
-  T_Ad_Housing_BuildingType,
-  T_Task_Ad_Housing_FindNew,
-  T_Ad_Housing_Operation,
+  T_Task_Ad_Vehicle_FindNew_Patch,
+  T_Task_Ad_Vehicle_FindNew,
   T_Task_Schedule,
 } from '@scrapland/data-model'
 // App
@@ -13,37 +11,22 @@ import { useToastsStore } from '@/stores/toasts'
 import { useTasksStore } from '@/stores/tasks'
 import { API } from '@/api'
 
-export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Housing_FindNew>) {
+export function useTaskVehicleFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Vehicle_FindNew>) {
   const toastsStore = useToastsStore()
   const tasksStore = useTasksStore()
   const taskValue = toValue(task)
 
   const isSaving = ref(false)
   // EditableFields
-  const editableBuildingTypes = ref<Array<T_Ad_Housing_BuildingType>>(taskValue.buildingTypes ?? [])
   const editableSchedule = ref(JSON.parse(JSON.stringify(taskValue._task_schedule)) as T_Task_Schedule)
-  const editableOperation = ref<null | T_Ad_Housing_Operation>(taskValue.operation)
   const editablePriceMax = ref(taskValue._price_max ?? Infinity)
   const editablePriceMin = ref(taskValue._price_min ?? 0)
-  const editableLocation = ref(taskValue.location)
   const editableNotes = ref(taskValue._task_notes)
 
   const { isValid: fieldScheduleIsValid } = useTaskScheduleValidation(editableSchedule)
 
-  const locationError = computed(() => {
-    if (editableLocation.value.trim() !== '') return null
-    return 'You must provide a location value'
-  })
-
-  const buildingTypesError = computed(() => {
-    if (editableBuildingTypes.value.length > 0) return null
-    return 'You must select at least one building type'
-  })
-
   const isValid = computed(() => {
     if (!fieldScheduleIsValid.value) return false
-    if (buildingTypesError.value) return false
-    if (locationError.value) return false
 
     return true
   })
@@ -51,14 +34,8 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
   const hasChanges = computed(() => {
     const compareTo = toValue(task)
 
-    const buildingTypes = [...editableBuildingTypes.value].sort().join(',')
-    const compareToBuildingTypes = [...compareTo.buildingTypes ?? []].sort().join(',')
-
     if (F_Task_ScheduleChanged(compareTo._task_schedule, editableSchedule.value)) return true
-    if (editableOperation.value !== compareTo.operation) return true
-    if (editableLocation.value !== compareTo.location) return true
     if (editableNotes.value !== compareTo._task_notes) return true
-    if (compareToBuildingTypes !== buildingTypes) return true
 
     const nullablePriceMin = editablePriceMin.value === 0 ? null : editablePriceMin.value
     if (nullablePriceMin !== compareTo._price_min) return true
@@ -67,23 +44,20 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
     if (nullablePriceMax !== compareTo._price_max) return true
   })
 
-  const saveChanges = async (): Promise<null | T_Task_Ad_Housing_FindNew> => {
+  const saveChanges = async (): Promise<null | T_Task_Ad_Vehicle_FindNew> => {
     const taskValue = toValue(task)
     isSaving.value = true
 
     const range = F_GetTaskPriceRange(editablePriceMin.value, editablePriceMax.value)
 
-    const payload: T_Task_Ad_Housing_FindNew_Patch = {
-      buildingTypes: editableBuildingTypes.value,
+    const payload: T_Task_Ad_Vehicle_FindNew_Patch = {
       _task_schedule: editableSchedule.value,
-      operation: editableOperation.value,
       _task_notes: editableNotes.value,
-      location: editableLocation.value,
       _price_min: range.min,
       _price_max: range.max,
     }
 
-    return await API.tasks.housing.findNew
+    return await API.tasks.vehicle.findNew
       .patch(taskValue._id, payload)
       .then(result => {
         tasksStore.updateTask(result)
@@ -101,14 +75,9 @@ export function useTaskHousingFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Hous
 
   return {
     saveChanges,
-    editableBuildingTypes,
-    buildingTypesError,
-    editableOperation,
     editableSchedule,
-    editableLocation,
     editablePriceMin,
     editablePriceMax,
-    locationError,
     editableNotes,
     hasChanges,
     isSaving,
