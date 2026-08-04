@@ -5,6 +5,7 @@ import { eq } from 'drizzle-orm'
 // App
 import { missingOrInvalidParam, missingResource, taskErrors } from '../../utils/send-error-response'
 import { getWsClientIdHeader } from '../../utils/get-ws-client-id-header'
+import { findTaskWithId } from '../../models/task/find-task-with-id'
 import { ExecutionQueue } from '../../instances/execution-queue'
 import { WebsocketRegistry } from '../../websocket/registry'
 import { db } from '../../database'
@@ -12,13 +13,9 @@ import { db } from '../../database'
 export async function controller(req: Request, res: Response<T_API_RESPONSE_Execution>) {
 
   const taskId = req.params.taskId
-  if (!taskId || typeof taskId !== 'string') return missingOrInvalidParam({ req, res, param: 'task-id' })
+  if (!taskId || typeof taskId !== 'string') return missingOrInvalidParam({ req, res, name: 'task-id' })
 
-  const task = db
-    .select()
-    .from(DBSchema_Task_Ad_Housing_FindNew)
-    .where(eq(DBSchema_Task_Ad_Housing_FindNew._id, taskId))
-    .all()[0]
+  const task = findTaskWithId(taskId)
 
   if (!task) return missingResource({ req, res, resource: E_ENTITY_TYPE.TASK, selector: taskId })
   if (task._task_status !== E_TASK_STATUS.PUBLISHED) {

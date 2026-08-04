@@ -52,7 +52,6 @@ export type T_Ad_Housing_Patch = Partial<Omit<T_Ad_Housing,
   | '_entityType'
   | '_createdAt'
   | '_updatedAt'
-  | '_ad_entityType'
   | '_ad_targetAndId'
   | '_ad_target'
   | '_ad_targetId'

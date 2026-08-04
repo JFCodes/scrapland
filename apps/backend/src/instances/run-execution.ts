@@ -5,9 +5,11 @@ import {
   E_RUN_OUTCOME_RESULT,
   E_AD_ENTITY_TYPE,
   E_TASK_TYPE,
+  T_Task_Ad_Vehicle_FindNew,
 } from '@scrapland/data-model'
 // App
 import { ExecuteAdHousingFindNew } from './run-execution/ad-housing-find-new'
+import { ExecuteAdVehicleFindNew } from './run-execution/ad-vehicle-find-new'
 import type { ExecutionOutcomeAndSummary  }from './_types'
 import { ExecutionModel } from '../models/execution'
 
@@ -50,7 +52,7 @@ async function getExecutionFunction (task: T_Task): Promise<null | ExecutionOutc
 
     case E_AD_ENTITY_TYPE.VEHICLE:
       switch (task._task_type) {
-
+        case E_TASK_TYPE.FIND_NEW_ADS: return ExecuteAdVehicleFindNew(task as T_Task_Ad_Vehicle_FindNew)
         default: null
       }
 

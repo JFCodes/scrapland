@@ -8,9 +8,11 @@ import {
 } from '@scrapland/data-model'
 // App
 import { filterByAdEntityAndType } from '@/stores/tasks/filter-by-ad-and-type'
+import { useApiErrorHandling } from '@/composables/api-error-handling'
 import { API } from '@/api'
 
 export const useTasksStore = defineStore('tasks', () => {
+  const { onApiError } = useApiErrorHandling()
 
   const tasks = ref<Array<T_Task>>([])
 
@@ -38,7 +40,7 @@ export const useTasksStore = defineStore('tasks', () => {
     await API.tasks
       .all()
       .then(result => tasks.value = result)
-    console.log(tasks.value)
+      .catch(onApiError)
   }
 
   const updateTask = (updated: T_Task): void => {

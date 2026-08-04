@@ -54,7 +54,6 @@ export async function TargetExecution_RemaxPortugal_Housing_FindNew (
     return await ReturnOutcomeWithError({ errorType, outcome, browser, error })
   }
 
-
   // 3. Get search url
   let searchUrl: string
   try {
