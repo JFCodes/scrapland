@@ -26,7 +26,9 @@ export function useTaskVehicleFindNewCreate () {
   const fieldNotes = ref<null | string>(null)
   const fieldPriceMax = ref<number>(Infinity)
   const fieldPriceMin = ref<number>(0)
-
+  const fieldBrand = ref<string>('')
+  const fieldModel = ref<string>('')
+  
   const { isValid: fieldScheduleIsValid } = useTaskScheduleValidation(fieldSchedule)
 
   const fieldTargetError = computed(() => fieldTarget.value === null ? 'You must pick a target' : '')
@@ -61,6 +63,8 @@ export function useTaskVehicleFindNewCreate () {
       _task_notes: fieldNotes.value,
       _price_min: priceRange.min,
       _price_max: priceRange.max,
+      brand: fieldBrand.value.trim() || null,
+      model: fieldModel.value.trim() || null,
     }
 
     isCreating.value = true
@@ -83,6 +87,8 @@ export function useTaskVehicleFindNewCreate () {
     fieldTarget,
     isCreating,
     fieldNotes,
+    fieldModel,
+    fieldBrand,
     isValid,
   }
 }

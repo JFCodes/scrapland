@@ -13,6 +13,7 @@ import CompEntityTargetFieldsTarget from '@/components/entity/targets/fields/tar
 import CompEntityTaskScheduleField from '@/components/entity/tasks/fields/field-schedule.vue'
 import CompEntityTaskFieldNotes from '@/components/entity/tasks/fields/field-notes.vue'
 import CompPanelsOverlay from '@/components/panels/p-overlay.vue'
+import CompFormInput from '@/components/forms/f-input.vue'
 import CompUiMessage from '@/components/ui/ui-message.vue'
 import CompUiButton from '@/components/ui/ui-button.vue'
 
@@ -28,6 +29,8 @@ const {
   fieldPriceMin,
   fieldTarget,
   fieldNotes,
+  fieldModel,
+  fieldBrand,
   isValid,
 } = useTaskVehicleFindNewCreate()
 
@@ -83,6 +86,16 @@ const beforeClose = async (): Promise<boolean> => {
       :error="fieldTargetError" />
 
     <template v-if="fieldTarget">
+      <CompFormInput
+        v-model="fieldBrand"
+        label="Brand"
+        class="--md-sm" />
+
+      <CompFormInput
+        v-model="fieldModel"
+        label="Model"
+        class="--md-sm" />
+
       <CompEntityTaskScheduleField
         v-model="fieldSchedule"
         class="--mb-sm" />

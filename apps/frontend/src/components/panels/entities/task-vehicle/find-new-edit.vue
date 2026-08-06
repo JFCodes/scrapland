@@ -13,6 +13,7 @@ import CompEntityTaskScheduleField from '@/components/entity/tasks/fields/field-
 import CompEntityTaskFieldNotes from '@/components/entity/tasks/fields/field-notes.vue'
 import CompEntityTaskEditHeader from '@/components/entity/tasks/task-edit-header.vue'
 import CompPanelsOverlay from '@/components/panels/p-overlay.vue'
+import CompFormInput from '@/components/forms/f-input.vue'
 import CompUiButton from '@/components/ui/ui-button.vue'
 
 const props = defineProps<PanelTaskVehicleEditCreateProps>()
@@ -26,6 +27,8 @@ const {
   editablePriceMin,
   editablePriceMax,
   editableNotes,
+  editableBrand,
+  editableModel,
   hasChanges,
   isSaving,
   isValid
@@ -79,6 +82,16 @@ const beforeClose = async (): Promise<boolean> => {
         :target="task._task_target"
         :status="editableStatus" />
     </template>
+
+    <CompFormInput
+      v-model="editableBrand"
+      label="Brand"
+      class="--md-sm" />
+
+    <CompFormInput
+      v-model="editableModel"
+      label="Model"
+      class="--md-sm" />
 
     <CompEntityTaskScheduleField v-model="editableSchedule" class="--mb-sm" />
 

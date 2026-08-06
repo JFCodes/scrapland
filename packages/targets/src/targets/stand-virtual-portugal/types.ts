@@ -1,3 +1,12 @@
+import { GraphqlListingEdge } from './types/edge'
+
+export type GraphqlExtensions = {
+  persistedQuery: {
+    sha256Hash: string
+    version: number
+  }
+}
+
 export type GraphqlVariables = {
   experiments: Array<{ key: string, variant: string }>
   filters: Array<{ name: string, value: string }>
@@ -20,10 +29,11 @@ export type GraphqlVariables = {
   after: null
 }
 
+
 export type GraphqlListing = {
   data: {
     advertSearch: {
-      edges: Array<unknown>
+      edges: Array<{ node: GraphqlListingEdge }>
       totalCount: number
     }
   }

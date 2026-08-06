@@ -1,5 +1,6 @@
 import {
   DBSchema_Task_Ad_Housing_FindNew,
+  DBSchema_Task_Ad_Vehicle_FindNew,
   E_TASK_SCHEDULE_TYPE,
   E_TARGET,
   E_TASK_STATUS
@@ -9,6 +10,10 @@ import { db } from './'
 
 export async function seedDatabase (): Promise<void> {
   const taskAdHousingFindNew = db.select().from(DBSchema_Task_Ad_Housing_FindNew).all()
+  const taskAdVehicleFindNew = db.select().from(DBSchema_Task_Ad_Vehicle_FindNew).all()
+
+  const hasStandVirtualPortugal = taskAdVehicleFindNew.some(d => d._task_target === E_TARGET.STAND_VIRTUAL_PORTUGAL)
+  if (!hasStandVirtualPortugal) await seedStandVirtualPortugal()
 
   const hasImovirtualPortugal = taskAdHousingFindNew.some(d => d._task_target === E_TARGET.IMOVIRTUAL_PORTUGAL)
   if (!hasImovirtualPortugal) await seedImovirtualPortugal()
@@ -27,6 +32,16 @@ async function seedRemaxPortugal (): Promise<void> {
     buildingTypes: ['single-house'],
     location: 'leiria/leiria/r',
     operation: 'buy',
+  })
+}
+
+async function seedStandVirtualPortugal (): Promise<void> {
+  await db.insert(DBSchema_Task_Ad_Vehicle_FindNew).values({
+    _task_target: E_TARGET.STAND_VIRTUAL_PORTUGAL,
+    _task_schedule: { type: E_TASK_SCHEDULE_TYPE.MANUAL },
+    _task_status: E_TASK_STATUS.PUBLISHED,
+    brand: 'mercedes-benz',
+    model: 'classe-glc',
   })
 }
 

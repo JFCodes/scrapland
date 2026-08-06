@@ -1,4 +1,4 @@
-import type { T_Ad_Housing, T_Ad_Housing_Patch } from '@scrapland/data-model'
+import type { T_Ad_Housing, T_Ad_Housing_Patch, T_Ad_Vehicle } from '@scrapland/data-model'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 // App
@@ -12,6 +12,7 @@ export const useAdsStore = defineStore('ads', () => {
   const { t } = useAppI18n()
 
   const adsHousing = ref<Array<T_Ad_Housing>>([])
+  const adsVehicle = ref<Array<T_Ad_Vehicle>>([])
 
   const {
     isLoadingMore: isLoadingMoreAdsHousing,
@@ -20,6 +21,15 @@ export const useAdsStore = defineStore('ads', () => {
     loadMore: loadMoreAdsHousing,
     load: loadAdsHousing,
   } = usePaginated({ data: adsHousing, request: API.ads.housing.all })
+
+  const {
+    isLoadingMore: isLoadingMoreAdsVehicle,
+    isLoading: isLoadingAdsVehicle,
+    totalItems: totalAdsVehicle,
+    loadMore: loadMoreAdsVehicle,
+    load: loadAdsVehicle,
+  } = usePaginated({ data: adsVehicle, request: API.ads.vehicle.all })
+
 
   const patchAdHousing = (adId: string, payload: T_Ad_Housing_Patch): Promise<null | T_Ad_Housing> => {
     return API.ads.housing
@@ -48,5 +58,12 @@ export const useAdsStore = defineStore('ads', () => {
     isLoadingAdsHousing,
     totalAdsHousing,
     adsHousing,
+    // Vehicle
+    loadMoreAdsVehicle,
+    loadAdsVehicle,
+    isLoadingMoreAdsVehicle,
+    isLoadingAdsVehicle,
+    totalAdsVehicle,
+    adsVehicle,
   }
 })

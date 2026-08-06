@@ -1,4 +1,4 @@
-import { F_Task_ScheduleChanged, F_GetTaskPriceRange } from '@scrapland/functions'
+import { F_Task_ScheduleChanged, F_GetTaskPriceRange, F_NullableStringsAreEqual } from '@scrapland/functions'
 import { type MaybeRefOrGetter, computed, ref, toValue } from 'vue'
 import type {
   T_Task_Ad_Vehicle_FindNew_Patch,
@@ -22,6 +22,8 @@ export function useTaskVehicleFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Vehi
   const editablePriceMax = ref(taskValue._price_max ?? Infinity)
   const editablePriceMin = ref(taskValue._price_min ?? 0)
   const editableNotes = ref(taskValue._task_notes)
+  const editableBrand = ref(taskValue.brand || '')
+  const editableModel = ref(taskValue.model || '')
 
   const { isValid: fieldScheduleIsValid } = useTaskScheduleValidation(editableSchedule)
 
@@ -42,6 +44,9 @@ export function useTaskVehicleFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Vehi
 
     const nullablePriceMax = isFinite(editablePriceMax.value) ? editablePriceMax.value : null
     if (nullablePriceMax !== compareTo._price_max) return true
+
+    if (!F_NullableStringsAreEqual(compareTo.brand, editableBrand.value)) return true
+    if (!F_NullableStringsAreEqual(compareTo.model, editableModel.value)) return true
   })
 
   const saveChanges = async (): Promise<null | T_Task_Ad_Vehicle_FindNew> => {
@@ -55,6 +60,8 @@ export function useTaskVehicleFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Vehi
       _task_notes: editableNotes.value,
       _price_min: range.min,
       _price_max: range.max,
+      brand: editableBrand.value || null,
+      model: editableModel.value || null
     }
 
     return await API.tasks.vehicle.findNew
@@ -79,6 +86,8 @@ export function useTaskVehicleFindNewEdit (task: MaybeRefOrGetter<T_Task_Ad_Vehi
     editablePriceMin,
     editablePriceMax,
     editableNotes,
+    editableBrand,
+    editableModel,
     hasChanges,
     isSaving,
     isValid,

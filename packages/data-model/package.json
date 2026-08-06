@@ -15,9 +15,6 @@
     "dev": "chokidar \"src/**/*.{ts,js,vue,css,scss}\" -c \"pnpm build\" --initial",
     "build": "tsup src/index.ts --format esm,cjs --dts"
   },
-  "peerDependencies": {
-    "drizzle-orm": "0.45.2"
-  },
   "devDependencies": {
     "chokidar-cli": "^3.0.0",
     "tsup": "^8.5.1",

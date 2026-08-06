@@ -24,7 +24,6 @@ const tabs: Array<UiPageTabRoute> = [
     label: t('global.classify'),
   },
 ]
-
 </script>
 
 <template>

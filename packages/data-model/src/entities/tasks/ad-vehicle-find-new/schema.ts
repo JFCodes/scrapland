@@ -1,4 +1,4 @@
-import { sqliteTable } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
 // App
 import { E_AD_ENTITY_TYPE } from '../../ads'
 import { getTaskPriceSchemaFields} from '../_price-schema-fields'
@@ -6,8 +6,10 @@ import { getTaskBaseSchemaFields } from '../_base-schema-fields'
 import { E_TASK_TYPE } from '../enums'
 
 export const DBSchema_Task_Ad_Vehicle_FindNew = sqliteTable('task-ad-vehicle-find-new', {
-  ...getTaskBaseSchemaFields(E_AD_ENTITY_TYPE.HOUSING, E_TASK_TYPE.FIND_NEW_ADS),
+  ...getTaskBaseSchemaFields(E_AD_ENTITY_TYPE.VEHICLE, E_TASK_TYPE.FIND_NEW_ADS),
   ...getTaskPriceSchemaFields(),
+  brand: text('brand'),
+  model: text('model'),
 })
 
 export type T_Task_Ad_Vehicle_FindNew = typeof DBSchema_Task_Ad_Vehicle_FindNew.$inferSelect

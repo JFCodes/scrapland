@@ -9,6 +9,7 @@ import {
 } from '@scrapland/data-model'
 // App
 import { ExecutionOutcomeAndSummary } from '../_types'
+import { upsertAdsVehicle } from '../../models/ad/upsert-ads-vehicle'
 
 type ExecutionFunction = (task: T_Task_Ad_Vehicle_FindNew) => Promise<T_RunOutcome_Ad_Vehicle_FindNew>
 
@@ -17,14 +18,9 @@ export async function ExecuteAdVehicleFindNew (task: T_Task_Ad_Vehicle_FindNew):
   if (!executionFunction) return null
 
   const outcome = await executionFunction(task)
+  const summary = await upsertAdsVehicle(outcome.data.ads)
 
-  // Upsert ads
-  // const summary = await upsertAdsHousing(outcome.data.ads)
-
-  return {
-    summary: { newAdsCount: 0, updatedAdsCount: 0 },
-    outcome,
-  }
+  return { summary, outcome }
 }
 
 function getTargetFunction (target: E_TARGET): null | ExecutionFunction {

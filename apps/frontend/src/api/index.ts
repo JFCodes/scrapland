@@ -8,6 +8,7 @@ import {
   type T_API_RESPONSE_Ads_StatusCounter,
   type T_API_PAYLOAD_Ad_Housing_Patch,
   type T_API_RESPONSE_Ads_Housing,
+  type T_API_RESPONSE_Ads_Vehicle,
   type T_API_RESPONSE_AppSettings,
   type T_API_RESPONSE_Executions,
   type T_API_Response_Ad_Housing,
@@ -116,6 +117,13 @@ class Api {
           method: 'GET'
         })
       }
+    },
+    vehicle: {
+      all: (pagination: T_API_Pagination, query?: RequestQueryValues) => this.request<T_API_RESPONSE_Ads_Vehicle, never, T_API_Pagination>({
+        query: { ...query, ...pagination },
+        path: 'ads/vehicle/all',
+        method: 'GET'
+      }),
     }
   }
 

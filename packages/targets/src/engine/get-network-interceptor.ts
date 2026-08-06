@@ -10,6 +10,7 @@ export type NetworkInterceptorResult<T, ReqPayload = any> = {
   status: number
   data: null | T
   request: {
+    query?: Map<string, string>
     payload?: ReqPayload
   }
 }
@@ -33,6 +34,12 @@ export function getNetworkInterceptor <T, ReqPayload = any> (
       const request: NetworkInterceptorResult<T>['request'] = {}
       try {
         request.payload = response.request().postDataJSON()
+
+        // Parse url query
+        const url = new URL(response.request().url())
+        const query = new Map<string, string>()
+        url.searchParams.forEach((value, key) => query.set(key, value))
+        request.query = query
       } catch(_) {}
 
       const json = await response.json()

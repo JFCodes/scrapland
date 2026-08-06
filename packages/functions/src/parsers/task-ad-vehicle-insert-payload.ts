@@ -9,9 +9,7 @@ import {
 import {
   isNonEmptyString,
   isTaskSchedule,
-  isValueOfArray,
   isEnumValue,
-  isArrayOf,
   isNumber,
 } from '../validators'
 
@@ -39,6 +37,8 @@ export function F_PARSER_TaskAdVehicleInsertPayload (body: any, options: Options
 
   // Optional - can be null
   const _task_notes = isNonEmptyString(body._task_notes)
+  const brand = isNonEmptyString(body.brand)
+  const model = isNonEmptyString(body.model)
 
   const _price_min = isNumber(body._price_min, { minValue: 0 })
   const _price_max = isNumber(body._price_max, { minValue: _price_min ?? 1, maxValue: maxPriceValue })
@@ -50,5 +50,7 @@ export function F_PARSER_TaskAdVehicleInsertPayload (body: any, options: Options
     _task_notes,
     _price_min,
     _price_max,
+    brand,
+    model
   }
 }

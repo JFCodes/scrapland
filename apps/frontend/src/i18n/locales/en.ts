@@ -57,6 +57,7 @@ const pages: Record<E_ROUTER_PAGES, string> = {
   [E_ROUTER_PAGES.VEHICLES_DASHBOARD]: 'Dashboard',
   [E_ROUTER_PAGES.VEHICLES_TASKS]: 'Tasks',
   [E_ROUTER_PAGES.VEHICLES_ADS]: 'Vehicle ads',
+  [E_ROUTER_PAGES.VEHICLES_ADS_ALL]: 'All ads',
   [E_ROUTER_PAGES.HOUSING]: 'Housing',
   [E_ROUTER_PAGES.HOUSING_DASHBOARD]: 'Dashboard',
   [E_ROUTER_PAGES.HOUSING_TASKS]: 'Tasks',
@@ -152,6 +153,10 @@ export default {
     adsHousingAll: {
       indexTitle: 'All housing ads',
       showing: 'showing {loaded} of {total} housing ads',
+    },
+    adsVehicleAll: {
+      indexTitle: 'All vehicle ads',
+      showing: 'showing {loaded} of {total} vehicle ads',
     },
     adsHousingDashboard: {
       sectionByStatusTitle: 'Housing ads by status'

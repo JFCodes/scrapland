@@ -1,12 +1,13 @@
 import type { T_API_Paginated } from './pagination'
 import type {
   T_Task_Ad_Housing_FindNew,
+  T_Task_Ad_Vehicle_FindNew,
   T_AppSettings,
+  T_Ad_Vehicle,
   T_Ad_Housing,
   E_AD_STATUS,
   T_Execution,
   T_Task,
-  T_Task_Ad_Vehicle_FindNew,
 } from '../entities'
 
 export type T_API_RESPONSE_Error = {
@@ -25,6 +26,7 @@ export type T_API_RESPONSE_Tasks = Array<T_Task>
 
 export type T_API_RESPONSE_Ads_StatusCounter = { counters: Record<E_AD_STATUS, number> }
 export type T_API_RESPONSE_Ads_Housing = T_API_Paginated<T_Ad_Housing>
+export type T_API_RESPONSE_Ads_Vehicle = T_API_Paginated<T_Ad_Vehicle>
 
 export type T_API_RESPONSE_Executions = T_API_Paginated<T_Execution>
 export type T_API_Response_Ad_Housing = T_Ad_Housing

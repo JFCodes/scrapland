@@ -19,8 +19,6 @@ export async function ExecuteAdHousingFindNew (task: T_Task_Ad_Housing_FindNew):
   if (!executionFunction) return null
 
   const outcome = await executionFunction(task)
-
-  // Upsert ads
   const summary = await upsertAdsHousing(outcome.data.ads)
 
   return { outcome, summary }
