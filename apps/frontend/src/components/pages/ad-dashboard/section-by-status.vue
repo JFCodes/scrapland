@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { E_AD_STATUS } from '@scrapland/data-model'
+import { E_AD_ENTITY_TYPE, E_AD_STATUS, type T_API_RESPONSE_Ads_StatusCounter } from '@scrapland/data-model'
 import { onMounted, ref } from 'vue'
 // App
 import { AD_STATUS_ORDERED, AD_STATUS_BADGE_ICON, AD_STATUS_BADGE_TYPE } from '@/components/constants'
@@ -12,6 +12,8 @@ import CompSkeleton from '@/components/skeletons/ads-housing-dashboard-counter.v
 import CompUiTypeBadge from '@/components/ui/ui-type-badge.vue'
 import CompUiTitleMain from '@/components/ui/ui-title-main.vue'
 import CompUiCard from '@/components/ui/ui-card.vue'
+
+const props = defineProps<{ adEntityType: E_AD_ENTITY_TYPE }>()
 
 const { onApiError } = useApiErrorHandling()
 const { t } = useAppI18n()
@@ -27,11 +29,18 @@ const essentialStatus = AD_STATUS_ORDERED.filter(s => {
 
 const loadData = async () => {
   isLoading.value = true
-  await API.ads.housing
-    .statusCounter()
+
+  await (getStatusCounterFunction())()
     .then(result => statusCounters.value = result.counters)
     .catch(onApiError)
     .finally(() => isLoading.value = false)
+}
+
+const getStatusCounterFunction = (): () => Promise<T_API_RESPONSE_Ads_StatusCounter> => {
+  switch (props.adEntityType) {
+    case E_AD_ENTITY_TYPE.HOUSING: return API.ads.housing.statusCounter
+    case E_AD_ENTITY_TYPE.VEHICLE: return API.ads.vehicle.statusCounter
+  }
 }
 
 onMounted(loadData)

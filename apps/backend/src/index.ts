@@ -9,10 +9,10 @@ import { controller as NoCacheController } from './controllers/no-cache'
 import { ExecutionQueue } from './instances/execution-queue'
 import { WebsocketRegistry } from './websocket/registry'
 import { AppSettings } from './instances/app-settings'
+import { Scheduler } from './instances/scheduler'
 import { router as ApiRouter } from './routers'
 import { seedDatabase } from './database/seed'
 
-// import { scheduler } from './schedule/scheduler'
 
 const app = express()
 
@@ -34,10 +34,12 @@ websocketServer.on('connection', (socket) => WebsocketRegistry.registerClient(so
 await ExecutionQueue.cleanRunningExecutions()
 await AppSettings.initialize()
 seedDatabase()
-
-// scheduler.initialize()
+Scheduler.initialize()
 
 const PORT = AppSettings.settings.BACKEND_SERVER_PORT
 httpServer.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`)
 })
+
+process.once('SIGTERM', () => Scheduler.stopAll())
+process.once('SIGINT', () => Scheduler.stopAll())

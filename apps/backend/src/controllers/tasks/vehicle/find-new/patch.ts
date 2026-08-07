@@ -4,6 +4,7 @@ import type { Request, Response } from 'express'
 import { eq } from 'drizzle-orm'
 // App
 import { missingOrInvalidParam, missingResource, taskErrors } from '../../../../utils/send-error-response'
+import { Scheduler } from '../../../../instances/scheduler'
 import { db } from '../../../../database'
 
 export async function controller(req: Request, res: Response<T_API_RESPONSE_Task_Vehicle_FindNew>) {
@@ -31,6 +32,7 @@ export async function controller(req: Request, res: Response<T_API_RESPONSE_Task
 
   if (!patched[0]) return taskErrors.failedToPatch({req, res, taskId })
 
+  Scheduler.updateTask(patched[0])
   res.status(200).json(patched[0])
 }
 

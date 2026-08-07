@@ -60,7 +60,6 @@ const { t } = useAppI18n()
           <Fuel :size="22" />
           <p>{{ adVehicle.fuelType }}</p>
         </div>
-
       </div>
     </div>
   </CompUiCard>
@@ -86,7 +85,7 @@ const { t } = useAppI18n()
   }
 
   &__title {
-    width: 90px;
+    width: 80px;
   }
 }
 </style>

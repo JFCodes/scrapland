@@ -15,6 +15,7 @@ export const useServerStatusStore = defineStore('server-status', () => {
   const serverOk = ref(true)
 
   const checkStatus = async (): Promise<void> => {
+    console.log('checkStatus')
     const status = await API.ping()
       .then(result =>result.status === 'ok')
       .catch(() => false)

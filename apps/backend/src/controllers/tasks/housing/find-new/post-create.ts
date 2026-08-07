@@ -9,6 +9,7 @@ import {
 // App
 import { failedToInsertEntity, taskErrors } from '../../../../utils/send-error-response'
 import { AppSettings } from '../../../../instances/app-settings'
+import { Scheduler } from '../../../../instances/scheduler'
 import { db } from '../../../../database'
 
 export async function controller(req: Request, res: Response<T_API_RESPONSE_Task_Housing_FindNew>) {
@@ -34,5 +35,7 @@ export async function controller(req: Request, res: Response<T_API_RESPONSE_Task
     .get()
 
   if (!inserted) return failedToInsertEntity({ req, res, entity: E_ENTITY_TYPE.TASK })
+
+  Scheduler.updateTask(inserted)
   res.status(201).json(inserted)
 }

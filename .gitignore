@@ -1,6 +1,7 @@
 node_modules
 dist/
 
+apps/_runtime
 apps/backend/data/application.sqlite-shm
 apps/backend/data/application.sqlite-wal
 apps/backend/data/application.sqlite

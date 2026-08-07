@@ -1,6 +1,7 @@
 import { T_AppSettings } from './types'
 
 export const DEFAULT_APP_SETTINGS: T_AppSettings = {
+  BACKEND_SERVER_BLOCK_ACTIVE_SCHEDULER: false,
   BACKEND_SERVER_PORT: 3000,
 
   TASKS_SCHEDULE_CRON_DEFAULT_EXPRESSION: '0 */2 * * *', // Every 2 hours

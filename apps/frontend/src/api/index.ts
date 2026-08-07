@@ -17,7 +17,6 @@ import {
   type T_API_RESPONSE_Tasks,
   type T_API_RESPONSE_Ping,
   type T_API_Pagination,
-  DEFAULT_APP_SETTINGS,
 } from '@scrapland/data-model'
 // App
 import type { RequestQueryValues, RequestOptions } from '@/api/types'
@@ -29,10 +28,8 @@ import type { RequestQueryValues, RequestOptions } from '@/api/types'
 // will fail and we never update the correct server port
 
 class Api {
-  backendServerPort = DEFAULT_APP_SETTINGS.BACKEND_SERVER_PORT
   wsClientId: null | string = null
-
-  baseUrl = this.getBaseUrl(this.backendServerPort)
+  baseUrl = 'api'
 
   appSettings = () => this.request<T_API_RESPONSE_AppSettings>({ path: 'app-settings', method: 'GET' })
   ping = () => this.request<T_API_RESPONSE_Ping>({ method: 'GET', path: 'ping' })
@@ -132,20 +129,18 @@ class Api {
         method: 'PATCH',
         body: payload,
       }),
+
+      statusCounter: () => {
+        return this.request<T_API_RESPONSE_Ads_StatusCounter>({
+          path: 'ads/vehicle/status-counter',
+          method: 'GET'
+        })
+      }
     }
   }
 
   public setWsClientId (clientId: string): void {
     this.wsClientId = clientId
-  }
-
-  public getBaseUrl (port: number): string {
-    return `http://localhost:${port}/api`
-  }
-
-  public setServerPort(port: number): void {
-    this.baseUrl = this.getBaseUrl(port)
-    this.backendServerPort = port
   }
 
   private async request<Response, Body = never, Query extends RequestQueryValues = never> (
@@ -162,6 +157,7 @@ class Api {
       body,
     }
   
+    console.log(url)
     const response = await fetch(url, init)
     const responseText = await response.text()
     const contentType = response.headers.get('content-type') ?? ''
@@ -193,17 +189,21 @@ class Api {
   }
 
   private getUrl (path: string, query?: RequestQueryValues): string {
-    const url = new URL(`${this.baseUrl}/${path}`)
-  
+    let url = `${this.baseUrl}/${path}`
+
     if(query) {
+      const searchParams = new URLSearchParams()
+  
       Object.entries(query).forEach(([key, value]) => {
         Array.isArray(value)
-          ? value.forEach(v => url.searchParams.append(key, String(v)))
-          : url.searchParams.set(key, String(value))
+          ? value.forEach(v => searchParams.append(key, String(v)))
+          : searchParams.set(key, String(value))
       })
+
+      url += `?${searchParams.toString()}`
     }
-  
-    return url.href
+
+    return url
   }
 }
 

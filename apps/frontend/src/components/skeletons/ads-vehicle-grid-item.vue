@@ -8,20 +8,16 @@ import CompUiCard from '@/components/ui/ui-card.vue'
   <CompUiCard class="skeleton-layout">
     <template #header>
       <div class="--group --group--spread --mb-xs">
-        <div class="--group">
-          <CompUiSkeleton rounded="--radius-sm" :h="30" :w="320" />
-          <CompUiSkeleton rounded="--radius-sm" :h="30" :w="40" />
-        </div>
+        <CompUiSkeleton rounded="--radius-sm" :h="30" :w="185" />
 
         <CompUiSkeleton rounded="--radius-sm" :h="32" :w="200" />
       </div>
       <div class="--group --group--spread">
         <div>
-          <CompUiSkeleton rounded="--radius-sm" :h="22" :w="320" />
+          <CompUiSkeleton rounded="--radius-sm" :h="22" :w="220" />
           <CompUiSkeleton rounded="--radius-sm" :h="22" :w="120" />
         </div>
         <div class="--group">
-          <CompUiSkeleton rounded="--radius-sm" :h="36" :w="36" />
           <CompUiSkeleton rounded="--radius-sm" :h="36" :w="36" />
         </div>
       </div>
@@ -29,34 +25,43 @@ import CompUiCard from '@/components/ui/ui-card.vue'
 
     <template #default>
       <div class="--group --group--top">
-        <CompUiSkeleton rounded="--radius-md" :h="170" :w="170" />
+        <CompUiSkeleton rounded="--radius-md" :h="170" :w="190" />
         <div>
-          <div class="--group">
-            <CompUiSkeleton class="--mb-2xs" rounded="--radius-md" :h="30" :w="30" />
-            <CompUiSkeleton class="--mb-2xs" rounded="--radius-md" :h="30" :w="160" />
+          <div class="--group --mb-2xs">
+            <div class="skeleton-layout__title">
+              <CompUiSkeleton rounded="--radius-md" :h="30" :w="65" />
+            </div>
+            <CompUiSkeleton rounded="--radius-md" :h="28" :w="55" />
+            <CompUiSkeleton rounded="--radius-md" :h="28" :w="125" />
           </div>
 
           <div class="--group --mb-2xs">
             <div class="skeleton-layout__title">
               <CompUiSkeleton rounded="--radius-md" :h="30" :w="65" />
             </div>
-            <CompUiSkeleton rounded="--radius-md" :h="28" :w="55" />
-            <CompUiSkeleton rounded="--radius-md" :h="28" :w="55" />
-            <CompUiSkeleton rounded="--radius-md" :h="28" :w="55" />
+            <CompUiSkeleton rounded="--radius-md" :h="28" :w="125" />
           </div>
 
           <div class="--group --mb-2xs">
             <div class="skeleton-layout__title">
               <CompUiSkeleton rounded="--radius-md" :h="30" :w="65" />
             </div>
-            <CompUiSkeleton rounded="--radius-md" :h="28" :w="50" />
-            <CompUiSkeleton rounded="--radius-md" :h="28" :w="50" />
-            <CompUiSkeleton rounded="--radius-md" :h="28" :w="50" />
+            <CompUiSkeleton rounded="--radius-md" :h="28" :w="95" />
           </div>
 
           <div class="--group --mb-2xs">
-            <CompUiSkeleton rounded="--radius-md" :h="30" :w="50" />
-            <CompUiSkeleton rounded="--radius-md" :h="30" :w="130" />
+            <div class="skeleton-layout__title">
+              <CompUiSkeleton rounded="--radius-md" :h="30" :w="65" />
+            </div>
+            <CompUiSkeleton rounded="--radius-md" :h="28" :w="95" />
+            <CompUiSkeleton rounded="--radius-md" :h="28" :w="95" />
+          </div>
+
+          <div class="--group --mb-2xs">
+            <div class="skeleton-layout__title">
+              <CompUiSkeleton rounded="--radius-md" :h="30" :w="65" />
+            </div>
+            <CompUiSkeleton rounded="--radius-md" :h="28" :w="140" />
           </div>
         </div>
       </div>
@@ -69,7 +74,7 @@ import CompUiCard from '@/components/ui/ui-card.vue'
   width: 280px;
 
   &__title {
-    width: 90px;
+    width: 80px;
   }
 }
 </style>

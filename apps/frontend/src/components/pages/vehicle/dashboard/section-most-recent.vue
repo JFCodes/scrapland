@@ -4,8 +4,8 @@ import { onMounted, computed } from 'vue'
 import { useAppI18n } from '@/composables/use-i18n'
 import { useAdsStore } from '@/stores/ads'
 // Components
-import CompEntityAdHousingGridItem from '@/components/entity/ad/housing/grid-item.vue'
-import CompSkeleton from '@/components/skeletons/ads-housing-grid-item.vue'
+import CompEntityAdHousingGridItem from '@/components/entity/ad/vehicle/grid-item.vue'
+import CompSkeleton from '@/components/skeletons/ads-vehicle-grid-item.vue'
 import CompUiTitleMain from '@/components/ui/ui-title-main.vue'
 
 const MOST_RECENT_COUNT = 10
@@ -13,9 +13,9 @@ const MOST_RECENT_COUNT = 10
 const { t } = useAppI18n()
 const adsStore = useAdsStore()
 
-const mostRecent = computed(() => adsStore.adsHousing.slice(0, MOST_RECENT_COUNT))
+const mostRecent = computed(() => adsStore.adsVehicle.slice(0, MOST_RECENT_COUNT))
 
-onMounted(adsStore.loadAdsHousing)
+onMounted(adsStore.loadAdsVehicle)
 </script>
 
 <template>
@@ -23,7 +23,7 @@ onMounted(adsStore.loadAdsHousing)
     <CompUiTitleMain class="--mb-md" :title="t('sentences.mostRecent', { count: MOST_RECENT_COUNT })" />
 
     <section class="section">
-      <template v-if="adsStore.isLoadingAdsHousing">
+      <template v-if="adsStore.isLoadingAdsVehicle">
         <CompSkeleton
           v-for="i in MOST_RECENT_COUNT"
           class="section__ad"
@@ -34,7 +34,7 @@ onMounted(adsStore.loadAdsHousing)
         v-for="ad in mostRecent"
         class="section__ad"
         :key="ad._id"
-        :ad-housing="ad" />
+        :ad-vehicle="ad" />
     </section>
   </div>
 </template>
