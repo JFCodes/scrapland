@@ -22,7 +22,6 @@ function watchRuntimeSettings(): Plugin {
   }
 }
 
-// https://vite.dev/config/
 export default defineConfig(() => {
   let appSettings
   try {

@@ -2,24 +2,26 @@
 import { E_AD_ENTITY_TYPE, type T_Ad_Vehicle } from '@scrapland/data-model'
 // App
 import { useAdChangStatus } from '@/composables/edit-entity/ads/change-status'
-// import { usePanelStore } from '@/stores/panel'
+import type { PanelAdVehicleProps } from '@/components/panels/types'
+import { usePanelStore } from '@/stores/panel'
 // Components
 import CompEntityAdStatusPicker from '@/components/entity/ad/ad-status-picker.vue'
 import CompEntityTaskTargetBadge from '@/components/entity/tasks/target-badge.vue'
+import CompPanelAdVehicle from '@/components/panels/entities/ad/ad-vehicle.vue'
 import CompUiIconButton from '@/components/ui/ui-icon-button.vue'
 import CompUiPrice from '@/components/ui/ui-price.vue'
-import { ExternalLink, Hammer } from '@lucide/vue'
+import { ExternalLink, Hammer, Eye } from '@lucide/vue'
 
-defineProps<{ adVehicle: T_Ad_Vehicle }>()
+const props = defineProps<{ adVehicle: T_Ad_Vehicle }>()
 
 const { isChangingStatus, changeStatus } = useAdChangStatus(E_AD_ENTITY_TYPE.VEHICLE)
-// const panelStore = usePanelStore()
+const panelStore = usePanelStore()
 
-// const showPanel = () => {
-//   panelStore.show<PanelAdHousingProps>(CompPanelAdHousing, {
-//     housingAd: props.adHousing
-//   })
-// }
+const showPanel = () => {
+  panelStore.show<PanelAdVehicleProps>(CompPanelAdVehicle, {
+    housingAd: props.adVehicle
+  })
+}
 </script>
 
 <template>
@@ -44,7 +46,7 @@ const { isChangingStatus, changeStatus } = useAdChangStatus(E_AD_ENTITY_TYPE.VEH
     </div>
     <div class="--group">
       <CompUiIconButton :href="adVehicle.url" :icon="ExternalLink" :is-active="false" />
-      <!-- <CompUiIconButton :icon="Eye" :is-active="false" @click="showPanel" /> -->
+      <CompUiIconButton :icon="Eye" :is-active="false" @click="showPanel" />
     </div>
   </div>
 </template>

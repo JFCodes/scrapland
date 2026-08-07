@@ -39,8 +39,7 @@ const tableHeaders: Array<UiTableHeader> = [
   { label: '#' },
   { label: '' },
   { label: t('global.target') },
-  { label: t('global.price') },
-  { label: `${t('global.brand')} / ${t('global.model')}` },
+  { label: `${t('global.price')} / ${t('global.brand')} / ${t('global.model')}` },
   { label: t('global.engine') },
   { label: `${t('global.year')} / ${t('global.Mileage')}` },
   { label: t('global.status') },
@@ -67,6 +66,7 @@ onMounted(searchAds)
   <CompLayoutIndexView
     :title="t('pages.adsVehicleAll.indexTitle')"
     :sub-title="showing"
+    :max-width="1500"
     @on-content-scroll-end="() => adsStore.loadMoreAdsVehicle()">
 
     <template #quick-filters>

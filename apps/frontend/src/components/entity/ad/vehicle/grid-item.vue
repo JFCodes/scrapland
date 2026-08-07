@@ -10,13 +10,12 @@ import CompUiCard from '@/components/ui/ui-card.vue'
 import {
   ChessKnight,
   CircleGauge,
-  Fuel
+  Fuel,
 } from '@lucide/vue'
 
 defineProps<{ adVehicle: T_Ad_Vehicle }>()
 
 const { t } = useAppI18n()
-
 </script>
 
 <template>

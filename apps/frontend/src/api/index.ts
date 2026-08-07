@@ -29,7 +29,7 @@ import type { RequestQueryValues, RequestOptions } from '@/api/types'
 
 class Api {
   wsClientId: null | string = null
-  baseUrl = 'api'
+  baseUrl = '/api'
 
   appSettings = () => this.request<T_API_RESPONSE_AppSettings>({ path: 'app-settings', method: 'GET' })
   ping = () => this.request<T_API_RESPONSE_Ping>({ method: 'GET', path: 'ping' })

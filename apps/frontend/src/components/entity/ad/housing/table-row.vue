@@ -22,7 +22,7 @@ const props = defineProps<{
 
 const { isChangingStatus, changeStatus } = useAdChangStatus(E_AD_ENTITY_TYPE.HOUSING)
 
-const showAdHousingPanel = () => {
+const showPanel = () => {
   const panelStore = usePanelStore()
 
   panelStore.show<PanelAdHousingProps>(CompPanelAdHousing, {
@@ -63,7 +63,7 @@ const showAdHousingPanel = () => {
   <td>
     <div class="--group">
       <CompUiIconButton :href="adHousing.url" :icon="ExternalLink" :is-active="false" />
-      <CompUiIconButton :icon="Eye" :is-active="false" @click="showAdHousingPanel" />
+      <CompUiIconButton :icon="Eye" :is-active="false" @click="showPanel" />
     </div>
   </td>
 </template>

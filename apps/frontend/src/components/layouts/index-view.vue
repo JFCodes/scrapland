@@ -21,6 +21,7 @@ defineSlots<{
 defineProps<{
   subTitle: string
   title: string
+  maxWidth?: number
 }>()
 
 const { writableQuery } = useRouterUtils()
@@ -46,7 +47,7 @@ const iconToggle = computed<Array<UiIconToggleItem<string>>>(() => {
 
 <template>
   <CompLayoutVerticalScrollContent
-    :max-width="1200"
+    :max-width="maxWidth ?? 1200"
     @on-content-scroll-end="emits('on-content-scroll-end')">
 
     <template #top>
