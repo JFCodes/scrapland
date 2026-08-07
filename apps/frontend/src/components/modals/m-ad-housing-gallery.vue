@@ -3,7 +3,7 @@
 import type { ModalAdHousingGalleryProps } from '@/components/modals/types'
 import type { InjectedProps } from '@/stores/modals'
 // Components
-import CompEntityAdHousingGallery from '@/components/entity/ad/housing/image-gallery.vue'
+import CompUiImageGallery from '@/components/ui/ui-image-gallery.vue'
 import CompModalBase from '@/components/modals/m-base.vue'
 import { Minimize } from '@lucide/vue'
 
@@ -22,7 +22,7 @@ defineProps<ModalAdHousingGalleryProps & InjectedProps<null>>()
         <Minimize :size="22" />
       </div>
 
-      <CompEntityAdHousingGallery
+      <CompUiImageGallery
         :start-index="activeIndex"
         :images="images" />
     </template>

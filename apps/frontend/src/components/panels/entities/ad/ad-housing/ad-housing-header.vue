@@ -7,7 +7,7 @@ import { useAdsStore } from '@/stores/ads'
 import CompEntityAdHousingBuildingTypesBadges from '@/components/entity/ad/housing/ad-building-types-badges.vue'
 import CompEntityTasksTargetBadge from '@/components/entity/tasks/target-badge.vue'
 import CompEntityAdStatusPicker from '@/components/entity/ad/ad-status-picker.vue'
-import { Euro } from '@lucide/vue'
+import CompUiPrice from '@/components/ui/ui-price.vue'
 
 const emits = defineEmits<{ 'update-ad': [ad: T_Ad_Housing] }>()
 const props = defineProps<{ adHousing: T_Ad_Housing }>()
@@ -46,9 +46,6 @@ const changeStatus = async (status: E_AD_STATUS): Promise<void> => {
       <p>{{ adHousing.descriptionShort }}</p>
     </div>
 
-    <div class="--group --text-xl --font-bold">
-      <p>{{ adHousing.price.toLocaleString() }}</p>
-      <Euro :size="16" />
-    </div>
+    <CompUiPrice class="--text-lg" currency="EUR" :icon-size="20" :price="adHousing.price" />
   </div>
 </template>

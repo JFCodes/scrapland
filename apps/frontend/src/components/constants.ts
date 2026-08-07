@@ -1,4 +1,5 @@
 import {
+  type T_Ad_Vehicle_PricePosition,
   type T_Ad_Housing_Operation,
   E_TASK_SCHEDULE_TYPE,
   E_EXECUTION_STATUS,
@@ -17,10 +18,12 @@ import {
   PhoneForwarded,
   BanknoteCheck,
   OctagonMinus,
+  ChevronsDown,
   ListOrdered,
   TimerReset,
   BookDashed,
   DollarSign,
+  ChevronsUp,
   Building2,
   RefreshCw,
   BanknoteX,
@@ -34,6 +37,7 @@ import {
   Clock2,
   Pause,
   Trash,
+  Equal,
   Play,
   Hand,
   Car,
@@ -125,4 +129,16 @@ export const AD_HOUSING_OPERATION_ICON: Record<'all' | T_Ad_Housing_Operation, C
   buy: markRaw(DollarSign),
   all: markRaw(Handshake),
   rent: markRaw(Receipt),
+}
+
+export const AD_VEHICLE_PRICE_POSITION_ICON: Record<T_Ad_Vehicle_PricePosition, Component> = {
+  below: markRaw(ChevronsDown),
+  above: markRaw(ChevronsUp),
+  average: markRaw(Equal),
+}
+
+export const AD_VEHICLE_PRICE_POSITION_BADGE_TYPE: Record<T_Ad_Vehicle_PricePosition, UiButtonType> = {
+  below: 'success',
+  above: 'warning',
+  average: 'light',
 }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { T_Ad_Housing } from '@scrapland/data-model'
+import { E_AD_ENTITY_TYPE, type T_Ad_Housing } from '@scrapland/data-model'
 // App
 import { useAdChangStatus } from '@/composables/edit-entity/ads/change-status'
 import type { PanelAdHousingProps } from '@/components/panels/types'
@@ -12,14 +12,15 @@ import CompEntityTasksTargetBadge from '@/components/entity/tasks/target-badge.v
 import CompEntityAdStatusPicker from '@/components/entity/ad/ad-status-picker.vue'
 import CompPanelAdHousing from '@/components/panels/entities/ad/ad-housing.vue'
 import CompUiIconButton from '@/components/ui/ui-icon-button.vue'
-import { ExternalLink, Euro, Eye } from '@lucide/vue'
+import CompUiPrice from '@/components/ui/ui-price.vue'
+import { ExternalLink, Eye } from '@lucide/vue'
 
 const props = defineProps<{
   index: number,
   adHousing: T_Ad_Housing
 }>()
 
-const { isChangingStatus, changeStatus } = useAdChangStatus()
+const { isChangingStatus, changeStatus } = useAdChangStatus(E_AD_ENTITY_TYPE.HOUSING)
 
 const showAdHousingPanel = () => {
   const panelStore = usePanelStore()
@@ -48,10 +49,7 @@ const showAdHousingPanel = () => {
   </td>
   <td>{{ adHousing._ad_targetId }}</td>
   <td>
-    <div class="--group">
-      <p class="--font-bold --text-md">{{ adHousing.price.toLocaleString() }}</p>
-      <Euro :size="16" />
-    </div>
+    <CompUiPrice currency="EUR" :price="adHousing.price" />
   </td>
   <td>
     <CompEntityAdHousingBuildingTypesBadges :ad-building-types="adHousing._ad_housing_buildingTypes" />

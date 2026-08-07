@@ -5,7 +5,7 @@ import { ref } from 'vue'
 import type { PanelAdHousingProps, OverLayExposed } from '@/components/panels/types'
 // Components
 import CompPanelAdHousingHeader from '@/components/panels/entities/ad/ad-housing/ad-housing-header.vue'
-import CompEntityAdHousingGallery from '@/components/entity/ad/housing/image-gallery.vue'
+import CompUiImageGallery from '@/components/ui/ui-image-gallery.vue'
 import CompPanelsOverlay from '@/components/panels/p-overlay.vue'
 
 const props = defineProps<PanelAdHousingProps>()
@@ -30,7 +30,7 @@ const update = (updated: T_Ad_Housing): void => { ad.value = updated }
       <CompPanelAdHousingHeader :ad-housing="ad" @update-ad="update" />
     </template>
 
-    <CompEntityAdHousingGallery can-maximize :images="housingAd.images" />
+    <CompUiImageGallery can-maximize :images="housingAd.images" />
 
   </CompPanelsOverlay>
 </template>

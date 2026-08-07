@@ -9,7 +9,7 @@ import { E_ROUTER_QUERIES } from '@/router/enums'
 import { useAdsStore } from '@/stores/ads'
 // Components
 import CompEntityAdVehicleTableRow from '@/components/entity/ad/vehicle/table-row.vue'
-// import CompEntityAdHousingGridItem from '@/components/entity/ad/housing/grid-item.vue'
+import CompEntityAdVehicleGridItem from '@/components/entity/ad/vehicle/grid-item.vue'
 import CompEntityGridOrTable from '@/components/entity/grid-or-table.vue'
 import CompLayoutIndexView from '@/components/layouts/index-view.vue'
 import CompFormSelect from '@/components/forms/f-select.vue'
@@ -38,6 +38,12 @@ const filterStatusOptions: Array<UiSelectOption<E_AD_STATUS>> = AD_STATUS_ORDERE
 const tableHeaders: Array<UiTableHeader> = [
   { label: '#' },
   { label: '' },
+  { label: t('global.target') },
+  { label: t('global.price') },
+  { label: `${t('global.brand')} / ${t('global.model')}` },
+  { label: t('global.engine') },
+  { label: `${t('global.year')} / ${t('global.Mileage')}` },
+  { label: t('global.status') },
   { label: '' },
 ]
 
@@ -89,9 +95,9 @@ onMounted(searchAds)
         </template>
 
         <!-- Grid item template -->
-        <!-- <template #grid-item="{ item }">
-          <CompEntityAdHousingGridItem :ad-housing="item" />
-        </template> -->
+        <template #grid-item="{ item }">
+          <CompEntityAdVehicleGridItem :ad-vehicle="item" />
+        </template>
 
       </CompEntityGridOrTable>
     </template>

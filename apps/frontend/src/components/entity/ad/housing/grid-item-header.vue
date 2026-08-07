@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { T_Ad_Housing } from '@scrapland/data-model'
+import { E_AD_ENTITY_TYPE, type T_Ad_Housing } from '@scrapland/data-model'
 // App
 import { useAdChangStatus } from '@/composables/edit-entity/ads/change-status'
 import type { PanelAdHousingProps } from '@/components/panels/types'
@@ -10,14 +10,15 @@ import CompEntityAdStatusPicker from '@/components/entity/ad/ad-status-picker.vu
 import CompEntityTaskTargetBadge from '@/components/entity/tasks/target-badge.vue'
 import CompPanelAdHousing from '@/components/panels/entities/ad/ad-housing.vue'
 import CompUiIconButton from '@/components/ui/ui-icon-button.vue'
-import { ExternalLink, Euro, Eye, Hammer } from '@lucide/vue'
+import CompUiPrice from '@/components/ui/ui-price.vue'
+import { ExternalLink, Hammer, Eye } from '@lucide/vue'
 
 const props = defineProps<{ adHousing: T_Ad_Housing }>()
 
-const { isChangingStatus, changeStatus } = useAdChangStatus()
+const { isChangingStatus, changeStatus } = useAdChangStatus(E_AD_ENTITY_TYPE.HOUSING)
 const panelStore = usePanelStore()
 
-const showAdHousingPanel = () => {
+const showPanel = () => {
   panelStore.show<PanelAdHousingProps>(CompPanelAdHousing, {
     housingAd: props.adHousing
   })
@@ -44,14 +45,12 @@ const showAdHousingPanel = () => {
           <Hammer :size="16" />
           <p>{{ adHousing.constructionYear }}</p>
         </template>
-        <span> - </span>
-        <p>{{ adHousing.price.toLocaleString() }}</p>
-        <Euro :size="16" />
+        <CompUiPrice currency="EUR" :price="adHousing.price" />
       </div>
     </div>
     <div class="--group">
       <CompUiIconButton :href="adHousing.url" :icon="ExternalLink" :is-active="false" />
-      <CompUiIconButton :icon="Eye" :is-active="false" @click="showAdHousingPanel" />
+      <CompUiIconButton :icon="Eye" :is-active="false" @click="showPanel" />
     </div>
   </div>
 </template>

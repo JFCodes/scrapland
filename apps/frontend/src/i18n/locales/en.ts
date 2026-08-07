@@ -1,4 +1,5 @@
 import {
+  type T_Ad_Vehicle_PricePosition,
   type T_Ad_Housing_BuildingType,
   type T_Ad_Housing_Operation,
   E_TASK_SCHEDULE_TYPE,
@@ -101,6 +102,12 @@ const adHousingOperation: Record<T_Ad_Housing_Operation, string> = {
   buy: 'Buy'
 }
 
+const adVehiclePricePosition: Record<T_Ad_Vehicle_PricePosition, string> = {
+  above: 'Above average',
+  average: 'In average',
+  below: 'Below average',
+}
+
 const taskType: Record<E_TASK_TYPE, string> = {
   [E_TASK_TYPE.FIND_NEW_ADS]: 'find new ads'
 }
@@ -113,22 +120,29 @@ export default {
     area: 'Area',
     askingPrice: 'Asking price',
     atDate: 'at {date}',
-    delete: 'Delete',
+    brand: 'Brand',
     buildingTypes: 'Building Types',
     cancel: 'Cancel',
     classify: 'Classify',
-    createTask: 'Create task',
     confirm: 'Confirm',
     create: 'Create',
+    createdAt: 'Created ad',
+    createTask: 'Create task',
+    delete: 'Delete',
+    description: 'Description',
     discardChanges: 'Discard changes',
     duration: 'Duration',
+    engine: 'Engine',
     finishedAt: 'Finished at',
+    fuelType: 'Fuel type',
     location: 'Location',
-    createdAt: 'Created ad',
+    mileage: 'Mileage',
+    model: 'Model',
     noParking: 'No parking',
     notes: 'Notes',
     operation: 'Operation',
     optional: 'Optional',
+    price: 'Price',
     priceRange: 'Price range',
     rooms: 'Rooms',
     save: 'Save',
@@ -141,6 +155,7 @@ export default {
     target: 'Target',
     targetId: 'Source id',
     task: 'Task',
+    year: 'Year',
   },
   sentences: {
     doYouWishToDiscardThem: `'Do you wish to discard them?'`,
@@ -261,6 +276,7 @@ export default {
   },
   enums: {
     adHousingBuildingTypes,
+    adVehiclePricePosition,
     adHousingOperation,
     taskScheduleType,
     executionStatus,

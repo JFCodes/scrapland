@@ -1,4 +1,4 @@
-import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, integer, text } from 'drizzle-orm/sqlite-core'
 // App
 import { getAdBaseSchemaFields } from '../base-schema-fields'
 import type { T_Ad_Vehicle_PricePosition } from './types'
@@ -13,6 +13,7 @@ export const DBSchema_Ad_Vehicle = sqliteTable('ad-vehicle-schema', {
   images: text('images', { mode: 'json' }).notNull().$type<Array<string>>(),
   pricePosition: text('pricePosition').$type<T_Ad_Vehicle_PricePosition>(),
   sellerWebsite: text('sellerWebsite'),
+  price: integer('price').notNull(),
   enginePower: text('enginePower'),
   engineSize: text('engineSize'),
   sellerName: text('sellerName'),
@@ -22,6 +23,7 @@ export const DBSchema_Ad_Vehicle = sqliteTable('ad-vehicle-schema', {
   version: text('version'),
   mileage: text('mileage'),
   brand: text('brand'),
+  title: text('title'),
   model: text('model'),
   year: text('year'),
 })

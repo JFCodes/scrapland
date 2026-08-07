@@ -1,4 +1,4 @@
-import type { T_Ad_Housing, T_Ad_Housing_Patch, T_Ad_Vehicle } from '@scrapland/data-model'
+import type { T_Ad_Housing, T_Ad_Housing_Patch, T_Ad_Vehicle, T_Ad_Vehicle_Patch } from '@scrapland/data-model'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 // App
@@ -11,9 +11,8 @@ export const useAdsStore = defineStore('ads', () => {
   const { onApiError } = useApiErrorHandling()
   const { t } = useAppI18n()
 
+  // HOUSING
   const adsHousing = ref<Array<T_Ad_Housing>>([])
-  const adsVehicle = ref<Array<T_Ad_Vehicle>>([])
-
   const {
     isLoadingMore: isLoadingMoreAdsHousing,
     isLoading: isLoadingAdsHousing,
@@ -21,15 +20,6 @@ export const useAdsStore = defineStore('ads', () => {
     loadMore: loadMoreAdsHousing,
     load: loadAdsHousing,
   } = usePaginated({ data: adsHousing, request: API.ads.housing.all })
-
-  const {
-    isLoadingMore: isLoadingMoreAdsVehicle,
-    isLoading: isLoadingAdsVehicle,
-    totalItems: totalAdsVehicle,
-    loadMore: loadMoreAdsVehicle,
-    load: loadAdsVehicle,
-  } = usePaginated({ data: adsVehicle, request: API.ads.vehicle.all })
-
 
   const patchAdHousing = (adId: string, payload: T_Ad_Housing_Patch): Promise<null | T_Ad_Housing> => {
     return API.ads.housing
@@ -49,6 +39,35 @@ export const useAdsStore = defineStore('ads', () => {
     return ad
   }
 
+  // VEHICLE
+  const adsVehicle = ref<Array<T_Ad_Vehicle>>([])
+
+  const {
+    isLoadingMore: isLoadingMoreAdsVehicle,
+    isLoading: isLoadingAdsVehicle,
+    totalItems: totalAdsVehicle,
+    loadMore: loadMoreAdsVehicle,
+    load: loadAdsVehicle,
+  } = usePaginated({ data: adsVehicle, request: API.ads.vehicle.all })
+
+  const patchAdVehicle = (adId: string, payload: T_Ad_Vehicle_Patch): Promise<null | T_Ad_Vehicle> => {
+    return API.ads.vehicle
+      .patch(adId, payload)
+      .then(result => updateAdVehicle(result))
+      .catch(error => {
+        onApiError(error)
+        return null
+      })
+  }
+
+  const updateAdVehicle = (ad: T_Ad_Vehicle): null | T_Ad_Vehicle => {
+    const updateIndex = adsVehicle.value.findIndex(item => item._id === ad._id)
+    if (updateIndex === -1) return null
+
+    adsVehicle.value[updateIndex] = ad
+    return ad
+  }
+
   return {
     // Housing
     loadMoreAdsHousing,
@@ -60,6 +79,7 @@ export const useAdsStore = defineStore('ads', () => {
     adsHousing,
     // Vehicle
     loadMoreAdsVehicle,
+    patchAdVehicle,
     loadAdsVehicle,
     isLoadingMoreAdsVehicle,
     isLoadingAdsVehicle,

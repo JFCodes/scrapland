@@ -1,7 +1,6 @@
 import { T_Ad_Vehicle_Insert, T_Ad_Vehicle_PricePosition, T_Task_Ad_Vehicle_FindNew } from '@scrapland/data-model'
 import { F_AD_GetTargetAndAdIds } from '@scrapland/functions'
 // App
-import { CONFIG } from '../config'
 import type {
   GraphqlListingEdgeParameterKey,
   GraphqlListingEdgeParameter,
@@ -30,7 +29,6 @@ export function parseRawAd (
   if (rawAd.thumbnail.x1) images.push(rawAd.thumbnail.x1)
   if (rawAd.thumbnail.x2) images.push(rawAd.thumbnail.x2)
 
-
   return {
     // Ad base schema fields
     ...F_AD_GetTargetAndAdIds(task._task_target, rawAd.id),
@@ -53,6 +51,8 @@ export function parseRawAd (
     model: modelParameter?.displayValue ?? null,
     year: yearParameter?.displayValue ?? null,
     sellerName: rawAd.sellerLink.name,
+    price: rawAd.price.amount.units,
+    title: rawAd.shortDescription,
     url: rawAd.url,
     images,
   }

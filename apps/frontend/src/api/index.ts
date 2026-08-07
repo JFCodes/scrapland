@@ -7,11 +7,13 @@ import {
   type T_API_RESPONSE_Task_Vehicle_FindNew,
   type T_API_RESPONSE_Ads_StatusCounter,
   type T_API_PAYLOAD_Ad_Housing_Patch,
+  type T_API_PAYLOAD_Ad_Vehicle_Patch,
   type T_API_RESPONSE_Ads_Housing,
   type T_API_RESPONSE_Ads_Vehicle,
   type T_API_RESPONSE_AppSettings,
   type T_API_RESPONSE_Executions,
   type T_API_Response_Ad_Housing,
+  type T_API_Response_Ad_Vehicle,
   type T_API_RESPONSE_Tasks,
   type T_API_RESPONSE_Ping,
   type T_API_Pagination,
@@ -123,6 +125,12 @@ class Api {
         query: { ...query, ...pagination },
         path: 'ads/vehicle/all',
         method: 'GET'
+      }),
+
+      patch: (adId: string, payload: T_API_PAYLOAD_Ad_Vehicle_Patch) => this.request<T_API_Response_Ad_Vehicle, T_API_PAYLOAD_Ad_Vehicle_Patch>({
+        path: `ads/vehicle/${adId}`,
+        method: 'PATCH',
+        body: payload,
       }),
     }
   }

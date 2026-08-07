@@ -30,6 +30,7 @@ export type T_API_RESPONSE_Ads_Vehicle = T_API_Paginated<T_Ad_Vehicle>
 
 export type T_API_RESPONSE_Executions = T_API_Paginated<T_Execution>
 export type T_API_Response_Ad_Housing = T_Ad_Housing
+export type T_API_Response_Ad_Vehicle = T_Ad_Vehicle
 
 export type T_API_RESPONSE_AppSettings = T_AppSettings
 export type T_API_RESPONSE_Execution = T_Execution
